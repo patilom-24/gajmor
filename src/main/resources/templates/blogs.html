@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs - Responsive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 27px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #searchInput {
+            width: 60%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #777;
+        }
+
+        /* Blog Container */
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            width: 90%;
+            margin: auto;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: scale(1.02);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .blog-title {
+            font-size: 18px;
+            margin: 10px 0 4px;
+            font-weight: bold;
+        }
+
+        .blog-author {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Modal Background */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+            padding: 10px;
+        }
+
+        /* Modal Box */
+        .modal-box {
+            background: white;
+            width: 70%;
+            max-width: 800px;
+            max-height: 90%;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 12px;
+            animation: slideUp 0.35s;
+        }
+
+        .modal-box img {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 6px;
+            float: right;
+            cursor: pointer;
+        }
+
+        .modal-title { font-size: 24px; font-weight: bold; margin-top: 10px; }
+        .modal-author { margin: 5px 0 15px; color: #555; font-size: 16px; }
+        .modal-content { font-size: 16px; color: #222; line-height: 1.6; white-space: pre-wrap; }
+
+        /* Animations */
+        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+        @keyframes slideUp { from {transform: translateY(40px); opacity:0;} to {transform: translateY(0); opacity:1;} }
+
+        /* Pagination */
+        .pagination {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background: #3498db;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media screen and (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr; /* 1 card per row */
+            }
+            #searchInput {
+                width: 80%;
+            }
+            .modal-box { width: 95%; padding: 15px; }
+            .modal-title { font-size: 22px; }
+            .modal-author { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">Blogs</div>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search blog by title or author...">
+</div>
+
+<div class="blog-container" id="blogList"></div>
+
+<div class="pagination">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBackground">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeModal()">Close</span>
+        <h2 id="modalTitle"></h2>
+        <h4 id="modalAuthor"></h4>
+        <img id="modalImage" src="">
+        <p id="modalContent"></p>
+    </div>
+</div>
+
+<script>
+    let blogs = [];
+    let filteredBlogs = [];
+    let currentPage = 1;
+    const blogsPerPage = 4;
+
+    async function loadBlogs() {
+        const response = await fetch("http://localhost:8080/blogs");
+        blogs = await response.json();
+        filteredBlogs = blogs;
+        displayBlogs();
+    }
+
+    function displayBlogs() {
+        const blogList = document.getElementById("blogList");
+        blogList.innerHTML = "";
+
+        const start = (currentPage - 1) * blogsPerPage;
+        const end = start + blogsPerPage;
+
+        filteredBlogs.slice(start, end).forEach(blog => {
+            const img = blog.imagePath
+                ? `http://localhost:8080/uploads${blog.imagePath}`
+                : "https://via.placeholder.com/250x150?text=No+Image";
+
+            blogList.innerHTML += `
+                <div class="blog-card" onclick="openModal(${blog.id})">
+                    <img src="${img}">
+                    <p class="blog-title">${blog.title}</p>
+                    <p class="blog-author">By ${blog.author}</p>
+                </div>
+            `;
+        });
+
+        document.getElementById("prevBtn").disabled = currentPage === 1;
+        document.getElementById("nextBtn").disabled = currentPage * blogsPerPage >= filteredBlogs.length;
+    }
+
+    document.getElementById("prevBtn").onclick = () => { currentPage--; displayBlogs(); };
+    document.getElementById("nextBtn").onclick = () => { currentPage++; displayBlogs(); };
+
+    document.getElementById("searchInput").addEventListener("input", function() {
+        const searchValue = this.value.toLowerCase();
+        filteredBlogs = blogs.filter(blog =>
+            blog.title.toLowerCase().includes(searchValue) ||
+            blog.author.toLowerCase().includes(searchValue)
+        );
+        currentPage = 1;
+        displayBlogs();
+    });
+
+    function openModal(id) {
+        const blog = blogs.find(b => b.id === id);
+        document.getElementById("modalTitle").innerText = blog.title;
+        document.getElementById("modalAuthor").innerText = "By " + blog.author;
+        document.getElementById("modalContent").innerText = blog.content;
+        document.getElementById("modalImage").src = blog.imagePath
+            ? `http://localhost:8080/uploads${blog.imagePath}`
+            : "https://via.placeholder.com/350x200?text=No+Image";
+        document.getElementById("modalBackground").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modalBackground").style.display = "none";
+    }
+
+    loadBlogs();
+</script>
+
+</body>
+</html>

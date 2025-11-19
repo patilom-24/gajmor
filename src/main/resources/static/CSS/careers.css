@@ -1,0 +1,596 @@
+/* NAV BAR BASE STYLE */
+
+body{
+    background-image: url("https://nailandhammer.in/wp-content/uploads/al_opt_content/IMAGE/nailandhammer.in/wp-content/uploads/2023/06/Untitled-design-94-min.jpg.bv.webp?bv_host=nailandhammer.in");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+/* NAV ON SCROLL */
+.nav.scrolled {
+  background-color: #3F3F46;
+}
+
+/* LOGO */
+.logo img {
+  height: 80px;
+  margin-left: 50px;
+}
+
+/* LINKS */
+.links {
+  display: flex;
+  gap: 50px;
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  position: relative;
+}
+
+/* HOVER UNDERLINE */
+.links a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: rgb(255, 153, 0);
+  transition: width 0.3s ease;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+
+.menu i {
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .links {
+    display: none;
+    flex-direction: column;
+    background-color: #000;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .links.show {
+    display: flex;
+  }
+
+  .menu {
+    display: block;
+  }
+}
+
+
+/* Sidebar and Overlay */
+.sidebar {
+  height: 100%;
+  width: 0;
+  max-width: 400px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #222;
+  color: white;
+  overflow-x: hidden;
+  transition: width 0.4s ease;
+  padding: 20px;
+  z-index: 1000;
+
+  /* ✅ Prevent content from overflowing during animation */
+  visibility: hidden;
+  opacity: 0;
+  transition: width 0.4s ease, visibility 0.4s ease, opacity 0.4s ease;
+}
+
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li a {
+    padding: 12px 20px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.sidebar-menu li a:hover {
+    background: #575757;
+}
+
+.sidebar-logo {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.sidebar h2 {
+  margin: 20px 0 10px;
+  font-size: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.contact-info {
+  font-size: 14px;
+  line-height: 2;
+}
+
+.contact-info p: hover{
+    background: #575757;
+}
+
+.contact-info a{
+  text-decoration: none;
+  color: #fff;
+}
+
+.contact-info i {
+  width: 20px;
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  color: white;
+  font-size: 18px;
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+
+
+.career-container {
+    /* max-height: 700px; */
+  max-width: 600px;
+  margin: 120px auto 50px;
+  padding: 25px;
+  background: #ffffffe9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.career-header h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222;
+}
+
+.career-header p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+#careerForm input,
+#careerForm select,
+#careerForm textarea {
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  /*margin-left: -10px;*/
+}
+
+#careerForm select{
+    height: 45px;
+    width: 100%;
+}
+
+#careerForm button {
+  width: 100%;
+  background: #ffae00;
+  color: #000;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+
+}
+
+#careerForm button:hover {
+  background: #e89d00;
+}
+
+.success-message {
+  display: none;
+  margin-top: 20px;
+  padding: 10px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+  text-align: center;
+  opacity: 0;
+}
+
+.success-message.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.success-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.success-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: popUp 0.5s ease;
+}
+
+.success-card h2 {
+  margin: 15px 0 10px;
+  color: #333;
+}
+
+.success-card p {
+  color: #555;
+}
+
+.success-card button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.success-card button:hover {
+  background: #43a047;
+}
+
+.checkmark svg {
+  width: 80px;
+  height: 80px;
+}
+
+@keyframes popUp {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .career-container {
+    margin: 100px 15px 30px;
+    padding: 15px;
+  }
+}
+
+
+.whatsapp-float {
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      width: 70px;
+      height: 70px;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background-color: #ffffff;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 28px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      text-align: center;
+      cursor: pointer;
+      transition: .6s;
+    }
+
+  .whatsapp-float i{
+    font-size: 50px;
+    margin-left: 5px;
+    transition: 1s;
+  }
+
+.whatsapp-float:hover {
+      background-color: #e0e0e0;
+}
+
+
+/* Footer Section */
+footer {
+  background-color: #3F3F46;
+  padding: 40px 20px 20px;
+}
+
+/* Wrapper for all columns */
+.footer-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Common column settings */
+.foot1, .foot2, .foot3, .foot4 {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+/* FOOTER COLUMN 1: Logo & Social */
+.foot1 img {
+  width: 200px;
+  height: 200px;
+}
+
+.foot1 p {
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: #ffffff;
+  margin-right: 15px;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ffae00;
+}
+
+/* FOOTER COLUMN 2: Contact */
+.foot2 h3,
+.foot3 h3,
+.foot4 h3 {
+  font-size: 30px;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.foot2 i {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.foot2 .contact-info {
+  color: #8a8a8a;
+  font-size: 14px;
+}
+
+.foot2 #phoneNo a {
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.foot2 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.foot2 a:hover {
+  color: #ffae00;
+}
+
+/* FOOTER COLUMN 3: Links & Newsletter */
+.foot3 ul,
+.foot4 ul {
+  list-style: none;
+  padding: 0;
+}
+
+.foot3 ul li,
+.foot4 ul li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.foot3 ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.foot3 ul li a:hover {
+  color: #ffae00;
+}
+
+.foot3 h4 {
+  color: #fff;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.newsletter-form input {
+  padding: 8px;
+  width: 180px;
+  border: none;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+.newsletter-form button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #ffae00;
+  color: #000;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #e89d00;
+}
+
+/* FOOTER COLUMN 4: Working Hours */
+.foot4 ul li {
+  line-height: 1.6;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  width: 100%;
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #444;
+  margin-top: 30px;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Fullscreen overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+/* Spinner Circle */
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #ff9900;
+    border-radius: 50%;
+    width: 70px; height: 70px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success animation */
+.success-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2100;
+}
+
+.success-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .foot1, .foot2, .foot3, .foot4 {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+  }
+}

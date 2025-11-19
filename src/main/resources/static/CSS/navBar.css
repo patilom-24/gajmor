@@ -1,0 +1,334 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+
+/* NAV BAR BASE STYLE */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.session a{
+    margin-left:50px;
+}
+
+/* NAV ON SCROLL */
+.nav.scrolled {
+  background-color: #3F3F46;
+}
+
+/* LOGO */
+.logo img {
+  height: 80px;
+  margin-left: 50px;
+}
+
+/* LINKS */
+.links {
+  display: flex;
+  gap: 50px;
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  position: relative;
+}
+
+/* HOVER UNDERLINE */
+.links a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: rgb(255, 153, 0);
+  transition: width 0.3s ease;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+/* HAMBURGER */
+.menu {
+  /* display: ; */
+}
+
+.menu i {
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .links {
+    display: none;
+    flex-direction: column;
+    background-color: #000;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .links.show {
+    display: flex;
+  }
+
+  .menu {
+    display: block;
+  }
+}
+
+
+/* Sidebar and Overlay */
+.sidebar {
+  height: 100%;
+  width: 0;
+  max-width: 400px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #222;
+  color: white;
+  overflow-x: hidden;
+  transition: width 0.4s ease;
+  padding: 20px;
+  z-index: 1000;
+
+  /* ✅ Prevent content from overflowing during animation */
+  visibility: hidden;
+  opacity: 0;
+  transition: width 0.4s ease, visibility 0.4s ease, opacity 0.4s ease;
+}
+
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.sidebar-logo {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.sidebar h2 {
+  margin: 20px 0 10px;
+  font-size: 20px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.contact-info {
+  font-size: 14px;
+  line-height: 2;
+}
+
+.contact-info a{
+  text-decoration: none;
+  color: #fff;
+}
+
+.contact-info i {
+  width: 20px;
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  color: white;
+  font-size: 18px;
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li a {
+    padding: 12px 20px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.sidebar-menu li a:hover {
+    background: #575757;
+}
+
+@media (max-width: 768px){
+    .links {
+        display: none;
+      }
+
+      .menu {
+        display: block;
+        font-size: 20px;
+      }
+
+      .info{
+        height: auto;
+      }
+
+      .info1{
+        width:100px;
+      }
+
+      .info1 h1 {
+        font-size: 10px;
+        margin-bottom: 20px;
+        color: #222;
+        text-align: center;
+        margin-left: 40px;
+      }
+
+      .info1 p {
+        margin-left: 40px;
+        font-size: 2rem;
+
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .info2{
+        visibility: hidden;
+      }
+
+      .a {
+        justify-content: center; /* Center the items */
+        margin: 20px;
+      }
+
+
+}
+
+/* slid bar responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50%; /* Show a sidebar covering 80% on smaller screens */
+    padding: 15px;
+  }
+
+  .sidebar h2 {
+    font-size: 18px;
+  }
+
+  .sidebar .closebtn {
+    font-size: 26px;
+    right: 15px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+
+  .contact-info {
+    font-size: 13px;
+  }
+
+  .social-icons a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 50%; /* Full width on very small screens */
+    padding: 10px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr; /* 1 column on phones */
+  }
+
+  .sidebar h2 {
+    font-size: 16px;
+  }
+
+  .sidebar .closebtn {
+    font-size: 24px;
+  }
+
+  .contact-info {
+    font-size: 12px;
+  }
+
+  .social-icons a {
+    font-size: 14px;
+  }
+
+  .sidebar-logo {
+    width: 150px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80vw;          /* Take 80% of screen on tablets/mobiles */
+    max-width: none;      /* Remove fixed max-width on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 90vw;          /* Even tighter on small phones */
+  }
+}

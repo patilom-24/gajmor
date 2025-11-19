@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Gajmor</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" th:href="@{/CSS/style.css}" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link rel="Icon" href="../static/Images/GajmorLogo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- nav section -->
+<div class="nav" id="navbar">
+    <div class="logo">
+        <img src="/Images/GajmorLogo.png" alt="GajmorLogo" />
+    </div>
+
+    <div class="links" id="navLinks">
+
+        <!-- ADMIN NAVIGATION -->
+        <a href="/admin-home" style="color: rgb(255, 153, 0);">HOME</a>
+        <a href="/add-Projects" style="margin-left: 30px;">ADD PROJECT</a>
+        <a href="/admin-view-pro" style="margin-left: 30px;">ADMIN VIEW PROJECTS</a>
+        <a href="/add-Blog" style="margin-left: 30px;">ADD BLOG</a>
+        <a href="/logout" style="margin-left: 30px;color:red;">LOGOUT</a>
+
+    </div>
+
+    <div class="menu">
+        <i class='bx bx-menu' onclick="openMenu()"></i>
+    </div>
+</div>
+
+<!-- MAIN SECTION -->
+<div id="container">
+    <div class="titles">
+        <h1><span>Welcome Admin</span></h1>
+        <h1 id="t2">Manage Your Work From here</h1>
+    </div>
+</div>
+
+<script src="/JS/script.js"></script>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
+
+    <img src="/Images/GajmorLogo.png" alt="Gajmor Logo" class="sidebar-logo" />
+
+    <h2>Admin Panel</h2>
+    <a href="/add-Projects" class="btn1">Add Project</a>
+    <a href="/admin-view-pro" class="btn1">View Projects</a>
+    <a href="/add-Blog" class="btn1">Add Blog</a>
+    <a href="/logout" class="btn1" style="background:red;">Logout</a>
+
+    <h2>Contact Info</h2>
+    <div class="contact-info">
+        <p><i class="fas fa-phone"></i> <a href="tel:+918856986239">(+91)8856986239</a></p>
+        <p><i class="fas fa-envelope"></i><a href="mailto:contact@gajmor.in">contact@gajmor.in</a></p>
+        <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
+    </div>
+</div>
+
+<script>
+    function openMenu() {
+        document.getElementById("sidebar").style.width = "300px";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeMenu() {
+        document.getElementById("sidebar").style.width = "0";
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>
+
+</body>
+
+<footer>
+    <div class="footer-container">
+        <div class="foot1">
+            <img src="/Images/GajmorLogo.png" alt="Gajmor Logo">
+            <p>We provide a full range of interior and architectural design services tailored to your lifestyle.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/gajmordesign"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="foot2">
+            <h3>Contacts</h3>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> <a href="tel:+918421396396">(+91) 84213 96396</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:contact@gajmor.in">contact@gajmor.in</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
+            </div>
+        </div>
+
+        <div class="foot3">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about-us">About Us</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/enquiry">Contact</a></li>
+                <li><a href="/devloperSection">Developer's Section</a></li>
+            </ul>
+
+            <h4>Subscribe to Newsletter</h4>
+            <form action="#" method="post" class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="foot4">
+            <h3>Working Hours</h3>
+            <ul>
+                <li>Mon - Fri: 10:00 AM - 7:00 PM</li>
+                <li>Saturday: 10:00 AM - 5:00 PM</li>
+                <li>Sunday: Closed</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Gajmor Design Studio. All rights reserved.</p>
+    </div>
+</footer>
+
+</html>

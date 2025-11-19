@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Blog Management</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eef1f7;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4c4cff, #2a2aff);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .container {
+            width: 95%;
+            margin: 20px auto;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .btn-add {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #4c4cff;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(76,76,255,0.4);
+        }
+        .btn-add:hover {
+            background: #2a2aff;
+            transform: scale(1.05);
+        }
+
+        /* CARD GRID */
+        .blog-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
+        }
+
+        /* CARD */
+        .blog-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            transition: 0.3s ease;
+            animation: fadeUp 0.5s ease;
+        }
+        @keyframes fadeUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .blog-card:hover {
+            transform: scale(1.03);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 18px;
+        }
+
+        .blog-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .blog-author {
+            color: #555;
+            margin: 5px 0 10px;
+        }
+
+        .blog-preview {
+            color: #333;
+            font-size: 14px;
+        }
+
+        /* ACTIONS */
+        .card-actions {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-edit {
+            background: #ffb700;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-edit:hover {
+            background: #ff9900;
+        }
+
+        .btn-delete {
+            background: #ff3b3b;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background: #e60000;
+        }
+
+        /* MODAL */
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-box {
+            width: 450px;
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            animation: pop 0.3s ease-in-out;
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 130px;
+            resize: none;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 22px;
+            cursor: pointer;
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="header">Admin Dashboard – Blog Management</div>
+
+<div class="container">
+
+    <button class="btn-add" onclick="openAddModal()">+ Add Blog</button>
+
+    <div class="blog-grid" id="blogGrid"></div>
+
+</div>
+
+<!-- ADD BLOG MODAL -->
+<div class="modal-bg" id="addModal">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeAddModal()">×</span>
+        <h2>Add Blog</h2>
+
+        <form id="addForm" enctype="multipart/form-data">
+
+            <label>Title</label>
+            <input type="text" name="title" required>
+
+            <label>Author</label>
+            <input type="text" name="author" required>
+
+            <label>Content</label>
+            <textarea name="content" required></textarea>
+
+            <label>Upload Image</label>
+            <input type="file" name="image" accept="image/*" required>
+
+            <button class="btn-add" type="submit" style="width: 100%">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-bg" id="editModal">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeEditModal()">×</span>
+        <h2>Edit Blog</h2>
+
+        <form id="editForm" enctype="multipart/form-data">
+
+            <input type="hidden" id="edit_id" name="id">
+
+            <label>Title</label>
+            <input id="edit_title" type="text" name="title" required>
+
+            <label>Author</label>
+            <input id="edit_author" type="text" name="author" required>
+
+            <label>Content</label>
+            <textarea id="edit_content" name="content" required></textarea>
+
+            <label>Replace Image</label>
+            <input type="file" name="image" accept="image/*">
+
+            <button class="btn-edit" type="submit" style="width: 100%">Update</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    /* Load Blogs into GRID */
+    function loadBlogs() {
+        fetch("/blogs")
+            .then(res => res.json())
+            .then(data => {
+
+                let html = "";
+
+                data.forEach(b => {
+
+                    const imageUrl = b.imagePath
+                        ? `http://localhost:8080/uploads/${b.imagePath}`
+                        : "https://via.placeholder.com/300x200?text=No+Image";
+
+                    html += `
+                        <div class="blog-card">
+                            <img src="${imageUrl}" alt="Blog Image">
+
+                            <div class="blog-content">
+                                <h3 class="blog-title">${b.title}</h3>
+                                <p class="blog-author">By: ${b.author}</p>
+                                <p class="blog-preview">${b.content.substring(0, 80)}...</p>
+
+                                <div class="card-actions">
+                                    <button class="btn-edit"
+                                        onclick="openEditModal(${b.id}, '${b.title}', '${b.author}', \`${b.content}\`)">
+                                        Edit
+                                    </button>
+
+                                    <button class="btn-delete" onclick="deleteBlog(${b.id})">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById("blogGrid").innerHTML = html;
+            });
+    }
+
+    loadBlogs();
+
+
+    /* Add Modal */
+    function openAddModal() { document.getElementById("addModal").style.display = "flex"; }
+    function closeAddModal() { document.getElementById("addModal").style.display = "none"; }
+
+    /* Edit Modal */
+    function openEditModal(id, title, author, content) {
+        document.getElementById("edit_id").value = id;
+        document.getElementById("edit_title").value = title;
+        document.getElementById("edit_author").value = author;
+        document.getElementById("edit_content").value = content;
+        document.getElementById("editModal").style.display = "flex";
+    }
+    function closeEditModal() { document.getElementById("editModal").style.display = "none"; }
+
+    /* Add Blog Submit */
+    document.getElementById("addForm").onsubmit = function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        fetch("/blogs/add", {
+            method: "POST",
+            body: formData
+        })
+        .then(() => {
+            alert("Blog Added Successfully!");
+            closeAddModal();
+            loadBlogs();
+        });
+    };
+
+    /* Update Blog */
+    document.getElementById("editForm").onsubmit = function(e) {
+        e.preventDefault();
+
+        let id = document.getElementById("edit_id").value;
+        let formData = new FormData(this);
+
+        fetch("/blogs/update/" + id, {
+            method: "PUT",
+            body: formData
+        }).then(() => {
+            alert("Blog Updated Successfully!");
+            closeEditModal();
+            loadBlogs();
+        });
+    };
+
+    /* Delete Blog */
+    function deleteBlog(id) {
+        if (!confirm("Are you sure?")) return;
+
+        fetch("/blogs/delete/" + id, { method: "DELETE" })
+        .then(() => {
+            alert("Blog Deleted Successfully!");
+            loadBlogs();
+        });
+    }
+
+</script>
+
+</body>
+</html>
