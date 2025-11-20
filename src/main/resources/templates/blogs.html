@@ -1,324 +1,224 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Blogs - Gajmor</title>
+    <title>Blogs - Responsive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Icons -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
             margin: 0;
-            padding: 120px 0 40px;
-            background: #0d0d0d;
-            font-family: "Montserrat", sans-serif;
+            padding: 0;
+        }
+
+        .header {
+            background: #2c3e50;
             color: white;
-        }
-
-        /* HEADER TITLE */
-        .header-title {
+            padding: 20px;
             text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffae00;
-            margin-bottom: 20px;
-            animation: fadeDown .5s ease;
+            font-size: 27px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* SEARCH */
+        /* Search Bar */
         .search-container {
+            width: 90%;
+            margin: 20px auto;
             text-align: center;
-            margin-bottom: 25px;
         }
 
         #searchInput {
             width: 60%;
-            max-width: 450px;
-            padding: 12px 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            color: white;
+            max-width: 400px;
+            padding: 10px;
             font-size: 16px;
-            outline: none;
+            border-radius: 8px;
+            border: 1px solid #777;
         }
 
-        #searchInput::placeholder {
-            color: #aaa;
-        }
-
-        /* BLOG GRID */
+        /* Blog Container */
         .blog-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
             width: 90%;
             margin: auto;
-            animation: fadeIn .6s ease;
         }
 
-        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-
-        /* BLOG CARD (Premium Glass) */
         .blog-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.12);
-            backdrop-filter: blur(8px);
-            border-radius: 18px;
-            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            padding: 12px;
             cursor: pointer;
-            transition: 0.35s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+            transition: 0.3s;
         }
 
         .blog-card:hover {
-            transform: scale(1.05);
-            border-color: #ffae00;
-            box-shadow: 0 0 18px rgba(255,174,0,0.45);
+            transform: scale(1.02);
         }
 
         .blog-card img {
             width: 100%;
-            height: 160px;
-            border-radius: 12px;
+            height: 140px;
             object-fit: cover;
-            margin-bottom: 12px;
+            border-radius: 8px;
         }
 
         .blog-title {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 18px;
+            margin: 10px 0 4px;
+            font-weight: bold;
         }
 
         .blog-author {
             font-size: 14px;
-            color: #bbb;
-            margin-top: 4px;
+            color: #555;
         }
 
-        /* PAGINATION */
-        .pagination {
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .pagination button {
-            background: #ffae00;
-            color: black;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 6px;
-            transition: .3s;
-        }
-
-        .pagination button:hover {
-            filter: brightness(1.1);
-        }
-
-        .pagination button:disabled {
-            background: #555;
-            color: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* MODAL */
+        /* Modal Background */
         .modal-bg {
             display: none;
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(10px);
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            z-index: 1000;
+            animation: fadeIn 0.3s;
+            padding: 10px;
         }
 
+        /* Modal Box */
         .modal-box {
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.2);
-            width: 90%;
+            background: white;
+            width: 70%;
             max-width: 800px;
-            max-height: 90vh;
+            max-height: 90%;
             overflow-y: auto;
-            padding: 25px;
-            border-radius: 18px;
-            animation: pop .4s ease;
-            color: white;
-        }
-
-        @keyframes pop {
-            from { opacity: 0; transform: scale(.85); }
-            to { opacity: 1; transform: scale(1); }
+            padding: 20px;
+            border-radius: 12px;
+            animation: slideUp 0.35s;
         }
 
         .modal-box img {
             width: 100%;
-            height: 300px;
-            border-radius: 14px;
+            border-radius: 8px;
+            max-height: 300px;
             object-fit: cover;
-            margin-bottom: 15px;
         }
 
         .close-btn {
-            background: #e74c3c;
-            border: none;
-            padding: 10px 18px;
+            background: red;
             color: white;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
+            padding: 7px 12px;
+            border-radius: 6px;
             float: right;
+            cursor: pointer;
         }
 
-        .modal-title {
-            font-size: 26px;
-            font-weight: 700;
-            margin-top: 10px;
-            color: #ffae00;
+        .modal-title { font-size: 24px; font-weight: bold; margin-top: 10px; }
+        .modal-author { margin: 5px 0 15px; color: #555; font-size: 16px; }
+        .modal-content { font-size: 16px; color: #222; line-height: 1.6; white-space: pre-wrap; }
+
+        /* Animations */
+        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+        @keyframes slideUp { from {transform: translateY(40px); opacity:0;} to {transform: translateY(0); opacity:1;} }
+
+        /* Pagination */
+        .pagination {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
         }
 
-        .modal-author {
-            margin: 5px 0 15px;
-            color: #ccc;
-            font-size: 15px;
-        }
-
-        .modal-content {
+        .pagination button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background: #3498db;
+            color: white;
             font-size: 16px;
-            line-height: 1.6;
-            white-space: pre-wrap;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            #searchInput { width: 85%; }
-            .modal-box img { height: 220px; }
+        .pagination button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media screen and (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr; /* 1 card per row */
+            }
+            #searchInput {
+                width: 80%;
+            }
+            .modal-box { width: 95%; padding: 15px; }
             .modal-title { font-size: 22px; }
+            .modal-author { font-size: 14px; }
         }
     </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
+<div class="header">Blogs</div>
 
-<!-- Start Header Area -->
-<header class="default-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/aboutUs">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Pages
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-<!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
-                        </div>
-                    </li>
-                    <li><a href="/jobs">careers</a></li>
-                    <li><a href="/enquiry">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<!-- End Header Area -->
-<div class="header-title">Blogs</div>
-
-<!-- SEARCH -->
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search by title or author...">
+    <input type="text" id="searchInput" placeholder="Search blog by title or author...">
 </div>
 
-<!-- BLOG GRID -->
 <div class="blog-container" id="blogList"></div>
 
-<!-- PAGINATION -->
 <div class="pagination">
     <button id="prevBtn">Previous</button>
     <button id="nextBtn">Next</button>
 </div>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div class="modal-bg" id="modalBackground">
     <div class="modal-box">
-        <button class="close-btn" onclick="closeModal()">Close</button>
-        <h2 id="modalTitle" class="modal-title"></h2>
-        <p id="modalAuthor" class="modal-author"></p>
-        <img id="modalImage">
-        <p id="modalContent" class="modal-content"></p>
+        <span class="close-btn" onclick="closeModal()">Close</span>
+        <h2 id="modalTitle"></h2>
+        <h4 id="modalAuthor"></h4>
+        <img id="modalImage" src="">
+        <p id="modalContent"></p>
     </div>
 </div>
 
 <script>
-
     let blogs = [];
     let filteredBlogs = [];
     let currentPage = 1;
     const blogsPerPage = 4;
 
     async function loadBlogs() {
-        const response = await fetch("/blogs");
+        const response = await fetch("http://localhost:8080/blogs");
         blogs = await response.json();
         filteredBlogs = blogs;
         displayBlogs();
     }
 
     function displayBlogs() {
-        const list = document.getElementById("blogList");
-        list.innerHTML = "";
+        const blogList = document.getElementById("blogList");
+        blogList.innerHTML = "";
 
         const start = (currentPage - 1) * blogsPerPage;
         const end = start + blogsPerPage;
 
         filteredBlogs.slice(start, end).forEach(blog => {
-
             const img = blog.imagePath
-                ? `/uploads/${blog.imagePath}`
+                ? `http://localhost:8080/uploads/${blog.imagePath}`
                 : "https://via.placeholder.com/250x150?text=No+Image";
 
-            list.innerHTML += `
+            blogList.innerHTML += `
                 <div class="blog-card" onclick="openModal(${blog.id})">
                     <img src="${img}">
                     <p class="blog-title">${blog.title}</p>
@@ -331,32 +231,27 @@
         document.getElementById("nextBtn").disabled = currentPage * blogsPerPage >= filteredBlogs.length;
     }
 
-    /* Pagination */
     document.getElementById("prevBtn").onclick = () => { currentPage--; displayBlogs(); };
     document.getElementById("nextBtn").onclick = () => { currentPage++; displayBlogs(); };
 
-    /* Search Filter */
     document.getElementById("searchInput").addEventListener("input", function() {
-        const q = this.value.toLowerCase();
-        filteredBlogs = blogs.filter(b =>
-            b.title.toLowerCase().includes(q) ||
-            b.author.toLowerCase().includes(q)
+        const searchValue = this.value.toLowerCase();
+        filteredBlogs = blogs.filter(blog =>
+            blog.title.toLowerCase().includes(searchValue) ||
+            blog.author.toLowerCase().includes(searchValue)
         );
         currentPage = 1;
         displayBlogs();
     });
 
-    /* OPEN MODAL */
     function openModal(id) {
         const blog = blogs.find(b => b.id === id);
-
         document.getElementById("modalTitle").innerText = blog.title;
         document.getElementById("modalAuthor").innerText = "By " + blog.author;
         document.getElementById("modalContent").innerText = blog.content;
         document.getElementById("modalImage").src = blog.imagePath
-            ? `/uploads/${blog.imagePath}`
+            ? `http://localhost:8080/uploads${blog.imagePath}`
             : "https://via.placeholder.com/350x200?text=No+Image";
-
         document.getElementById("modalBackground").style.display = "flex";
     }
 
@@ -365,7 +260,6 @@
     }
 
     loadBlogs();
-
 </script>
 
 </body>
