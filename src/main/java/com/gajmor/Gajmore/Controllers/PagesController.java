@@ -78,4 +78,9 @@ public class PagesController {
     public String getJobPage(){
         return "job";
     }
+
+    @GetMapping("/viewBlogs")
+    public String viewBlogs(){
+        return "blogs";
+    }
 }
