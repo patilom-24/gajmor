@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class CareerMailService {
 
     public String buildCareerAdminEmail(String name, String qualification, int age, String email,
-                                        String position, String exp1, String exp2) {
+                                        String position, String exp1) {
 
         String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
         StringBuilder sb = new StringBuilder();
@@ -38,8 +38,6 @@ public class CareerMailService {
         sb.append("<p><span class='label'>Applied Position:</span> <span class='value'>").append(position).append("</span></p>");
         sb.append("<p><span class='label'>Work Experience:</span></p>");
         sb.append("<div class='info-box'>").append(exp1).append("</div>");
-        sb.append("<p><span class='label'>Why Gajmor:</span></p>");
-        sb.append("<div class='info-box'>").append(exp2).append("</div>");
         sb.append("<p><b>Resume attached with this email.</b></p>");
         sb.append("</div>");
 

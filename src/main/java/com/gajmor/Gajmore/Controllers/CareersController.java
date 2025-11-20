@@ -46,7 +46,6 @@ public class CareersController {
             @RequestParam String position,
             @RequestParam("resume") MultipartFile resume,
             @RequestParam("experience") String exp1,
-            @RequestParam("whyGajmor") String exp2,
             Model model,
             RedirectAttributes redirectAttributes
     ) throws MessagingException, IOException {
@@ -54,7 +53,7 @@ public class CareersController {
 
 
         // ✅ Build emails
-        String adminHtml = careersMail.buildCareerAdminEmail(name, qualification, age, email, position, exp1, exp2);
+        String adminHtml = careersMail.buildCareerAdminEmail(name, qualification, age, email, position, exp1);
         String applicantHtml = careersMail.buildCareerApplicantEmail(name);
 
         // ✅ Send Admin Email with Resume Attachment
