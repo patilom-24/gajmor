@@ -1,248 +1,290 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>View Projects</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects • Gajmor Design</title>
 
-/* Container */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-}
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <link rel="stylesheet" th:href="@{/CSS/style.css}" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-/* Section */
-.section {
-    flex: 1;
-    min-width: 350px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+    <style>
+        body {
+            background: #f4f4f4;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-.section h2 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333;
-    border-bottom: 2px solid #ff9800;
-    padding-bottom: 8px;
-}
+        /* Page Wrapper */
+        .project-wrapper {
+            padding: 120px 20px 40px;
+            max-width: 1500px;
+            margin: auto;
+        }
 
-/* Project Grid */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
+        .section-box {
+            background: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
-/* Project Card */
-.project-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: slideUp 0.5s ease-in-out;
-}
-.project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-.project-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-.project-title {
-    padding: 12px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 16px;
-}
+        .section-box h2 {
+            border-left: 5px solid #ff9800;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            color: black;
+            font-weight: bold;
+        }
 
-/* Modal */
-.modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(6px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 10px;
-    animation: fadeIn 0.4s ease-in-out;
-}
-.modal-content {
-    background: #fff;
-    padding: 20px;
-    max-width: 900px;
-    width: 95%;
-    max-height: 90vh;
-    border-radius: 12px;
-    overflow-y: auto;
-    position: relative;
-    animation: scaleUp 0.4s ease-in-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@keyframes scaleUp {
-    from { transform: scale(0.85); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+        /* Projects Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
 
-/* Scrollable images in modal */
-.image-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-}
-.image-scroll img {
-    height: 250px;
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
-.image-scroll img:hover {
-    transform: scale(1.05);
-}
+        .project-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+            cursor: pointer;
+            animation: fadeUp 0.5s ease;
+        }
 
-.description {
-    font-size: 15px;
-    line-height: 1.5;
-    margin-top: 10px;
-}
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
 
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: #ff5555;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 6px;
-    transition: background 0.3s;
-}
-.close-btn:hover {
-    background: #e33;
-}
+        .project-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .container { flex-direction: column; }
-}
-@media (max-width: 600px) {
-    .project-card img { height: 150px; }
-    .modal-content {
-        width: 98%;
-        height: 95%;
-        border-radius: 8px;
-    }
-    .image-scroll img { height: 200px; }
-}
-</style>
+        .project-title {
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal */
+        .modal-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 15px;
+        }
+
+        .modal-box {
+            background: #fff;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow-y: auto;
+            padding: 20px;
+            animation: scaleIn 0.35s ease;
+            position: relative;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            background: #ff4444;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+        }
+
+        /* Image scroll strip */
+        .modal-images {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .modal-images img {
+            height: 250px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 600px) {
+            .modal-images img { height: 180px; }
+            .project-card img { height: 150px; }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <!-- Commercial Projects -->
-    <div class="section">
+<!-- NAVBAR -->
+<div class="nav" id="navbar">
+    <div class="logo">
+        <img src="/Images/GajmorLogo.png" alt="GajmorLogo" />
+    </div>
+
+    <div class="links" id="navLinks">
+        <a href="/">HOME</a>
+
+        <div th:if="${session.login}" class="session">
+            <a href="/add-Projects">ADD PROJECT</a>
+            <a href="/enquires" style="margin-left:50px;">ALL ENQUIRIES</a>
+        </div>
+
+        <a href="/services">OUR SERVICES</a>
+        <a href="/careers">CAREERS</a>
+        <a href="/aboutUs">ABOUT US</a>
+        <a href="/enquiry">CONTACTS</a>
+
+        <!-- Highlight Projects -->
+        <a href="/projects" style="color: rgb(255, 153, 0); font-weight:bold;">PROJECTS</a>
+    </div>
+
+    <div class="menu">
+        <i class='bx bx-menu' onclick="openMenu()"></i>
+    </div>
+</div>
+
+<!-- Overlay + Sidebar (same your style) -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<div id="sidebar" class="sidebar">
+    <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
+
+    <img src="/Images/GajmorLogo.png" class="sidebar-logo" />
+
+    <h2>Our Gallery</h2>
+    <div class="gallery">
+        <img src="/Images/Walldrobe/walldrobe2.jpg" />
+        <img src="https://source.unsplash.com/100x100/?interior,kitchen" />
+        <img src="https://source.unsplash.com/100x100/?interior,bedroom" />
+        <img src="https://source.unsplash.com/100x100/?interior,design" />
+        <img src="https://source.unsplash.com/100x100/?interior,room" />
+        <img src="https://source.unsplash.com/100x100/?interior,furniture" />
+    </div>
+
+    <ul class="sidebar-menu">
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="/about">ℹ️ About</a></li>
+        <li><a href="/services">💼 Services</a></li>
+        <li><a href="/projects">📂 Projects</a></li>
+        <li><a href="/careers">🧑‍💼 Careers</a></li>
+    </ul>
+</div>
+
+<!-- MAIN PROJECT PAGE -->
+<div class="project-wrapper">
+
+    <!-- COMMERCIAL -->
+    <div class="section-box">
         <h2>🏢 Commercial Projects</h2>
         <div class="project-grid" id="commercialGrid"></div>
     </div>
 
-    <!-- Residential Projects -->
-    <div class="section">
+    <!-- RESIDENTIAL -->
+    <div class="section-box">
         <h2>🏠 Residential Projects</h2>
         <div class="project-grid" id="residentialGrid"></div>
     </div>
+
 </div>
 
-<!-- Modal -->
-<div class="modal" id="projectModal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()">✖ Close</button>
+<!-- MODAL -->
+<div class="modal-bg" id="projectModal">
+    <div class="modal-box">
+        <button class="close-btn" onclick="closeModal()">Close</button>
         <h2 id="modalTitle"></h2>
-        <div class="image-scroll" id="modalImages"></div>
+
+        <div class="modal-images" id="modalImages"></div>
+
         <p><strong>📍 Location:</strong> <span id="modalLocation"></span></p>
         <p><strong>📐 Area:</strong> <span id="modalArea"></span></p>
-        <div class="description"><strong>📝 Description:</strong> <span id="modalDescription"></span></div>
+        <p><strong>📝 Description:</strong> <span id="modalDescription"></span></p>
     </div>
 </div>
 
 <script>
-// Fetch projects from backend
-fetch('/projects/list')
-    .then(res => res.json())
-    .then(projects => {
-        const commercialGrid = document.getElementById('commercialGrid');
-        const residentialGrid = document.getElementById('residentialGrid');
+    fetch('/projects/list')
+        .then(res => res.json())
+        .then(projects => {
+            const commercial = document.getElementById('commercialGrid');
+            const residential = document.getElementById('residentialGrid');
 
-        projects.forEach(project => {
-            let card = document.createElement('div');
-            card.classList.add('project-card');
+            projects.forEach(project => {
+                const card = document.createElement('div');
+                card.classList.add('project-card');
 
-            // Use first image if exists
-            const firstImage = project.images.length > 0 
-                ? `http://localhost:8080/uploads${project.images[0].imagePath}` 
-                : 'https://via.placeholder.com/300x200?text=No+Image';
+                const firstImg =
+                    project.images.length > 0
+                        ? `/uploads/${project.images[0].imagePath}`
+                        : "https://via.placeholder.com/300x200?text=No+Image";
 
-            card.innerHTML = `
-                <img src="${firstImage}" alt="${project.name}">
-                <div class="project-title">${project.name}</div>
-            `;
+                card.innerHTML = `
+                    <img src="${firstImg}">
+                    <div class="project-title">${project.name}</div>
+                `;
 
-            card.onclick = () => openModal(project);
+                card.onclick = () => openModal(project);
 
-            if (project.projectType === "Commercial") {
-                commercialGrid.appendChild(card);
-            } else {
-                residentialGrid.appendChild(card);
-            }
+                if (project.projectType === "Commercial") {
+                    commercial.appendChild(card);
+                } else {
+                    residential.appendChild(card);
+                }
+            });
         });
-    });
 
-// Open Modal
-function openModal(project) {
-    document.getElementById('modalImages').innerHTML =
-        project.images.map(img => `<img src="http://localhost:8080/uploads${img.imagePath}">`).join('');
-    document.getElementById('modalTitle').textContent = project.name;
-    document.getElementById('modalLocation').textContent = project.location || "Not Available";
-    document.getElementById('modalArea').textContent = project.area || "Not Available";
-    document.getElementById('modalDescription').textContent = project.description || "No description available.";
-    document.getElementById('projectModal').style.display = 'flex';
-}
+    function openModal(project) {
+        document.getElementById("modalTitle").innerHTML = project.name;
 
-// Close Modal
-function closeModal() {
-    document.getElementById('projectModal').style.display = 'none';
-}
+        document.getElementById("modalImages").innerHTML =
+            project.images.map(img => `<img src="/uploads/${img.imagePath}">`).join("");
+
+        document.getElementById("modalLocation").innerHTML = project.location || "Not Available";
+        document.getElementById("modalArea").innerHTML = project.area || "Not Available";
+        document.getElementById("modalDescription").innerHTML = project.description || "No description available.";
+
+        document.getElementById("projectModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("projectModal").style.display = "none";
+    }
 </script>
 
 </body>
+
+<!-- FOOTER FRAGMENT -->
 <div th:replace="fragments/footer :: site-footer"></div>
 
 </html>

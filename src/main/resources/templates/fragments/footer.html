@@ -1,81 +1,103 @@
+<!-- ================= FOOTER FRAGMENT ================= -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gajmor</title>
-    <link rel="stylesheet" href="/CSS/style.css">
-    <link rel="stylesheet" th:href="@{/CSS/footer.css}" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <link rel="Icon" style="background-color: black;" href="../../static/Images/GajmorLogo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- Font Awesome CDN -->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <body>
-
-</body>
-
 <footer th:fragment="site-footer">
-    <div class="footer-container">
-        <!-- Column 1: Logo & Social -->
-        <div class="foot1">
-            <img src="/Images/GajmorLogo.png" alt="Gajmor Logo">
-            <p>We provide a full range of interior and architectural design services tailored to your lifestyle.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=100001825220191&ref=_ig_profile_ac"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/gajmordesign?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
+
+    <style>
+        .footer-section {
+            background:#0b0b0b;
+            padding:70px 40px 30px;
+            font-family:"Montserrat",sans-serif;
+            color:white;
+        }
+
+        .footer-grid {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:50px;
+            max-width:1300px;
+            margin:auto;
+        }
+
+        .footer-grid img { width:160px; margin-bottom:15px; }
+
+        .footer-grid h3 {
+            color:#ffae00;
+            margin-bottom:15px;
+            font-size:20px;
+        }
+
+        .footer-grid a {
+            display:block;
+            color:#ddd;
+            margin:5px 0;
+            text-decoration:none;
+            transition:0.3s;
+        }
+
+        .footer-grid a:hover {
+            color:#ffae00;
+            padding-left:4px;
+        }
+
+        .footer-bottom {
+            margin-top:40px;
+            text-align:center;
+            padding-top:20px;
+            border-top:1px solid rgba(255,255,255,0.12);
+            font-size:14px;
+            color:#ccc;
+        }
+
+        @media(max-width:900px){
+            .footer-grid { grid-template-columns:repeat(2,1fr); }
+        }
+        @media(max-width:600px){
+            .footer-grid { grid-template-columns:1fr; }
+        }
+    </style>
+
+    <div class="footer-section">
+        <div class="footer-grid">
+
+            <div>
+                <img src="/Images/GajmorLogo.png">
+                <p>Premium interior & architectural design for modern living.</p>
             </div>
-        </div>
 
-        <!-- Column 2: Contact Info -->
-        <div class="foot2">
-            <h3>Contacts</h3>
-            <div class="contact-info">
-                <p id="phoneNo"><i class="fas fa-phone"></i> <a href="tel:+918421396396">(+91) 84213 96396</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:contact@gajmor.in">contact@gajmor.in</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a href="https://goo.gl/maps/tKEygv2CPLAir1ht8 ">Pune, Maharashtra</a></p>
+            <div>
+                <h3>Contacts</h3>
+                <a href="tel:+918421396396">📞 (+91) 84213 96396</a>
+                <a href="mailto:contact@gajmor.in">✉ contact@gajmor.in</a>
+                <a href="https://goo.gl/maps/tKEygv2CPLAir1ht8">📍 Pune, Maharashtra</a>
             </div>
+
+            <div>
+                <h3>Quick Links</h3>
+                <a href="/home">Home</a>
+                <a href="/about-us">About</a>
+                <a href="/services">Services</a>
+                <a href="/projects">Projects</a>
+                <a href="/contact">Contact</a>
+            </div>
+
+            <div>
+                <h3>Working Hours</h3>
+                <p>Mon–Fri: 10 AM – 7 PM</p>
+                <p>Sat: 10 AM – 5 PM</p>
+                <p>Sun: Closed</p>
+            </div>
+
         </div>
 
-        <!-- Column 3: Quick Links & Newsletter -->
-        <div class="foot3">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about-us">About Us</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/enquiry">Contact</a></li>
-                <li><a href="/devloperSection">Developer's Section</a></li>
-            </ul>
-
-            <h4>Subscribe to Newsletter</h4>
-            <form action="#" method="post" class="newsletter-form">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
+        <div class="footer-bottom">
+            © 2025 Gajmor Design Studio — All rights reserved.
         </div>
 
-        <!-- Column 4: Working Hours -->
-        <div class="foot4">
-            <h3>Working Hours</h3>
-            <ul>
-                <li>Mon - Fri: 10:00 AM - 7:00 PM</li>
-                <li>Saturday: 10:00 AM - 5:00 PM</li>
-                <li>Sunday: Closed</li>
-            </ul>
-        </div>
     </div>
 
-    <!-- Bottom Bar -->
-    <div class="footer-bottom">
-        <p>&copy; 2025 Gajmor Design Studio. All rights reserved.</p>
-    </div>
 </footer>
+</body>
+</html>

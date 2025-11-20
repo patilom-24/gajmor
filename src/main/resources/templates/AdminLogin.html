@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Gajmor</title>
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin:0;
+            padding:0;
+            background:#0d0d0d;
+            font-family:"Montserrat",sans-serif;
+            color:white;
+            padding-top:120px;
+        }
+
+        /* MAIN WRAPPER */
+        .login-wrapper {
+            width:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:40px 15px;
+        }
+
+        .login-container {
+            width:90%;
+            max-width:950px;
+            display:flex;
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.1);
+            border-radius:22px;
+            overflow:hidden;
+            backdrop-filter:blur(10px);
+            box-shadow:0 4px 25px rgba(0,0,0,0.45);
+            animation:fadeIn .7s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity:0; transform:scale(.96); }
+            to { opacity:1; transform:scale(1); }
+        }
+
+        /* LEFT IMAGE */
+        .login-left {
+            flex:1.1;
+            background:#000;
+        }
+        .login-left img {
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            opacity:0.9;
+        }
+
+        /* RIGHT FORM */
+        .login-right {
+            flex:1;
+            padding:50px 40px;
+        }
+
+        .login-right h2 {
+            font-size:32px;
+            color:#ffae00;
+            margin-bottom:25px;
+            font-weight:700;
+        }
+
+        .input-group {
+            position:relative;
+            margin-bottom:22px;
+        }
+
+        .input-group i {
+            position:absolute;
+            top:50%;
+            left:14px;
+            transform:translateY(-50%);
+            color:#ffae00;
+            font-size:18px;
+        }
+
+        .input-group input {
+            width:100%;
+            padding:14px 18px 14px 45px;
+            background:#1b1b1b;
+            border:none;
+            color:white;
+            border-radius:10px;
+            font-size:15px;
+        }
+
+        .input-group input:focus {
+            outline:2px solid #ffae00;
+        }
+
+        .options {
+            margin-bottom:20px;
+            font-size:14px;
+            color:#cccccc;
+        }
+        .options input {
+            accent-color:#ffae00;
+        }
+
+        .btn-login {
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            font-size:17px;
+            background:linear-gradient(90deg,#ff9900,#ffb13d);
+            color:black;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform:translateY(-2px);
+            filter:brightness(1.1);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:850px){
+            .login-container {
+                flex-direction:column;
+            }
+            .login-left { height:270px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div th:replace="fragments/header :: site-header"></div>
+
+<!-- MAIN LOGIN SECTION -->
+<div class="login-wrapper">
+    <div class="login-container">
+
+        <!-- LEFT IMAGE -->
+        <div class="login-left">
+            <img src="/Images/architech.jpg" alt="Gajmor Admin Login">
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="login-right">
+            <h2>Admin Login</h2>
+
+            <form action="/adminLoginForm" method="post">
+
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+
+                <div class="options">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+
+                <button type="submit" class="btn-login">Log In</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div th:replace="fragments/footer :: site-footer"></div>
+
+</body>
+</html>

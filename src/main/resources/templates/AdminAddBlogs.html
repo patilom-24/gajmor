@@ -1,191 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Blog Management</title>
+    <title>Admin Blog Management - Gajmor</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background: #eef1f7;
-            font-family: 'Poppins', sans-serif;
+            margin:0;
+            padding:0;
+            background:#0d0d0d;
+            color:white;
+            font-family:"Montserrat",sans-serif;
+            padding-top:120px;
         }
 
-        .header {
-            background: linear-gradient(45deg, #4c4cff, #2a2aff);
-            color: white;
-            padding: 18px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            animation: fadeInDown 0.6s ease;
+        /* TOP PAGE TITLE */
+        .page-title {
+            text-align:center;
+            font-size:32px;
+            color:#ffae00;
+            font-weight:700;
+            margin-bottom:25px;
+            animation:fadeDown .5s ease;
         }
-
-        @keyframes fadeInDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+        @keyframes fadeDown { from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
 
         .container {
-            width: 95%;
-            margin: 20px auto;
-            animation: fadeIn 0.6s ease;
+            width:92%;
+            margin:auto;
+            animation:fadeIn 0.5s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
         .btn-add {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #4c4cff;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(76,76,255,0.4);
+            padding:12px 20px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            background:linear-gradient(90deg,#ff9900,#ffb13d);
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            box-shadow:0 4px 12px rgba(255,166,0,0.35);
+            transition:.3s ease;
         }
-        .btn-add:hover {
-            background: #2a2aff;
-            transform: scale(1.05);
-        }
+        .btn-add:hover { transform:translateY(-2px); filter:brightness(1.1); }
 
-        /* CARD GRID */
+        /* BLOG GRID */
         .blog-grid {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 22px;
+            margin-top:25px;
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+            gap:25px;
         }
 
-        /* CARD */
+        /* BLOG CARD */
         .blog-card {
-            background: white;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-            transition: 0.3s ease;
-            animation: fadeUp 0.5s ease;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            backdrop-filter:blur(8px);
+            border-radius:16px;
+            overflow:hidden;
+            box-shadow:0 4px 18px rgba(0,0,0,0.35);
+            transition:0.3s ease;
         }
-        @keyframes fadeUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .blog-card:hover {
-            transform: scale(1.03);
-        }
+        .blog-card:hover { transform:scale(1.03); }
 
         .blog-card img {
-            width: 100%;
-            height: 190px;
-            object-fit: cover;
+            width:100%;
+            height:190px;
+            object-fit:cover;
         }
 
         .blog-content {
-            padding: 18px;
+            padding:18px;
         }
 
         .blog-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 0;
+            font-size:20px;
+            font-weight:600;
+            color:white;
         }
 
         .blog-author {
-            color: #555;
-            margin: 5px 0 10px;
+            color:#bbbbbb;
+            margin:5px 0 10px;
+            font-size:14px;
         }
 
         .blog-preview {
-            color: #333;
-            font-size: 14px;
+            color:#dddddd;
+            font-size:14px;
         }
 
-        /* ACTIONS */
+        /* ACTION BUTTONS */
         .card-actions {
-            margin-top: 12px;
-            display: flex;
-            justify-content: space-between;
+            margin-top:12px;
+            display:flex;
+            justify-content:space-between;
         }
 
         .btn-edit {
-            background: #ffb700;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
+            background:#ffae00;
+            padding:8px 14px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
         }
-        .btn-edit:hover {
-            background: #ff9900;
-        }
+        .btn-edit:hover { background:#ff9900; }
 
         .btn-delete {
-            background: #ff3b3b;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+            background:#ff3b3b;
+            color:white;
+            padding:8px 14px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
         }
-        .btn-delete:hover {
-            background: #e60000;
-        }
+        .btn-delete:hover { background:#d40000; }
 
-        /* MODAL */
+        /* MODALS */
         .modal-bg {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.7);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            z-index:999999;
         }
 
         .modal-box {
-            width: 450px;
-            background: white;
-            padding: 22px;
-            border-radius: 14px;
-            animation: pop 0.3s ease-in-out;
+            width:450px;
+            background:#111;
+            border:1px solid rgba(255,255,255,0.15);
+            padding:25px;
+            border-radius:14px;
+            animation:pop .3s ease;
         }
 
-        @keyframes pop {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes pop { from{opacity:0; transform:scale(.85);} to{opacity:1; transform:scale(1);} }
+
+        .modal-box h2 { color:#ffae00; }
 
         input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
+            width:100%;
+            padding:10px;
+            margin-top:8px;
+            margin-bottom:14px;
+            border-radius:8px;
+            border:none;
+            background:#1b1b1b;
+            color:white;
         }
-
-        textarea {
-            height: 130px;
-            resize: none;
-        }
+        textarea { height:130px; resize:none; }
 
         .close-btn {
-            float: right;
-            font-size: 22px;
-            cursor: pointer;
-            color: red;
+            float:right;
+            color:#ff3b3b;
+            font-size:26px;
+            cursor:pointer;
         }
 
     </style>
@@ -193,7 +174,10 @@
 
 <body>
 
-<div class="header">Admin Dashboard – Blog Management</div>
+<!-- HEADER -->
+<div th:replace="fragments/header :: site-header"></div>
+
+<h1 class="page-title">Admin Dashboard – Blog Management</h1>
 
 <div class="container">
 
@@ -210,7 +194,6 @@
         <h2>Add Blog</h2>
 
         <form id="addForm" enctype="multipart/form-data">
-
             <label>Title</label>
             <input type="text" name="title" required>
 
@@ -223,19 +206,18 @@
             <label>Upload Image</label>
             <input type="file" name="image" accept="image/*" required>
 
-            <button class="btn-add" type="submit" style="width: 100%">Submit</button>
+            <button class="btn-add" type="submit" style="width:100%;">Submit</button>
         </form>
     </div>
 </div>
 
-<!-- EDIT MODAL -->
+<!-- EDIT BLOG MODAL -->
 <div class="modal-bg" id="editModal">
     <div class="modal-box">
         <span class="close-btn" onclick="closeEditModal()">×</span>
         <h2>Edit Blog</h2>
 
         <form id="editForm" enctype="multipart/form-data">
-
             <input type="hidden" id="edit_id" name="id">
 
             <label>Title</label>
@@ -250,14 +232,17 @@
             <label>Replace Image</label>
             <input type="file" name="image" accept="image/*">
 
-            <button class="btn-edit" type="submit" style="width: 100%">Update</button>
+            <button class="btn-edit" type="submit" style="width:100%;">Update</button>
         </form>
     </div>
 </div>
 
+<!-- FOOTER -->
+<div th:replace="fragments/footer :: site-footer"></div>
+
 <script>
 
-    /* Load Blogs into GRID */
+    /** LOAD BLOGS **/
     function loadBlogs() {
         fetch("/blogs")
             .then(res => res.json())
@@ -268,21 +253,21 @@
                 data.forEach(b => {
 
                     const imageUrl = b.imagePath
-                        ? `http://localhost:8080/uploads/${b.imagePath}`
+                        ? "/uploads/" + b.imagePath
                         : "https://via.placeholder.com/300x200?text=No+Image";
 
                     html += `
                         <div class="blog-card">
-                            <img src="${imageUrl}" alt="Blog Image">
-
+                            <img src="${imageUrl}" alt="">
                             <div class="blog-content">
+
                                 <h3 class="blog-title">${b.title}</h3>
                                 <p class="blog-author">By: ${b.author}</p>
                                 <p class="blog-preview">${b.content.substring(0, 80)}...</p>
 
                                 <div class="card-actions">
                                     <button class="btn-edit"
-                                        onclick="openEditModal(${b.id}, '${b.title}', '${b.author}', \`${b.content}\`)">
+                                        onclick="openEditModal(${b.id}, \`${b.title}\`, \`${b.author}\`, \`${b.content}\`)">
                                         Edit
                                     </button>
 
@@ -290,6 +275,7 @@
                                         Delete
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     `;
@@ -301,12 +287,10 @@
 
     loadBlogs();
 
-
-    /* Add Modal */
+    /** MODAL HANDLERS **/
     function openAddModal() { document.getElementById("addModal").style.display = "flex"; }
     function closeAddModal() { document.getElementById("addModal").style.display = "none"; }
 
-    /* Edit Modal */
     function openEditModal(id, title, author, content) {
         document.getElementById("edit_id").value = id;
         document.getElementById("edit_title").value = title;
@@ -316,49 +300,37 @@
     }
     function closeEditModal() { document.getElementById("editModal").style.display = "none"; }
 
-    /* Add Blog Submit */
+    /** ADD BLOG **/
     document.getElementById("addForm").onsubmit = function(e) {
         e.preventDefault();
-
         let formData = new FormData(this);
 
-        fetch("/blogs/add", {
-            method: "POST",
-            body: formData
-        })
+        fetch("/blogs/add", { method:"POST", body:formData })
         .then(() => {
-            alert("Blog Added Successfully!");
             closeAddModal();
             loadBlogs();
         });
     };
 
-    /* Update Blog */
+    /** UPDATE BLOG **/
     document.getElementById("editForm").onsubmit = function(e) {
         e.preventDefault();
-
         let id = document.getElementById("edit_id").value;
         let formData = new FormData(this);
 
-        fetch("/blogs/update/" + id, {
-            method: "PUT",
-            body: formData
-        }).then(() => {
-            alert("Blog Updated Successfully!");
+        fetch("/blogs/update/" + id, { method:"PUT", body:formData })
+        .then(() => {
             closeEditModal();
             loadBlogs();
         });
     };
 
-    /* Delete Blog */
+    /** DELETE BLOG **/
     function deleteBlog(id) {
         if (!confirm("Are you sure?")) return;
 
-        fetch("/blogs/delete/" + id, { method: "DELETE" })
-        .then(() => {
-            alert("Blog Deleted Successfully!");
-            loadBlogs();
-        });
+        fetch("/blogs/delete/" + id, { method:"DELETE" })
+        .then(() => loadBlogs());
     }
 
 </script>

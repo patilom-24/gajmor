@@ -64,4 +64,13 @@ public class PagesController {
 		return "index";
 	}
 
+    @GetMapping("/aboutUs")
+    public String getAboutUs(){
+        return "aboutUs";
+    }
+
+    @GetMapping("/services")
+    public String getServicePage(){
+        return "services";
+    }
 }

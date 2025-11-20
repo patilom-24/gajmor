@@ -1,29 +1,269 @@
-<!DOCTYPE html> 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/CSS/adminLoginStyle.css}" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <link rel="Icon" style="background-color: black;" href="../static/Images/GajmorLogo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login • Gajmor Design Studio</title>
 
-    <title>Gajmor</title>
+    <!-- ICONS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <style>
+        /* ===================== GLOBAL ===================== */
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0d0d0d;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
+
+        a { text-decoration: none; }
+
+        /* ===================== NAVBAR ===================== */
+
+        .nav {
+            width: 100%;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+
+        .logo img {
+            width: 130px;
+        }
+
+        .links a {
+            color: #fff;
+            margin-left: 25px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .links a:hover {
+            color: #ffd700;
+        }
+
+        .menu i {
+            color: white;
+            font-size: 35px;
+            display: none;
+        }
+
+        @media(max-width: 768px){
+            .links { display: none; }
+            .menu i { display: block; }
+        }
+
+        /* ===================== SIDEBAR ===================== */
+
+        #overlay {
+            position: fixed;
+            display: none;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid rgba(255,215,0,0.2);
+            overflow-x: hidden;
+            transition: 0.45s;
+            padding-top: 30px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 36px;
+            cursor: pointer;
+            color: #ffd700;
+        }
+
+        .sidebar-logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px;
+            font-size: 18px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        /* ===================== ADMIN LOGIN CARD ===================== */
+
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .login-container {
+            display: flex;
+            width: 85%;
+            max-width: 950px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .login-left {
+            flex: 1.2;
+        }
+
+        .login-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-right {
+            flex: 1;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .login-right h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,215,0,0.2);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .input-group i {
+            color: #ffd700;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 15px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #ffd700;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            color: black;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(255,215,0,0.7);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===================== FOOTER ===================== */
+
+        footer {
+            background: #000;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,215,0,0.3);
+        }
+
+        footer .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+            gap: 20px;
+        }
+
+        footer h3 { color: #ffd700; }
+
+        footer .social-icons i {
+            font-size: 20px;
+            margin-right: 12px;
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            margin-top: 25px;
+            text-align: center;
+            color: #888;
+        }
+
+        @media(max-width:850px){
+            .login-container {
+                flex-direction: column;
+            }
+            .login-left { height: 250px; }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="nav" id="navbar">
+<!-- NAVBAR -->
+<div class="nav">
     <div class="logo">
-        <img src="Images/GajmorLogo.png" alt="GajmorLogo" />
+        <img src="/Images/GajmorLogo.png">
     </div>
 
-    <div class="links" id="navLinks">
-        <a href="/" style="color: rgb(255, 153, 0);">HOME</a>
-        <div th:if="${session.login}" class="session">
-            <a href="/addProject">ADD PROJECT</a>
-            <a href="/enquires" style="margin-left: 50px;">ALL ENQUIRIES</a>
-        </div>
+    <div class="links">
+        <a href="/" style="color:#ffd700;">HOME</a>
+        <a href="/addProject">ADD PROJECT</a>
+        <a href="/enquires">ALL ENQUIRIES</a>
     </div>
 
     <div class="menu">
@@ -31,71 +271,76 @@
     </div>
 </div>
 
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+<!-- SIDEBAR -->
+<div id="overlay" onclick="closeMenu()"></div>
 
 <div id="sidebar" class="sidebar">
-    <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
+    <span class="closebtn" onclick="closeMenu()">&times;</span>
 
-    <img src="/Images/GajmorLogo.png" alt="Logo" class="sidebar-logo" />
+    <img src="/Images/GajmorLogo.png" class="sidebar-logo">
 
-    <h2>Our Gallery</h2>
+    <h2 style="color:#ffd700;">Our Gallery</h2>
+
     <div class="gallery">
-        <img src="/Images/Walldrobe/walldrobe2.jpg" />
-        <img src="https://i.ibb.co/Fk6swD1k/main1.jpg">
-        <img src="https://i.ibb.co/bRvYq7ZH/main2.jpg">
-        <img src="https://i.ibb.co/RGFJ7sDK/main3.jpg">
-        <img src="https://i.ibb.co/9kWq9yzX/walldrobe8.jpg">
-        <img src="https://i.ibb.co/RkRXR81V/walldrobe1.jpg">
+        <img src="/Images/Walldrobe/walldrobe2.jpg" width="60%">
     </div>
 
     <ul class="sidebar-menu">
         <li><a href="/">🏠 Home</a></li>
-        <li><a href="/about">ℹ️ About</a></li>
+        <li><a href="/aboutUs">ℹ️ About</a></li>
         <li><a href="/services">💼 Services</a></li>
         <li><a href="/projects">📂 Projects</a></li>
         <li><a href="/careers">🧑‍💼 Careers</a></li>
     </ul>
 </div>
 
-<!-- Login Page -->
+<!-- LOGIN FORM -->
 <div class="login-wrapper">
     <div class="login-container">
+
         <div class="login-left">
-            <img src="/Images/architech.jpg" alt="Login Illustration" />
+            <img src="/Images/architech.jpg">
         </div>
 
         <div class="login-right">
-            <h2>Log In</h2>
+            <h2>Admin Login</h2>
+
             <form id="adminLoginForm">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="username" placeholder="Username" required />
+                    <input type="text" id="username" placeholder="Username" required>
                 </div>
 
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Password" required />
+                    <input type="password" id="password" placeholder="Password" required>
                 </div>
 
-                <div class="options">
-                    <label><input type="checkbox" /> Remember me</label>
-                </div>
-
-                <button type="submit" class="btn-login">Log In</button>
+                <button class="btn-login" type="submit">LOGIN</button>
             </form>
         </div>
+
     </div>
 </div>
 
 <script>
-    // Admin Login Validation
-    document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
+    function openMenu(){
+        document.getElementById("sidebar").style.width = "300px";
+        document.getElementById("overlay").style.display = "block";
+    }
+    function closeMenu(){
+        document.getElementById("sidebar").style.width = "0";
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    // Admin Login
+    document.getElementById("adminLoginForm").addEventListener("submit", function(event){
         event.preventDefault();
 
         let user = document.getElementById("username").value;
         let pass = document.getElementById("password").value;
 
-        if (user === "admin" && pass === "admin123") {
+        if(user === "admin" && pass === "admin123"){
             window.location.href = "/adminHome";
         } else {
             alert("Invalid Username or Password");
@@ -103,56 +348,40 @@
     });
 </script>
 
-
-</body>
-
+<!-- FOOTER -->
 <footer>
     <div class="footer-container">
-        <div class="foot1">
-            <img src="/Images/GajmorLogo.png">
-            <p>We provide a full range of interior and architectural design services tailored to your lifestyle.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=100001825220191"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/gajmordesign"><i class="fab fa-instagram"></i></a>
-            </div>
+        <div>
+            <img src="/Images/GajmorLogo.png" width="130">
+            <p>Premium interior design & turnkey solutions tailored to your lifestyle.</p>
         </div>
 
-        <div class="foot2">
-            <h3>Contacts</h3>
-            <div class="contact-info">
-                <p><i class="fas fa-phone"></i> (+91) 84213 96396</p>
-                <p><i class="fas fa-envelope"></i> contact@gajmor.in</p>
-                <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
-            </div>
+        <div>
+            <h3>Contact</h3>
+            <p><i class="fas fa-phone"></i> (+91) 84213 96396</p>
+            <p><i class="fas fa-envelope"></i> contact@gajmor.in</p>
+            <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
         </div>
 
-        <div class="foot3">
+        <div>
             <h3>Quick Links</h3>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about-us">About Us</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/enquiry">Contact</a></li>
-                <li><a href="/devloperSection">Developer's Section</a></li>
-            </ul>
+            <p><a href="/" style="color:#ffd700;">Home</a></p>
+            <p><a href="/services" style="color:#ffd700;">Services</a></p>
+            <p><a href="/projects" style="color:#ffd700;">Projects</a></p>
         </div>
 
-        <div class="foot4">
+        <div>
             <h3>Working Hours</h3>
-            <ul>
-                <li>Mon - Fri: 10:00 AM - 7:00 PM</li>
-                <li>Saturday: 10:00 AM - 5:00 PM</li>
-                <li>Sunday: Closed</li>
-            </ul>
+            <p>Mon–Fri: 10 AM – 7 PM</p>
+            <p>Sat: 10 AM – 5 PM</p>
+            <p>Sunday Closed</p>
         </div>
     </div>
 
     <div class="footer-bottom">
-        <p>&copy; 2025 Gajmor Design Studio. All rights reserved.</p>
+        © 2025 Gajmor Design Studio. All rights reserved.
     </div>
 </footer>
 
+</body>
 </html>

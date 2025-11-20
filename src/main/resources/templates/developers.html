@@ -4,27 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Developers • Gajmor Design Studio</title>
-    <!-- Bootstrap CSS -->
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- External CSS -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <link rel="Icon" style="background-color: black;" href="../static/Images/GajmorLogo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- Font Awesome CDN -->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/CSS/developers.css">
-    <script src="JS/script.js"></script>
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+    <style>
+        /* ============ GLOBAL DARK BACKGROUND ============ */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0b0b0b;
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ============ DEVELOPER SECTION CONTAINER ============ */
+        .developer-wrapper {
+            padding: 90px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .dev-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 90px;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+            animation: fadeUp 0.7s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Developer Details */
+        .dev-info h1 {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .highlight {
+            color: #ffb13d;
+        }
+
+        .dev-info p {
+            color: #e0e0e0;
+            margin-top: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .dev-info a {
+            color: #ffb13d;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .dev-buttons .btn {
+            margin-right: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+
+        .btn-primary {
+            background: #0077ff;
+            border: none;
+        }
+
+        .btn-danger {
+            background: #d6336c;
+            border: none;
+        }
+
+        /* Developer Image */
+        .dev-photo {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: 0.4s ease;
+        }
+
+        .dev-photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Reverse Layout */
+        .reverse {
+            flex-direction: row-reverse;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .dev-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .dev-photo {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+    </style>
 </head>
+
 <body>
 
-<!-- nav section -->
+<!-- ============ NAVBAR (Your Original Code) ================= -->
 <div class="nav" id="navbar">
     <div class="logo">
-        <img src="Images/GajmorLogo.png" alt="GajmorLogo" />
+        <img src="Images/GajmorLogo.png" alt="GajmorLogo"/>
     </div>
 
     <div class="links" id="navLinks">
@@ -44,28 +150,11 @@
     </div>
 </div>
 
-<!-- Overlay -->
+<!-- Overlay + Sidebar (Your Original Code) -->
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-<!-- Sidebar -->
 <div id="sidebar" class="sidebar">
     <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
-
-    <img src="/Images/GajmorLogo.png" alt="Gajmor Logo" class="sidebar-logo" />
-    <div th:if="${session.login}" class="session">
-        <h2>Welcome,<br> <span th:text="${session.login}"></span>!</h2>
-        <a href="/logout" class="btn1" style="color:#fff;font-size:15px;text-decoration:none;margin-right:10px;">logout  <i class="fa-solid fa-right-from-bracket" style="font-size:20px; "></i></a>
-    </div>
-    <h2>Our Gallery</h2>
-    <div class="gallery">
-        <img src="/Images/Walldrobe/walldrobe2.jpg" />
-        <img src="https://source.unsplash.com/100x100/?interior,kitchen" />
-        <img src="https://source.unsplash.com/100x100/?interior,bedroom" />
-        <img src="https://source.unsplash.com/100x100/?interior,design" />
-        <img src="https://source.unsplash.com/100x100/?interior,room" />
-        <img src="https://source.unsplash.com/100x100/?interior,furniture" />
-    </div>
-
+    <img src="/Images/GajmorLogo.png" alt="Gajmor Logo" class="sidebar-logo"/>
     <ul class="sidebar-menu">
         <li><a href="/">🏠 Home</a></li>
         <li><a href="/about">ℹ️ About</a></li>
@@ -73,96 +162,68 @@
         <li><a href="/projects">📂 Projects</a></li>
         <li><a href="/careers">🧑‍💼 Careers</a></li>
     </ul>
-
-    <h2>Contact Info</h2>
-    <div class="contact-info">
-        <p><i class="fas fa-phone"></i> <a href="tel:+918421396396">(+91) 84213 96396</a></p>
-        <p><i class="fas fa-envelope"></i><a href="mailto:tejasdevgharkar12@gmail.com">contact@gajmor.in</a></p>
-        <p><i class="fas fa-map-marker-alt"></i> <a href="https://maps.app.goo.gl/Key3CKYWMkPku5rk6">Pune, Maharashtra</a></p>
-    </div>
-
-    <div class="social-icons">
-
-
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://www.instagram.com/gajmordesign?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
-        <!--        <a href="/adminLogin"><i class="fa-solid fa-user-tie"></i></a>-->
-    </div>
 </div>
-<a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float">
     <i class="fa-brands fa-whatsapp" style="color: #128C7E;"></i>
 </a>
 
-
-<!-- Developer Section -->
-<div class="container py-5">
+<!-- ============ DEVELOPERS PAGE CONTENT ============ -->
+<div class="developer-wrapper">
 
     <!-- Developer 1 -->
-    <div class="row align-items-center mb-5 developer-section">
-        <div class="col-md-6">
-            <p class="welcome-text">WELCOME TO MY WORLD</p>
+    <div class="dev-section">
+        <div class="dev-info">
             <h1>Hi, I'm <span class="highlight">Tejas Devgharkar</span></h1>
-            <h3>a Full Stack Developer</h3>
+            <h3>Full Stack Developer</h3>
             <p>
-                Passionate about building scalable web applications, backend systems,
-                and modern UI/UX. Always learning and exploring new technologies.
+                Passionate about building scalable backend systems, modern UI/UX,
+                and delivering complete end-to-end solutions.
             </p>
-            <p><strong>📱</strong> <a href="tel:+917666300048">+91 7666300048</a></p>
+            <p><strong>📞</strong> <a href="tel:+917666300048">+91 7666300048</a></p>
             <p><strong>✉️</strong> <a href="mailto:tejasdevgharkar12@gmail.com">tejasdevgharkar12@gmail.com</a></p>
-            <a href="https://www.linkedin.com/in/tejas-devgharkar-150805286"
 
-               class="btn btn-primary mt-2">
-                <i class="bi bi-linkedin"><i class="fa-brands fa-linkedin"></i></i> Connect on LinkedIn
-            </a>
-            <a href="https://www.instagram.com/mr_tejas_1600m"
-               target="_blank"
-               class="btn btn-danger">
-                <i class="bi bi-instagram"><i class="fa-brands fa-instagram" style="color: #ffffff;"></i></i> Instagram
-            </a>
+            <div class="dev-buttons">
+                <a href="https://www.linkedin.com/in/tejas-devgharkar-150805286"
+                   class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+
+                <a href="https://www.instagram.com/mr_tejas_1600m"
+                   class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            </div>
         </div>
 
-        <!-- LinkedIn Button -->
-
-        <div class="col-md-6 text-center">
-            <img src="Images/Tejas-Image3.jpg" alt="Tejas Devgharkar" class="dev-photo">
-        </div>
+        <img src="Images/Tejas-Image3.jpg" class="dev-photo" alt="Tejas">
     </div>
 
     <!-- Developer 2 -->
-    <div class="row align-items-center developer-section flex-md-row-reverse">
-        <div class="col-md-6">
-            <p class="welcome-text">WELCOME TO MY WORLD</p>
+    <div class="dev-section reverse">
+        <div class="dev-info">
             <h1>Hi, I'm <span class="highlight">Om Patil</span></h1>
-            <h3>a Full Stack Developer</h3>
+            <h3>Full Stack Developer</h3>
             <p>
-                Experienced in frontend and backend technologies. I love crafting
-                responsive designs and integrating APIs to deliver complete solutions.
+                Skilled in Java, Spring Boot, SQL, and responsive UI.
+                I build clean, modern, and functional applications.
             </p>
-            <p><strong>📱</strong> <a href="tel:+917020991707">+91 7020991707</a></p>
+            <p><strong>📞</strong> <a href="tel:+917020991707">+91 7020991707</a></p>
             <p><strong>✉️</strong> <a href="mailto:omjagannathpatil24@gmail.com">omjagannathpatil24@gmail.com</a></p>
-            <a href="https://www.linkedin.com/in/om-patil-24m04"
-               class="btn btn-primary mt-2">
-                <i class="bi bi-linkedin"><i class="fa-brands fa-linkedin"></i></i> Connect on LinkedIn
-            </a>
-            <a href="https://www.instagram.com/_patil_om.24_"
-               class="btn btn-danger">
-                <i class="bi bi-instagram"><i class="fa-brands fa-instagram" style="color: #ffffff;"></i></i> Instagram
-            </a>
+
+            <div class="dev-buttons">
+                <a href="https://www.linkedin.com/in/om-patil-24m04"
+                   class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+
+                <a href="https://www.instagram.com/_patil_om.24_"
+                   class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            </div>
         </div>
-        <div class="col-md-6 text-center">
-            <img src="Images/Om-Image.jpg" alt="Om Patil" class="dev-photo">
-        </div>
+
+        <img src="Images/Om-Image.jpg" class="dev-photo" alt="Om">
     </div>
 
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
+<!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
 
+</body>
 </html>

@@ -1,141 +1,156 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Gajmor</title>
-    <link rel="stylesheet" href="/CSS/style.css">
-    <link rel="stylesheet" th:href="@{/CSS/style.css}" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <link rel="Icon" href="../static/Images/GajmorLogo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin:0;
+            padding:0;
+            background:#0d0d0d;
+            font-family:"Montserrat",sans-serif;
+            color:white;
+            overflow-x:hidden;
+            padding-top:120px;
+        }
+
+        /* PAGE LAYOUT */
+        .admin-wrapper {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:100%;
+            min-height:80vh;
+            padding:40px 20px;
+        }
+
+        .left-side {
+            flex:1;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .left-side img {
+            width:75%;
+            opacity:0.08;
+            filter:drop-shadow(0 0 55px #ffae00);
+        }
+
+        .right-side {
+            flex:1;
+            padding:20px;
+            animation:fadeInRight 0.7s ease;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity:0; transform:translateX(40px); }
+            to { opacity:1; transform:translateX(0); }
+        }
+
+        .right-side h1 {
+            font-size:42px;
+            font-weight:700;
+            color:#ffae00;
+            margin:0 0 10px;
+        }
+
+        .right-side h2 {
+            font-size:22px;
+            color:#dddddd;
+            font-weight:400;
+        }
+
+        .right-side .btn-box {
+            margin-top:35px;
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+            width:70%;
+        }
+
+        .dash-btn {
+            padding:14px;
+            border-radius:12px;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:600;
+            color:white;
+            text-align:center;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.15);
+            transition:0.3s;
+        }
+
+        .dash-btn:hover {
+            background:#ffae00;
+            color:black;
+            transform:translateX(5px);
+        }
+
+        .logout-btn {
+            background:#ff3b3b !important;
+            border:none;
+        }
+        .logout-btn:hover {
+            background:#d40000 !important;
+            transform:translateX(5px);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:900px){
+            .admin-wrapper {
+                flex-direction:column;
+                text-align:center;
+            }
+            .left-side img {
+                width:55%;
+                margin-bottom:25px;
+            }
+            .right-side .btn-box {
+                width:90%;
+                margin:auto;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<!-- nav section -->
-<div class="nav" id="navbar">
-    <div class="logo">
-        <img src="/Images/GajmorLogo.png" alt="GajmorLogo" />
+<!-- HEADER -->
+<div th:replace="fragments/header :: site-header"></div>
+
+<!-- MAIN CONTENT -->
+<div class="admin-wrapper">
+
+    <div class="left-side">
+        <img src="/Images/GajmorLogo.png" alt="Gajmor Logo">
     </div>
 
-    <div class="links" id="navLinks">
+    <div class="right-side">
+        <h1>Welcome Admin</h1>
+        <h2>Manage Your Work From Here</h2>
 
-        <!-- ADMIN NAVIGATION -->
-        <a href="/admin-home" style="color: rgb(255, 153, 0);">HOME</a>
-        <a href="/add-Projects" style="margin-left: 30px;">ADD PROJECT</a>
-        <a href="/admin-view-pro" style="margin-left: 30px;">ADMIN VIEW PROJECTS</a>
-        <a href="/add-Blog" style="margin-left: 30px;">ADD BLOG</a>
-        <a href="/logout" style="margin-left: 30px;color:red;">LOGOUT</a>
-
+        <div class="btn-box">
+            <a class="dash-btn" href="/add-Projects">➕ Add Project</a>
+            <a class="dash-btn" href="/admin-view-pro">📂 View Projects</a>
+            <a class="dash-btn" href="/add-Blog">📝 Add Blog</a>
+            <a class="dash-btn logout-btn" href="/logout">🚪 Logout</a>
+        </div>
     </div>
 
-    <div class="menu">
-        <i class='bx bx-menu' onclick="openMenu()"></i>
-    </div>
 </div>
 
-<!-- MAIN SECTION -->
-<div id="container">
-    <div class="titles">
-        <h1><span>Welcome Admin</span></h1>
-        <h1 id="t2">Manage Your Work From here</h1>
-    </div>
-</div>
-
-<script src="/JS/script.js"></script>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar">
-    <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
-
-    <img src="/Images/GajmorLogo.png" alt="Gajmor Logo" class="sidebar-logo" />
-
-    <h2>Admin Panel</h2>
-    <a href="/add-Projects" class="btn1">Add Project</a>
-    <a href="/admin-view-pro" class="btn1">View Projects</a>
-    <a href="/add-Blog" class="btn1">Add Blog</a>
-    <a href="/logout" class="btn1" style="background:red;">Logout</a>
-
-    <h2>Contact Info</h2>
-    <div class="contact-info">
-        <p><i class="fas fa-phone"></i> <a href="tel:+918856986239">(+91)8856986239</a></p>
-        <p><i class="fas fa-envelope"></i><a href="mailto:contact@gajmor.in">contact@gajmor.in</a></p>
-        <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
-    </div>
-</div>
-
-<script>
-    function openMenu() {
-        document.getElementById("sidebar").style.width = "300px";
-        document.getElementById("overlay").style.display = "block";
-    }
-
-    function closeMenu() {
-        document.getElementById("sidebar").style.width = "0";
-        document.getElementById("overlay").style.display = "none";
-    }
-</script>
+<!-- FOOTER -->
+<div th:replace="fragments/footer :: site-footer"></div>
 
 </body>
-
-<footer>
-    <div class="footer-container">
-        <div class="foot1">
-            <img src="/Images/GajmorLogo.png" alt="Gajmor Logo">
-            <p>We provide a full range of interior and architectural design services tailored to your lifestyle.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/gajmordesign"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-
-        <div class="foot2">
-            <h3>Contacts</h3>
-            <div class="contact-info">
-                <p><i class="fas fa-phone"></i> <a href="tel:+918421396396">(+91) 84213 96396</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:contact@gajmor.in">contact@gajmor.in</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
-            </div>
-        </div>
-
-        <div class="foot3">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about-us">About Us</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/enquiry">Contact</a></li>
-                <li><a href="/devloperSection">Developer's Section</a></li>
-            </ul>
-
-            <h4>Subscribe to Newsletter</h4>
-            <form action="#" method="post" class="newsletter-form">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-
-        <div class="foot4">
-            <h3>Working Hours</h3>
-            <ul>
-                <li>Mon - Fri: 10:00 AM - 7:00 PM</li>
-                <li>Saturday: 10:00 AM - 5:00 PM</li>
-                <li>Sunday: Closed</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; 2025 Gajmor Design Studio. All rights reserved.</p>
-    </div>
-</footer>
-
 </html>

@@ -1,422 +1,466 @@
-	<!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-	<meta charset="UTF-8">
-	<title>View Projects</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-	body {
-	    font-family: Arial, sans-serif;
-	    background-color: #f5f5f5;
-	    margin: 0;
-	    padding: 0;
-	}
-	
-	/* Project Grid */
-	.project-grid {
-	    display: grid;
-	    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-	    gap: 20px;
-	    padding: 20px;
-	}
-	
-	/* Project Card */
-	.project-card {
-	    background: #fff;
-	    border-radius: 12px;
-	    overflow: hidden;
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-	    transition: transform 0.3s ease, box-shadow 0.3s ease;
-	    animation: fadeUp 0.5s ease-in-out;
-	}
-	.project-card:hover {
-	    transform: translateY(-5px) scale(1.02);
-	    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-	}
-	.project-card img {
-	    width: 100%;
-	    height: 200px;
-	    object-fit: cover;
-	}
-	.project-title {
-	    padding: 12px;
-	    font-weight: bold;
-	    text-align: center;
-	    font-size: 16px;
-	    border-top: 1px solid #eee;
-	}
-	.card-actions {
-	    display: flex;
-	    justify-content: space-around;
-	    padding: 10px;
-	    border-top: 1px solid #eee;
-	}
-	.card-actions button {
-	    padding: 6px 12px;
-	    border: none;
-	    border-radius: 6px;
-	    cursor: pointer;
-	    font-size: 14px;
-	    transition: all 0.3s;
-	}
-	.view-btn { background: #2ecc71; color: #fff; }
-	.view-btn:hover { background: #27ae60; }
-	.edit-btn { background: #3498db; color: #fff; }
-	.edit-btn:hover { background: #2c80b4; }
-	.delete-btn { background: #e74c3c; color: #fff; }
-	.delete-btn:hover { background: #c0392b; }
-	
-	/* Modal (View + Edit) */
-	.modal {
-	    position: fixed;
-	    top: 0; left: 0;
-	    width: 100%; height: 100%;
-	    background: rgba(0,0,0,0.7);
-	    display: none;
-	    justify-content: center;
-	    align-items: center;
-	    backdrop-filter: blur(6px);
-	    z-index: 1000;
-	    padding: 15px;
-	    animation: fadeIn 0.4s ease-in-out;
-	}
-	.modal-content {
-	    background: #fff;
-	    padding: 20px;
-	    max-width: 900px;
-	    width: 95%;
-	    max-height: 90%;
-	    border-radius: 12px;
-	    overflow-y: auto;
-	    position: relative;
-	    animation: scaleUp 0.4s ease-in-out;
-	}
-	.close-btn {
-	    position: absolute;
-	    top: 15px; right: 20px;
-	    background: #ff5555;
-	    color: white;
-	    border: none;
-	    padding: 8px 14px;
-	    cursor: pointer;
-	    font-size: 14px;
-	    border-radius: 6px;
-	    transition: background 0.3s;
-	}
-	.close-btn:hover { background: #e33; }
-	
-	/* Image previews */
-	.image-preview {
-	    display: flex;
-	    flex-wrap: wrap;
-	    gap: 10px;
-	    margin-bottom: 15px;
-	}
-	.image-preview img {
-	    height: 150px;
-	    border-radius: 8px;
-	    transition: transform 0.3s;
-	}
-	.image-preview img:hover {
-	    transform: scale(1.05);
-	}
-	
-	/* Edit form */
-	.edit-form input, .edit-form textarea {
-	    width: 100%;
-	    margin-bottom: 12px;
-	    padding: 10px;
-	    border-radius: 6px;
-	    border: 1px solid #ccc;
-	}
-	.edit-form label {
-	    font-weight: bold;
-	}
-	.image-box {
-	    position: relative;
-	}
-	.image-box img {
-	    height: 120px;
-	    border-radius: 6px;
-	}
-	.image-box button {
-	    position: absolute;
-	    top: 5px; right: 5px;
-	    background: #e74c3c;
-	    color: #fff;
-	    border: none;
-	    font-size: 12px;
-	    padding: 3px 6px;
-	    border-radius: 50%;
-	    cursor: pointer;
-	}
-	
-	/* Animations */
-	@keyframes fadeIn {
-	    from { opacity: 0; }
-	    to { opacity: 1; }
-	}
-	@keyframes scaleUp {
-	    from { transform: scale(0.85); opacity: 0; }
-	    to { transform: scale(1); opacity: 1; }
-	}
-	@keyframes fadeUp {
-	    from { transform: translateY(20px); opacity: 0; }
-	    to { transform: translateY(0); opacity: 1; }
-	}
-	
-	/* Mobile */
-	@media (max-width: 600px) {
-	    .project-card img { height: 160px; }
-	    .modal-content { width: 98%; height: 95%; border-radius: 8px; }
-	    .image-preview img { height: 120px; }
-	}
-	#spinnerOverlay {
-	           position: fixed;
-	           top: 0; left: 0;
-	           width: 100%; height: 100%;
-	           background: rgba(0,0,0,0.6);
-	           display: none;
-	           align-items: center;
-	           justify-content: center;
-	           z-index: 1000;
-	       }
-	       .spinner {
-	           border: 6px solid #f3f3f3;
-	           border-top: 6px solid #3498db;
-	           border-radius: 50%;
-	           width: 60px; height: 60px;
-	           animation: spin 1s linear infinite;
-	       }
-	       @keyframes spin { 100% { transform: rotate(360deg); } }
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin View Projects - Gajmor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	       /* Success overlay */
-	       #successOverlay {
-	           position: fixed;
-	           top: 0; left: 0;
-	           width: 100%; height: 100%;
-	           background: rgba(0,0,0,0.6);
-	           display: none;
-	           align-items: center;
-	           justify-content: center;
-	           z-index: 1001;
-	           color: #fff;
-	           font-size: 24px;
-	           font-weight: bold;
-	       }
-	       .success-box {
-	           background: #2ecc71;
-	           padding: 20px 40px;
-	           border-radius: 10px;
-	       }
-	</style>
-	</head>
-	<body>
-	
-	<div class="project-grid" id="projectGrid">
-	    <!-- Projects dynamically loaded -->
-	</div>
-	
-	<!-- View Project Modal -->
-	<div class="modal" id="viewModal">
-	    <div class="modal-content">
-	        <button class="close-btn" onclick="closeModal('viewModal')">✖ Close</button>
-	        <h2 id="viewTitle"></h2>
-	        <div id="viewImages" class="image-preview"></div>
-	        <p><strong>📍 Location:</strong> <span id="viewLocation"></span></p>
-	        <p><strong>📐 Area:</strong> <span id="viewArea"></span></p>
-	        <p><strong>📝 Description:</strong> <span id="viewDescription"></span></p>
-	        <button class="edit-btn" onclick="switchToEdit()">Edit This Project</button>
-	    </div>
-	</div>
-	<div id="spinnerOverlay">
-	       <div class="spinner"></div>
-	   </div>
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-	   <!-- Success -->
-	   <div id="successOverlay">
-	       <div class="success-box">✅ Update Successful!</div>
-	   </div>
-	<!-- Edit Project Modal -->
-	<div class="modal" id="editModal">
-	    <div class="modal-content">
-	        <button class="close-btn" onclick="closeModal('editModal')">✖ Close</button>
-	        <h2>Edit Project</h2>
-	        <form id="editProjectForm" class="edit-form">
-	            <input type="hidden" id="projectId">
-	
-	            <label>Project Name:</label>
-	            <input type="text" id="projectName">
-	            
-				<label>ProjectType:</label>
-				<input type="text" id="projectType">
+    <style>
 
-	            <label>Location:</label>
-	            <input type="text" id="projectLocation">
-				
-	
-	            <label>Area:</label>
-	            <input type="text" id="projectArea">
-	
-	            <label>Description:</label>
-	            <textarea id="projectDescription"></textarea>
-	
-	            <label>Existing Images:</label>
-	            <div class="image-preview" id="editImages"></div>
-	
-	            <label>Add More Images:</label>
-	            <input type="file" id="newImages" multiple>
-	
-	            <button type="button" onclick="saveProject()" style="background:#2ecc71;color:white;padding:10px 14px;border:none;border-radius:6px;cursor:pointer;">Save Changes</button>
-	        </form>
-	    </div>
-	</div>
-	
-	<script>
-	// Fetch projects
-	fetch('/projects/list')
-	    .then(res => res.json())
-	    .then(projects => {
-	        const grid = document.getElementById('projectGrid');
-	        projects.forEach(project => {
-	            let card = document.createElement('div');
-	            card.classList.add('project-card');
+        body {
+            margin:0;
+            padding:0;
+            background:#0d0d0d;
+            color:white;
+            font-family:"Montserrat",sans-serif;
+            padding-top:120px;
+        }
 
-	            const firstImage = project.images.length > 0
-	                ? `/uploads/${project.images[0].imagePath}`
-	                : 'https://via.placeholder.com/400x250?text=No+Image';
+        /* PAGE TITLE */
+        .page-title {
+            text-align:center;
+            font-size:32px;
+            color:#ffae00;
+            font-weight:700;
+            margin-bottom:25px;
+            animation:fadeDown .5s ease;
+        }
+        @keyframes fadeDown {
+            from { opacity:0; transform:translateY(-20px); }
+            to { opacity:1; transform:translateY(0); }
+        }
 
-	            card.innerHTML = `
-	                <img src="${firstImage}" alt="${project.name}">
-	                <div class="project-title">${project.name}</div>
-	                <div class="card-actions">
-	                    <button class="view-btn" onclick='openViewModal(${JSON.stringify(project)})'>View</button>
-	                    <button class="edit-btn" onclick='openEditModal(${JSON.stringify(project)})'>Edit</button>
-	                    <button class="delete-btn" onclick="deleteProject(${project.id})">Delete</button>
-	                </div>
-	            `;
-	            grid.appendChild(card);
-	        });
-	    });
+        /* PROJECT GRID */
+        .project-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+            gap:22px;
+            padding:20px;
+            width:90%;
+            margin:auto;
+            animation:fadeIn .6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity:0; }
+            to { opacity:1; }
+        }
 
-	// View Modal
-	let currentProject = null;
-	function openViewModal(project) {
-	    document.getElementById('viewTitle').textContent = project.name;
-	    document.getElementById('viewLocation').textContent = project.location || "Not Available";
-	    document.getElementById('viewArea').textContent = project.area || "Not Available";
-	    document.getElementById('viewDescription').textContent = project.description || "No description available.";
+        /* PREMIUM GLASS CARD */
+        .project-card {
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.12);
+            backdrop-filter:blur(8px);
+            border-radius:18px;
+            overflow:hidden;
+            box-shadow:0 4px 20px rgba(0,0,0,0.35);
+            transition:.35s ease;
+            animation:fadeUp .5s ease;
+        }
 
-	    let imgDiv = document.getElementById('viewImages');
-	    imgDiv.innerHTML = project.images
-	        .map(img => `<img src="/uploads/${img.imagePath}">`)
-	        .join('');
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(20px); }
+            to { opacity:1; transform:translateY(0); }
+        }
 
-	    document.getElementById('viewModal').style.display = 'flex';
-	    currentProject = project;
-	}
+        .project-card:hover {
+            transform:scale(1.04);
+            border-color:#ffae00;
+            box-shadow:0 0 25px rgba(255,174,0,0.45);
+        }
 
-	// Edit Modal
-	function switchToEdit() {
-	    closeModal('viewModal');
-	    openEditModal(currentProject);
-	}
-	function openEditModal(project) {
-	    document.getElementById("projectId").value = project.id;
-	    document.getElementById("projectName").value = project.name;
-	    document.getElementById("projectType").value = project.projectType;
-	    document.getElementById("projectLocation").value = project.location || "";
-	    document.getElementById("projectArea").value = project.area || "";
-	    document.getElementById("projectDescription").value = project.description || "";
+        .project-card img {
+            width:100%;
+            height:190px;
+            object-fit:cover;
+        }
 
-	    let imgDiv = document.getElementById("editImages");
-	    imgDiv.innerHTML = "";
-	    project.images.forEach(img => {
-	        let div = document.createElement("div");
-	        div.classList.add("image-box");
-	        div.innerHTML = `
-	            <img src="/uploads/${img.imagePath}">
-	            <button type="button" onclick="deleteImage(${project.id}, '${img.imagePath}', this)">x</button>
-	        `;
-	        imgDiv.appendChild(div);
-	    });
+        .project-title {
+            text-align:center;
+            padding:12px;
+            font-weight:700;
+            font-size:18px;
+            color:white;
+        }
 
-	    document.getElementById('editModal').style.display = 'flex';
-	}
+        /* CARD BUTTONS */
+        .card-actions {
+            padding:12px;
+            display:flex;
+            justify-content:space-between;
+        }
 
-	// Close Modal
-	function closeModal(id) {
-	    document.getElementById(id).style.display = 'none';
-	}
+        .btn {
+            border:none;
+            padding:8px 14px;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:600;
+            transition:.3s ease;
+            font-size:14px;
+        }
 
-	// Save Project (Add/Update)
-	// Save Project (Add/Update)
-	function saveProject() {
-	    let id = document.getElementById("projectId").value;
-	    let formData = new FormData();
-	    if (id) formData.append("id", id);
-	    formData.append("name", document.getElementById("projectName").value);
-	    formData.append("projectType", document.getElementById("projectType").value);
-	    formData.append("location", document.getElementById("projectLocation").value);
-	    formData.append("area", document.getElementById("projectArea").value);
-	    formData.append("description", document.getElementById("projectDescription").value);
+        .view-btn { background:#ffae00; color:black; }
+        .view-btn:hover { filter:brightness(1.1); }
 
-	    let files = document.getElementById("newImages").files;
-	    for (let i = 0; i < files.length; i++) {
-	        formData.append("images", files[i]);
-	    }
+        .edit-btn { background:#3498db; color:white; }
+        .edit-btn:hover { background:#227cbf; }
 
-	    // ✅ Show spinner overlay
-	    document.getElementById("spinnerOverlay").style.display = "flex";
-	    fetch(`/projects/save`, { method: "POST", body: formData })
-	        .then(res => {
-	            if (!res.ok) throw new Error("Failed to update");
-	            return res.text();
-	        })
-	        .then(msg => {
-	            // ✅ Hide spinner
-	            document.getElementById("spinnerOverlay").style.display = "none";
-	            // ✅ Show success overlay
-	            document.getElementById("successOverlay").style.display = "flex";
+        .delete-btn { background:#e74c3c; color:white; }
+        .delete-btn:hover { background:#c0392b; }
 
-	            setTimeout(() => {
-	                document.getElementById("successOverlay").style.display = "none";
-	                location.reload();
-	            }, 2000);
-	        })
-	        .catch(err => {
-	            document.getElementById("spinnerOverlay").style.display = "none";
-	            alert("Error: " + err.message);
-	        });
-	}
+        /* MODALS */
+        .modal {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.7);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            z-index:2000;
+            backdrop-filter:blur(8px);
+        }
 
+        .modal-content {
+            background:#111;
+            border:1px solid rgba(255,255,255,0.15);
+            padding:25px;
+            width:95%;
+            max-width:900px;
+            max-height:90vh;
+            overflow-y:auto;
+            border-radius:16px;
+            animation:pop .4s ease;
+        }
 
-	// Delete Project
-	function deleteProject(id) {
-	    if (confirm("Are you sure?")) {
-	        fetch(`/projects/${id}`, { method: "DELETE" })
-	            .then(res => {
-	                if (res.ok) {
-	                    alert("Deleted!");
-	                    location.reload();
-	                }
-	            });
-	    }
-	}
+        @keyframes pop {
+            from { opacity:0; transform:scale(.85); }
+            to { opacity:1; transform:scale(1); }
+        }
 
-	// Delete Image
-	function deleteImage(projectId, imgPath, btn) {
-	    if (confirm("Delete this image?")) {
-	        fetch(`/projects/${projectId}/deleteImage?path=${encodeURIComponent(imgPath)}`, { method: "DELETE" })
-	            .then(res => {
-	                if (res.ok) {
-	                    btn.parentElement.remove();
-	                }
-	            });
-	    }
-	}
-	</script>
+        .close-btn {
+            background:#ff3b3b;
+            color:white;
+            border:none;
+            padding:8px 16px;
+            float:right;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
+        }
+        .close-btn:hover { background:#d40000; }
 
-	</body>
-    <div th:replace="fragments/footer :: site-footer"></div>
-	</html>
+        .modal-content h2 {
+            color:#ffae00;
+            margin-bottom:15px;
+        }
+
+        /* IMAGE PREVIEWS */
+        .image-preview {
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+            margin-bottom:15px;
+        }
+
+        .image-preview img {
+            height:150px;
+            border-radius:12px;
+            transition:.3s;
+        }
+
+        .image-preview img:hover {
+            transform:scale(1.05);
+        }
+
+        /* EDIT FORM */
+        input, textarea {
+            width:100%;
+            padding:12px;
+            margin-bottom:12px;
+            border-radius:10px;
+            border:none;
+            background:#1d1d1d;
+            color:white;
+        }
+        textarea { height:130px; resize:none; }
+
+        label { color:#ffae00; font-weight:600; }
+
+        /* image delete button */
+        .image-box {
+            position:relative;
+        }
+
+        .image-box button {
+            position:absolute;
+            top:8px;
+            right:8px;
+            background:#e74c3c;
+            color:white;
+            border:none;
+            border-radius:50%;
+            font-size:12px;
+            width:25px;
+            height:25px;
+            cursor:pointer;
+        }
+
+        /* Spinner Overlay */
+        #spinnerOverlay {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.6);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            z-index:3000;
+        }
+
+        .spinner {
+            border:6px solid #333;
+            border-top:6px solid #ffae00;
+            border-radius:50%;
+            width:65px;
+            height:65px;
+            animation:spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform:rotate(360deg); } }
+
+        /* SUCCESS BOX */
+        #successOverlay {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.6);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            color:#fff;
+            z-index:3001;
+        }
+
+        .success-box {
+            background:#2ecc71;
+            padding:20px 40px;
+            border-radius:14px;
+            font-size:22px;
+            font-weight:700;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div th:replace="fragments/header :: site-header"></div>
+
+<h1 class="page-title">Admin View Projects</h1>
+
+<!-- PROJECT GRID -->
+<div class="project-grid" id="projectGrid"></div>
+
+<!-- VIEW MODAL -->
+<div class="modal" id="viewModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('viewModal')">Close</button>
+
+        <h2 id="viewTitle"></h2>
+        <div id="viewImages" class="image-preview"></div>
+
+        <p><strong>Location:</strong> <span id="viewLocation"></span></p>
+        <p><strong>Area:</strong> <span id="viewArea"></span></p>
+        <p><strong>Description:</strong> <span id="viewDescription"></span></p>
+
+        <button class="edit-btn" onclick="switchToEdit()">Edit This Project</button>
+    </div>
+</div>
+
+<!-- SPINNER -->
+<div id="spinnerOverlay">
+    <div class="spinner"></div>
+</div>
+
+<!-- SUCCESS -->
+<div id="successOverlay">
+    <div class="success-box">✔ Project Updated Successfully!</div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('editModal')">Close</button>
+
+        <h2>Edit Project</h2>
+
+        <form id="editProjectForm">
+
+            <input type="hidden" id="projectId">
+
+            <label>Project Name</label>
+            <input type="text" id="projectName">
+
+            <label>Project Type</label>
+            <input type="text" id="projectType">
+
+            <label>Location</label>
+            <input type="text" id="projectLocation">
+
+            <label>Area</label>
+            <input type="text" id="projectArea">
+
+            <label>Description</label>
+            <textarea id="projectDescription"></textarea>
+
+            <label>Existing Images</label>
+            <div id="editImages" class="image-preview"></div>
+
+            <label>Add More Images</label>
+            <input type="file" id="newImages" multiple>
+
+            <button type="button" onclick="saveProject()" class="view-btn" style="width:100%; margin-top:15px;">
+                Save Changes
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div th:replace="fragments/footer :: site-footer"></div>
+
+<script>
+
+    /* LOAD PROJECTS */
+    fetch('/projects/list')
+        .then(res => res.json())
+        .then(projects => {
+            const grid = document.getElementById('projectGrid');
+
+            projects.forEach(project => {
+                let card = document.createElement('div');
+                card.classList.add('project-card');
+
+                const firstImage = project.images.length > 0
+                    ? `/uploads/${project.images[0].imagePath}`
+                    : 'https://via.placeholder.com/400x250?text=No+Image';
+
+                card.innerHTML = `
+                    <img src="${firstImage}">
+                    <div class="project-title">${project.name}</div>
+                    <div class="card-actions">
+                        <button class="btn view-btn" onclick='openViewModal(${JSON.stringify(project)})'>View</button>
+                        <button class="btn edit-btn" onclick='openEditModal(${JSON.stringify(project)})'>Edit</button>
+                        <button class="btn delete-btn" onclick="deleteProject(${project.id})">Delete</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        });
+
+    /* OPEN VIEW MODAL */
+    let currentProject = null;
+
+    function openViewModal(project) {
+
+        currentProject = project;
+
+        document.getElementById('viewTitle').textContent = project.name;
+        document.getElementById('viewLocation').textContent = project.location || "Not provided";
+        document.getElementById('viewArea').textContent = project.area || "Not provided";
+        document.getElementById('viewDescription').textContent = project.description;
+
+        document.getElementById('viewImages').innerHTML =
+            project.images.map(img => `<img src="/uploads/${img.imagePath}">`).join('');
+
+        document.getElementById('viewModal').style.display = 'flex';
+    }
+
+    /* SWITCH TO EDIT */
+    function switchToEdit() {
+        closeModal('viewModal');
+        openEditModal(currentProject);
+    }
+
+    /* OPEN EDIT MODAL */
+    function openEditModal(project) {
+
+        document.getElementById('projectId').value = project.id;
+        document.getElementById('projectName').value = project.name;
+        document.getElementById('projectType').value = project.projectType;
+        document.getElementById('projectLocation').value = project.location;
+        document.getElementById('projectArea').value = project.area;
+        document.getElementById('projectDescription').value = project.description;
+
+        let div = document.getElementById('editImages');
+        div.innerHTML = "";
+
+        project.images.forEach(img => {
+            div.innerHTML += `
+                <div class="image-box">
+                    <img src="/uploads/${img.imagePath}">
+                    <button onclick="deleteImage(${project.id}, '${img.imagePath}', this)">x</button>
+                </div>
+            `;
+        });
+
+        document.getElementById('editModal').style.display = 'flex';
+    }
+
+    /* CLOSE MODAL */
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    /* SAVE PROJECT */
+    function saveProject() {
+        let id = document.getElementById('projectId').value;
+        let fd = new FormData();
+
+        fd.append("id", id);
+        fd.append("name", document.getElementById('projectName').value);
+        fd.append("projectType", document.getElementById('projectType').value);
+        fd.append("location", document.getElementById('projectLocation').value);
+        fd.append("area", document.getElementById('projectArea').value);
+        fd.append("description", document.getElementById('projectDescription').value);
+
+        let files = document.getElementById('newImages').files;
+        for (let f of files) fd.append("images", f);
+
+        // Show spinner
+        document.getElementById("spinnerOverlay").style.display = "flex";
+
+        fetch(`/projects/save`, { method:"POST", body:fd })
+            .then(res => res.text())
+            .then(() => {
+                document.getElementById("spinnerOverlay").style.display = "none";
+                document.getElementById("successOverlay").style.display = "flex";
+                setTimeout(() => location.reload(), 1500);
+            });
+    }
+
+    /* DELETE PROJECT */
+    function deleteProject(id) {
+        if (!confirm("Delete this project?")) return;
+
+        fetch(`/projects/${id}`, { method:"DELETE" })
+            .then(() => location.reload());
+    }
+
+    /* DELETE IMAGE */
+    function deleteImage(id, path, btn) {
+        if (!confirm("Delete this image?")) return;
+
+        fetch(`/projects/${id}/deleteImage?path=${encodeURIComponent(path)}`, { method:"DELETE" })
+            .then(() => btn.parentElement.remove());
+    }
+
+</script>
+
+</body>
+</html>

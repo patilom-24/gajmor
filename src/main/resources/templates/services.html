@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Services</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,500" rel="stylesheet">
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/main.css">
+
+
+    <style>
+        :root{
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --accent: #316bff;
+  --card-shadow: 0 8px 30px rgba(49,107,255,0.06);
+  --radius: 12px;
+  --gap: 20px;
+}
+
+.why-choose{
+  background: var(--bg);
+  padding: 56px 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #111827;
+}
+
+.why-choose .container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wc-title{
+  font-size: 28px;
+  margin: 0 0 6px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.wc-intro{
+  text-align: center;
+  color: var(--muted);
+  margin: 0 0 28px;
+  font-size: 15px;
+}
+
+/* grid of feature cards */
+.wc-features{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+/* single feature */
+.wc-features li{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  background: #fff;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.wc-features li:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(17,24,39,0.06);
+}
+
+/* check icon */
+.wc-icon{
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-block;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(49,107,255,0.12), rgba(49,107,255,0.06));
+  position: relative;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* draw a checkmark using pseudo element */
+.wc-icon::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 5px;
+  border-left: 3px solid var(--accent);
+  border-bottom: 3px solid var(--accent);
+  transform: translate(-50%, -55%) rotate(-45deg);
+  border-radius: 2px;
+}
+
+/* text inside each card */
+.wc-text h3{
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.wc-text p{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* make it single column on small screens */
+@media (max-width: 800px){
+  .wc-features{
+    grid-template-columns: 1fr;
+  }
+  .wc-features li{
+    padding: 16px;
+  }
+  .wc-icon{ min-width:40px; min-height:40px; }
+  .wc-text h3{ font-size:15px; }
+}
+
+/* optional: tighter layout on large screens */
+@media (min-width: 1200px){
+  .wc-features{ gap: 22px; }
+}
+
+
+:root{
+  --bg: #fff;
+  --muted: #6b7280;
+  --accent: #316bff;
+  --accent-2: #2dd4bf;
+  --card-shadow: 0 10px 30px rgba(17,24,39,0.06);
+  --radius: 12px;
+  --max-width: 1100px;
+}
+
+/* Base */
+.id-process{
+  background: var(--bg);
+  padding: 56px 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #0f172a;
+}
+.id-process .wrap{
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Header */
+.id-header{
+  text-align: center;
+  margin-bottom: 28px;
+}
+.id-header h2{
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+.id-lead{
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* ---------- Grid-based timeline: 3 items per row ---------- */
+.timeline { margin-top: 24px; }
+
+.timeline-track{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* desktop: 3 columns */
+  gap: 24px;
+  align-items: stretch;
+  padding: 4px;
+}
+
+/* Ensure any old connector/line pseudo is disabled */
+.timeline-track::before{ display: none !important; }
+
+/* Step card */
+.step{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--card-shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+  min-width: 0;
+}
+.step:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px rgba(17,24,39,0.08);
+}
+
+/* Marker */
+.step-marker{
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(49,107,255,0.12), rgba(45,212,191,0.06));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+  border: 2px solid rgba(49,107,255,0.09);
+  margin-top: 2px;
+}
+
+/* remove any leftover connector pseudo */
+.step::after{ display: none !important; }
+
+/* Step body */
+.step-body h3{
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.step-body p{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ---------- Responsive breakpoints ---------- */
+/* 2 columns on medium screens */
+@media (max-width: 1100px){
+  .timeline-track{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* 1 column on small screens */
+@media (max-width: 880px){
+  .timeline-track{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .step{
+    padding-left: 18px;
+  }
+
+  .step-marker{
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+}
+
+/* very small screens */
+@media (max-width: 420px){
+  .step-body p{ font-size: 13px; }
+  .step-marker{ width: 40px; height: 40px; font-size: 14px;}
+  .step{ padding: 14px; border-radius: 10px; }
+}
+
+/* Optional: highlight current step by adding .current to .step */
+.step.current{
+  box-shadow: 0 28px 60px rgba(49,107,255,0.12);
+  transform: translateY(-8px);
+}
+.step.current .step-marker{
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: none;
+}
+    </style>
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <h1 style="color: aliceblue;">Gajmor</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/aboutUs">About</a></li>
+                    <li><a class="active" href="/services">Services</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Pages
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/view-pro">Projects</a>
+                            <!-- <a class="dropdown-item" href="elements.html">Elements</a> -->
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Blog
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
+<!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
+                        </div>
+                    </li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- End Header Area -->
+
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="text-white">Our Services</h1>
+                <p>Days so us evening for herb bearing lesser man female night</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End top-section Area -->
+
+<!-- WHY CHOOSE US SECTION -->
+<section class="why-choose" aria-labelledby="why-choose-title">
+    <div class="container">
+        <h2 id="why-choose-title" class="wc-title">Why Choose Us</h2>
+        <p class="wc-intro">People choose Gajmor Designs because we combine experience, value and commitment to deliver results that matter.</p>
+
+        <ul class="wc-features">
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>Experienced Team</h3>
+                    <p>Seasoned designers and strategists who bring industry knowledge to every project.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>Affordable &amp; Transparent Pricing</h3>
+                    <p>Clear, fair pricing with no hidden fees — quality that fits your budget.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>On-Time Delivery</h3>
+                    <p>We respect deadlines and deliver on schedule without compromising quality.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>Custom Design, No Templates</h3>
+                    <p>Unique, tailor-made designs created specifically for your brand and goals.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>100% Client Satisfaction</h3>
+                    <p>We measure success by your satisfaction — we iterate until it’s right.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>Unlimited Revisions</h3>
+                    <p>Flexible revision policy so we refine the design until it matches your vision.</p>
+                </div>
+            </li>
+
+            <li>
+                <span class="wc-icon" aria-hidden="true"></span>
+                <div class="wc-text">
+                    <h3>Fast Response</h3>
+                    <p>Quick replies and proactive project updates to keep things moving smoothly.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+
+
+<!-- Start Offer Area -->
+<section class="offer-area relative">
+    <div class="container">
+        <div class="row align-items-center justify-content-end">
+            <div class="col-lg-8 offer-right">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title text-left mb-5">
+                            <h4>Our Service</h4>
+                            <h2>What We Offer For Your <br /> Dream House</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-offer">
+                            <a href="#">
+                                <h4>Architecture</h4>
+                            </a>
+                            <p>
+                                Days so us evening for herb bearing lesser man female night gathering creeping great first our bearing appear
+                                multiply dominion.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-offer">
+                            <a href="#">
+                                <h4>3d Modeling</h4>
+                            </a>
+                            <p>
+                                Days so us evening for herb bearing lesser man female night gathering creeping great first our bearing appear
+                                multiply dominion.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-offer">
+                            <a href="#">
+                                <h4>2d Modeling</h4>
+                            </a>
+                            <p>
+                                Days so us evening for herb bearing lesser man female night gathering creeping great first our bearing appear
+                                multiply dominion.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-offer">
+                            <a href="#">
+                                <h4>Construction</h4>
+                            </a>
+                            <p>
+                                Days so us evening for herb bearing lesser man female night gathering creeping great first our bearing appear
+                                multiply dominion.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Offer Area -->
+
+<!-- INTERIOR DESIGN — PROCESS / HOW WE WORK -->
+<section class="id-process" aria-labelledby="id-process-title">
+    <div class="wrap">
+        <header class="id-header">
+            <h2 id="id-process-title">Our Process — Interior Design</h2>
+            <p class="id-lead">A clear, collaborative journey from concept to completion — thoughtfully planned and expertly delivered.</p>
+        </header>
+
+        <div class="timeline">
+            <div class="timeline-track">
+                <!-- Step 1 -->
+                <article class="step">
+                    <div class="step-marker">1</div>
+                    <div class="step-body">
+                        <h3>Discovery &amp; Consultation</h3>
+                        <p>We learn about your space, lifestyle, preferences and budget through site visits and initial discussions to capture your vision.</p>
+                    </div>
+                </article>
+
+                <!-- Step 2 -->
+                <article class="step">
+                    <div class="step-marker">2</div>
+                    <div class="step-body">
+                        <h3>Concept &amp; Space Planning</h3>
+                        <p>We create layout options, moodboards and theme proposals to explore the best use of your space and style direction.</p>
+                    </div>
+                </article>
+
+                <!-- Step 3 -->
+                <article class="step">
+                    <div class="step-marker">3</div>
+                    <div class="step-body">
+                        <h3>Design Development &amp; 3D Visualization</h3>
+                        <p>Detailed plans, material palettes and realistic 3D renders bring the concept to life so you can preview the final design.</p>
+                    </div>
+                </article>
+
+                <!-- Step 4 -->
+                <article class="step">
+                    <div class="step-marker">4</div>
+                    <div class="step-body">
+                        <h3>Material Selection &amp; Budget Finalization</h3>
+                        <p>We recommend finishes and furnishings, prepare transparent cost estimates, and fine-tune selections to match the budget.</p>
+                    </div>
+                </article>
+
+                <!-- Step 5 -->
+                <article class="step">
+                    <div class="step-marker">5</div>
+                    <div class="step-body">
+                        <h3>Execution &amp; Project Management</h3>
+                        <p>We manage contractors, supervise works onsite, and coordinate deliveries to ensure the project runs on time and to spec.</p>
+                    </div>
+                </article>
+
+                <!-- Step 6 -->
+                <article class="step">
+                    <div class="step-marker">6</div>
+                    <div class="step-body">
+                        <h3>Final Styling &amp; Handover</h3>
+                        <p>Styling, accessories and finishing touches are added. We perform quality checks and hand over the completed project.</p>
+                    </div>
+                </article>
+
+                <!-- Step 7 -->
+                <article class="step">
+                    <div class="step-marker">7</div>
+                    <div class="step-body">
+                        <h3>Post-Project Support</h3>
+                        <p>We provide minor touch-ups and ongoing support to ensure your space remains beautiful and functional.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+ start footer Area
+<footer class="footer-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Top Products</h4>
+                <ul>
+                    <li><a href="#">Managed Website</a></li>
+                    <li><a href="#">Manage Reputation</a></li>
+                    <li><a href="#">Power Tools</a></li>
+                    <li><a href="#">Marketing Service</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Brand Assets</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Brand Assets</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 single-footer-widget">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Research</a></li>
+                    <li><a href="#">Experts</a></li>
+                    <li><a href="#">Agencies</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6 single-footer-widget">
+                <h4>Newsletter</h4>
+                <p>You can trust us. we only send promo offers,</p>
+                <div class="form-wrap" id="mc_embed_signup">
+                    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                          method="get" class="form-inline">
+                        <input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address'"
+                               required="" type="email" />
+                        <button class="click-btn btn btn-default">
+                            <span>subscribe</span>
+                        </button>
+                        <div style="position: absolute; left: -5000px;">
+                            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text" />
+                        </div>
+
+                        <div class="info"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row footer-bottom d-flex justify-content-between">
+            <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+            </p>
+            <div class="col-lg-4 col-sm-12 footer-social">
+                <a href="#"><i class="fa fa-facebook-f"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+ End footer Area
+-->
+
+<div th:replace="fragments/footer :: site-footer"></div>
+
+
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/parallax.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/isotope.pkgd.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/main.js"></script>
+</body>
+
+</html>
