@@ -23,110 +23,206 @@
         body {
             margin: 0;
             padding: 0;
-            background: #0b0b0b;
-            color: #fff;
             font-family: "Poppins", sans-serif;
             overflow-x: hidden;
         }
 
         /* ============ DEVELOPER SECTION CONTAINER ============ */
-        .developer-wrapper {
-            padding: 90px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+        .developer-section {
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #111827;
+}
 
-        .dev-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 90px;
-            flex-wrap: wrap;
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            border-radius: 18px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            animation: fadeUp 0.7s ease;
-        }
+/* Wrapper */
+.developer-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 48px;
+}
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* Each developer block */
+.dev-section {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(250,250,251,0.9), #fff);
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(13,18,30,0.06);
+  overflow: hidden;
+}
 
-        /* Developer Details */
-        .dev-info h1 {
-            font-size: 40px;
-            font-weight: 700;
-        }
+/* Reverse the layout for the second developer */
+.dev-section.reverse {
+  grid-template-columns: 380px 1fr;
+}
 
-        .highlight {
-            color: #ffb13d;
-        }
+/* Info block (text) */
+.dev-info {
+  padding: 8px 6px;
+}
 
-        .dev-info p {
-            color: #e0e0e0;
-            margin-top: 10px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
+/* Headings */
+.dev-info h1 {
+  font-size: 30px;
+  margin: 0 0 8px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: #0b1220;
+}
 
-        .dev-info a {
-            color: #ffb13d;
-            font-weight: bold;
-            text-decoration: none;
-        }
+.dev-info .highlight {
+  color: #0b74ff;
+}
 
-        .dev-buttons .btn {
-            margin-right: 10px;
-            margin-top: 10px;
-            border-radius: 8px;
-            padding: 10px 20px;
-        }
+/* Subheading */
+.dev-info h3 {
+  margin: 0 0 14px;
+  color: #374151;
+  font-weight: 600;
+  font-size: 16px;
+}
 
-        .btn-primary {
-            background: #0077ff;
-            border: none;
-        }
+/* Paragraphs */
+.dev-info p {
+  margin: 10px 0;
+  color: #4b5563;
+  line-height: 1.6;
+  font-size: 15px;
+}
 
-        .btn-danger {
-            background: #d6336c;
-            border: none;
-        }
+/* Contact links */
+.dev-info a {
+  color: #0b74ff;
+  text-decoration: none;
+}
+.dev-info a:hover { text-decoration: underline; }
 
-        /* Developer Image */
-        .dev-photo {
-            width: 320px;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 20px;
-            border: 3px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            transition: 0.4s ease;
-        }
+/* Photo container */
+.dev-photo {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(12,20,40,0.10);
+  border: 6px solid #fff;
+  transform: rotate(-2deg);
+  transition: transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .25s ease;
+}
 
-        .dev-photo:hover {
-            transform: scale(1.05);
-        }
+/* Hover effect on photo */
+.dev-photo:hover {
+  transform: scale(1.02) rotate(0deg);
+  box-shadow: 0 18px 46px rgba(12,20,40,0.12);
+}
 
-        /* Reverse Layout */
-        .reverse {
-            flex-direction: row-reverse;
-        }
+/* Buttons row */
+.dev-buttons {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 
-        /* Mobile Responsive */
-        @media (max-width: 900px) {
-            .dev-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .dev-photo {
-                width: 260px;
-                height: 260px;
-            }
-        }
+/* Generic button */
+.dev-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 12px rgba(12,20,40,0.04);
+}
+
+/* LinkedIn button (primary blue) */
+.btn.btn-primary {
+  background: linear-gradient(180deg,#0b74ff,#055bd6);
+  color: #fff;
+  border: 1px solid rgba(5,91,214,0.12);
+}
+
+/* Instagram button (gradient) */
+.btn.btn-danger {
+  background: linear-gradient(45deg,#f58529 0%,#dd2a7b 50%,#8134af 100%);
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Icon inside button */
+.btn i.fa-brands {
+  font-size: 16px;
+  display: inline-block;
+}
+
+/* Button hover */
+.dev-buttons .btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(12,20,40,0.12);
+}
+
+/* Small contact row styling (phone/email) */
+.dev-info p strong {
+  margin-right: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .dev-section,
+  .dev-section.reverse {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .dev-photo {
+    max-width: 260px;
+    margin: 14px auto 0;
+    transform: none;
+  }
+  .dev-section.reverse .dev-photo { transform: none; }
+  .dev-info { order: 0; }
+  .dev-buttons { justify-content: center; }
+}
+
+        .whatsapp-float {
+    position: fixed;
+    width: 58px;
+    height: 58px;
+    bottom: 25px;
+    right: 25px;
+    background: #25D366; /* WhatsApp green */
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.30);
+}
+
+.whatsapp-float i {
+    color: #fff;
+}
+
 
     </style>
 </head>
@@ -177,63 +273,82 @@
 </header>
 <!-- End Header Area -->
 
+ <section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="text-white">Meet Our Developers</h1>
+                <p>Meet the developers building Gajmor — creative thinkers, problem solvers, and makers</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- WhatsApp Float -->
 <a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float">
     <i class="fa-brands fa-whatsapp" style="color: #128C7E;"></i>
 </a>
 
 <!-- ============ DEVELOPERS PAGE CONTENT ============ -->
-<div class="developer-wrapper">
 
-    <!-- Developer 1 -->
-    <div class="dev-section">
-        <div class="dev-info">
-            <h1>Hi, I'm <span class="highlight">Tejas Devgharkar</span></h1>
-            <h3>Full Stack Developer</h3>
-            <p>
-                Passionate about building scalable backend systems, modern UI/UX,
-                and delivering complete end-to-end solutions.
-            </p>
-            <p><strong>📞</strong> <a href="tel:+917666300048">+91 7666300048</a></p>
-            <p><strong>✉️</strong> <a href="mailto:tejasdevgharkar12@gmail.com">tejasdevgharkar12@gmail.com</a></p>
+<section class="developer-section">
 
-            <div class="dev-buttons">
-                <a href="https://www.linkedin.com/in/tejas-devgharkar-150805286"
-                   class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    <div class="developer-wrapper">
 
-                <a href="https://www.instagram.com/mr_tejas_1600m"
-                   class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <!-- Developer 1 -->
+        <div class="dev-section">
+            <div class="dev-info">
+                <h1>Hi, I'm <span class="highlight">Tejas Devgharkar</span></h1>
+                <h3>Full Stack Developer</h3>
+                <p>
+                    Experienced in Java, Spring Boot, SQL, and building responsive interfaces.
+                    I create fast, modern, and reliable applications.
+                </p>
+
+                <p><strong>📞</strong> <a href="tel:+917666300048">+91 7666300048</a></p>
+                <p><strong>✉️</strong> <a href="mailto:tejasdevgharkar12@gmail.com">tejasdevgharkar12@gmail.com</a></p>
+
+                <div class="dev-buttons">
+                    <a href="https://www.linkedin.com/in/tejas-devgharkar-150805286"
+                       class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+
+                    <a href="https://www.instagram.com/mr_tejas_1600m"
+                       class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                </div>
             </div>
+
+            <img src="Images/Tejas-Image.jpg" class="dev-photo" alt="Tejas">
         </div>
 
-        <img src="Images/Tejas-Image.jpg" class="dev-photo" alt="Tejas">
-    </div>
+        <!-- Developer 2 -->
+        <div class="dev-section reverse">
+            <div class="dev-info">
+                <h1>Hi, I'm <span class="highlight">Om Patil</span></h1>
+                <h3>Full Stack Developer</h3>
+                <p>
+                    Skilled in Java, Spring Boot, SQL, and responsive UI.
+                    I build clean, modern, and functional applications.
+                </p>
 
-    <!-- Developer 2 -->
-    <div class="dev-section reverse">
-        <div class="dev-info">
-            <h1>Hi, I'm <span class="highlight">Om Patil</span></h1>
-            <h3>Full Stack Developer</h3>
-            <p>
-                Skilled in Java, Spring Boot, SQL, and responsive UI.
-                I build clean, modern, and functional applications.
-            </p>
-            <p><strong>📞</strong> <a href="tel:+917020991707">+91 7020991707</a></p>
-            <p><strong>✉️</strong> <a href="mailto:omjagannathpatil24@gmail.com">omjagannathpatil24@gmail.com</a></p>
+                <p><strong>📞</strong> <a href="tel:+917020991707">+91 7020991707</a></p>
+                <p><strong>✉️</strong> <a href="mailto:omjagannathpatil24@gmail.com">omjagannathpatil24@gmail.com</a></p>
 
-            <div class="dev-buttons">
-                <a href="https://www.linkedin.com/in/om-patil-24m04"
-                   class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <div class="dev-buttons">
+                    <a href="https://www.linkedin.com/in/om-patil-24m04"
+                       class="btn btn-primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
 
-                <a href="https://www.instagram.com/_patil_om.24_"
-                   class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                    <a href="https://www.instagram.com/_patil_om.24_"
+                       class="btn btn-danger"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                </div>
             </div>
+
+            <img src="Images/Om-Image.jpg" class="dev-photo" alt="Om">
         </div>
 
-        <img src="Images/Om-Image.jpg" class="dev-photo" alt="Om">
     </div>
 
-</div>
+</section>
 
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
