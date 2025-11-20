@@ -11,20 +11,13 @@
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/main.css">
 
     <style>
         /* ============ GLOBAL DARK BACKGROUND ============ */
         body {
             margin: 0;
             padding: 0;
-<!--            background: #0b0b0b;-->
+            background: #0b0b0b;
             color: #fff;
             font-family: "Poppins", sans-serif;
             overflow-x: hidden;
@@ -134,53 +127,51 @@
 
 <body>
 
-<!-- Start Header Area -->
-<header class="default-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
+<!-- ============ NAVBAR (Your Original Code) ================= -->
+<div class="nav" id="navbar">
+    <div class="logo">
+        <img src="Images/GajmorLogo.png" alt="GajmorLogo"/>
+    </div>
 
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/aboutUs">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Pages
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>
-                        </div>
-                    </li>
-                    <li><a href="/enquiry">Contact</a></li>
-                </ul>
-            </div>
+    <div class="links" id="navLinks">
+        <a href="/">HOME</a>
+        <div th:if="${session.login}" class="session">
+            <a href="/add-Projects">ADD PROJECT</a>
+            <a href="/enquires" style="margin-left: 50px;">ALL ENQUIRIES</a>
         </div>
-    </nav>
-</header>
-<!-- End Header Area -->
+        <a href="services">OUR SERVICES</a>
+        <a href="/careers">CAREERS</a>
+        <a href="aboutUs">ABOUT US</a>
+        <a href="/enquiry">CONTACTS</a>
+    </div>
 
+    <div class="menu">
+        <i class='bx bx-menu' onclick="openMenu()"></i>
+    </div>
+</div>
 
+<!-- Overlay + Sidebar (Your Original Code) -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+<div id="sidebar" class="sidebar">
+    <span class="closebtn" onclick="closeMenu()"><i class='bx bx-x'></i></span>
+    <img src="/Images/GajmorLogo.png" alt="Gajmor Logo" class="sidebar-logo"/>
+    <ul class="sidebar-menu">
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="/about">ℹ️ About</a></li>
+        <li><a href="/services">💼 Services</a></li>
+        <li><a href="/projects">📂 Projects</a></li>
+        <li><a href="/careers">🧑‍💼 Careers</a></li>
+    </ul>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float">
+    <i class="fa-brands fa-whatsapp" style="color: #128C7E;"></i>
+</a>
 
 <!-- ============ DEVELOPERS PAGE CONTENT ============ -->
 <div class="developer-wrapper">
+
     <!-- Developer 1 -->
     <div class="dev-section">
         <div class="dev-info">
@@ -202,7 +193,7 @@
             </div>
         </div>
 
-        <img src="Images/Tejas-Image.jpg" class="dev-photo" alt="Tejas">
+        <img src="Images/Tejas-Image3.jpg" class="dev-photo" alt="Tejas">
     </div>
 
     <!-- Developer 2 -->
@@ -230,11 +221,6 @@
     </div>
 
 </div>
-
-<!-- WhatsApp Float -->
-<a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float">
-    <i class="fa-brands fa-whatsapp" style="color: #128C7E;"></i>
-</a>
 
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
