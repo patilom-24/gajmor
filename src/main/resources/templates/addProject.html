@@ -8,6 +8,13 @@
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -161,7 +168,48 @@
 <body>
 
 <!-- ====== HEADER FRAGMENT ====== -->
-<div th:replace="fragments/header :: site-header"></div>
+<!-- Start Header Area -->
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <h1 style="color: aliceblue;">Gajmor</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/aboutUs">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Pages
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" class="active"  href="/view-pro">Projects</a>
+                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Blog
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
+                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>
+                        </div>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>-->
+        </div>
+    </nav>
+</header>
+<!-- End Header Area -->
 
 <!-- ====== Loader Overlay ====== -->
 <div id="loadingOverlay" class="loading-overlay">
