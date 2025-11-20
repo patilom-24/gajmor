@@ -73,4 +73,9 @@ public class PagesController {
     public String getServicePage(){
         return "services";
     }
+
+    @GetMapping("/jobs")
+    public String getJobPage(){
+        return "job";
+    }
 }
