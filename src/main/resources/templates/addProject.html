@@ -17,87 +17,6 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <style>
-        /* ⭐ ALL YOUR ORIGINAL CSS — NOT CHANGED */
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            background:#0d0d0d;
-            color:white;
-            font-family:"Montserrat",sans-serif;
-            padding-top:120px;
-        }
-        .container-flex {
-            display:flex;
-            width:100%;
-            min-height:85vh;
-        }
-        .left-panel {
-            flex:1;
-            background:url('/Images/GajmorLogo.png') center/50% no-repeat,
-                       linear-gradient(135deg,#111,#0b0b0b);
-            background-blend-mode:overlay;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-        }
-        .left-panel h1 {
-            font-size:42px;
-            color:#ffae00;
-            font-weight:700;
-            letter-spacing:2px;
-            text-align:center;
-        }
-        .right-panel {
-            flex:1;
-            padding:60px;
-            background:#111;
-            border-left:1px solid rgba(255,255,255,0.1);
-        }
-        .form-title {
-            font-size:28px;
-            color:#ffae00;
-            font-weight:700;
-            margin-bottom:25px;
-        }
-        .form-group { margin-bottom:20px; }
-        label {
-            display:block;
-            font-weight:600;
-            margin-bottom:6px;
-            font-size:14px;
-        }
-        input, textarea {
-            width:100%;
-            padding:12px 14px;
-            background:#1b1b1b;
-            border:none;
-            border-radius:10px;
-            color:white;
-            font-size:14px;
-            outline:none;
-        }
-        textarea { height:120px; resize:none; }
-        .radio-row {
-            display:flex;
-            gap:25px;
-            margin-top:5px;
-        }
-        button.submit-btn {
-            width:100%;
-            padding:14px;
-            background:linear-gradient(90deg,#ff9900,#ffb13d);
-            border:none;
-            color:white;
-            border-radius:12px;
-            font-size:17px;
-            font-weight:600;
-            cursor:pointer;
-            transition:0.3s ease;
-        }
-        button.submit-btn:hover {
-            transform:translateY(-2px);
-            filter:brightness(1.1);
-        }
 
         /* ===== Overlays ===== */
         .loading-overlay,
@@ -165,10 +84,149 @@
             font-weight:600;
             font-size:16px;
         }
+
+<!--        ==================================-->
+
+        /* Section spacing */
+section {
+    background: #f7f7f7;
+}
+
+/* Card styling */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 20px;
+    background: #111 !important;
+    border-bottom: none;
+}
+
+.card-header h4 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Form styling */
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #000;
+    box-shadow: none;
+}
+
+/* Radio button spacing */
+.d-flex.gap-4 .form-check {
+    margin-right: 20px;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+/* Submit button */
+.btn-dark {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-dark:hover {
+    background: #333;
+}
+
+/* Add shadow effect */
+.card {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+
     </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,500" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
+
+<!-- Start Header Area -->
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <h1 style="color: aliceblue;">Gajmor</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/aboutUs">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li class="dropdown">
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/view-pro">Projects</a>
+                            <!-- <a class="dropdown-item" href="elements.html">Elements</a> -->
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="/view-blogs" id="navbardrop" data-toggle="dropdown">
+                            Blog
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
+                        </div>
+                    </li>
+                    <li><a href="/jobs">careers</a></li>
+                    <li><a href="/enquiry">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- End Header Area -->
+
+
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="text-white">Add a New Project</h1>
+                <p>Add a new project with all required details in one simple step</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End top-section Area -->
 
 <!-- 🎵 Professional Success Sound -->
 <audio id="successSound">
@@ -192,7 +250,8 @@
     </div>
 </div>
 
-<!-- MAIN PAGE -->
+<!--
+&lt;!&ndash; MAIN PAGE &ndash;&gt;
 <div class="container-flex">
     <div class="left-panel">
         <h1>ADD A NEW PROJECT</h1>
@@ -241,6 +300,80 @@
         </form>
     </div>
 </div>
+-->
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0" style="color: #f7f7f7;text-align: center; font-size: 25px;">Project Details</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form id="projectForm" enctype="multipart/form-data">
+
+                            <!-- Project Name -->
+                            <div class="mb-3">
+                                <label class="form-label">Project Name <label for="" style="color: red;">*</label> </label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+
+                            <!-- Project Type -->
+                            <div class="mb-3">
+                                <label class="form-label">Project Type <label for="" style="color: red;">*</label></label>
+                                <div class="d-flex gap-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="projectType" id="Commercial" value="Commercial" required>
+                                        <label class="form-check-label" for="Commercial">Commercial</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="projectType" id="Residential" value="Residential" required>
+                                        <label class="form-check-label" for="Residential">Residential</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label class="form-label">Project Location <label for="" style="color: red;">*</label></label>
+                                <input type="text" name="location" class="form-control" required>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                <label class="form-label">Description <label for="" style="color: red;">*</label></label>
+                                <textarea name="description" class="form-control" rows="4" required></textarea>
+                            </div>
+
+                            <!-- Square Feet -->
+                            <div class="mb-3">
+                                <label class="form-label">Square Feet Area <label for="" style="color: red;">*</label></label>
+                                <input type="number" min="1" name="area" class="form-control" required>
+                            </div>
+
+                            <!-- Project Images -->
+                            <div class="mb-4">
+                                <label class="form-label">Project Images <label for="" style="color: red;">*</label></label>
+                                <input type="file" name="images" class="form-control" multiple required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-dark w-100">Add Project</button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <!-- JS -->
 <script>
@@ -307,6 +440,22 @@
         }
     });
 </script>
+
+<!-- FOOTER -->
+<div th:replace="fragments/footer :: site-footer"></div>
+
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/parallax.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/isotope.pkgd.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
