@@ -8,13 +8,19 @@
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 
     <style>
 
@@ -27,7 +33,6 @@
             padding-top:120px;
         }
 
-        /* PAGE TITLE */
         .page-title {
             text-align:center;
             font-size:32px;
@@ -41,7 +46,6 @@
             to { opacity:1; transform:translateY(0); }
         }
 
-        /* PROJECT GRID */
         .project-grid {
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
@@ -51,12 +55,12 @@
             margin:auto;
             animation:fadeIn .6s ease;
         }
+
         @keyframes fadeIn {
             from { opacity:0; }
             to { opacity:1; }
         }
 
-        /* PREMIUM GLASS CARD */
         .project-card {
             background:rgba(255,255,255,0.05);
             border:1px solid rgba(255,255,255,0.12);
@@ -93,7 +97,6 @@
             color:white;
         }
 
-        /* CARD BUTTONS */
         .card-actions {
             padding:12px;
             display:flex;
@@ -111,15 +114,13 @@
         }
 
         .view-btn { background:#ffae00; color:black; }
+        .edit-btn { background:#3498db; color:white; }
+        .delete-btn { background:#e74c3c; color:white; }
+
+        .delete-btn:hover { background:#c0392b; }
+        .edit-btn:hover { background:#227cbf; }
         .view-btn:hover { filter:brightness(1.1); }
 
-        .edit-btn { background:#3498db; color:white; }
-        .edit-btn:hover { background:#227cbf; }
-
-        .delete-btn { background:#e74c3c; color:white; }
-        .delete-btn:hover { background:#c0392b; }
-
-        /* MODALS */
         .modal {
             position:fixed;
             inset:0;
@@ -158,49 +159,13 @@
             cursor:pointer;
             font-weight:600;
         }
-        .close-btn:hover { background:#d40000; }
-
-        .modal-content h2 {
-            color:#ffae00;
-            margin-bottom:15px;
-        }
-
-        /* IMAGE PREVIEWS */
-        .image-preview {
-            display:flex;
-            flex-wrap:wrap;
-            gap:12px;
-            margin-bottom:15px;
-        }
 
         .image-preview img {
             height:150px;
             border-radius:12px;
-            transition:.3s;
         }
 
-        .image-preview img:hover {
-            transform:scale(1.05);
-        }
-
-        /* EDIT FORM */
-        input, textarea {
-            width:100%;
-            padding:12px;
-            margin-bottom:12px;
-            border-radius:10px;
-            border:none;
-            background:#1d1d1d;
-            color:white;
-        }
-        textarea { height:130px; resize:none; }
-
-        label { color:#ffae00; font-weight:600; }
-
-        /* image delete button */
-        .image-box {
-            position:relative;
-        }
+        .image-box { position:relative; }
 
         .image-box button {
             position:absolute;
@@ -210,97 +175,43 @@
             color:white;
             border:none;
             border-radius:50%;
-            font-size:12px;
             width:25px;
             height:25px;
-            cursor:pointer;
         }
 
-        /* Spinner Overlay */
-        #spinnerOverlay {
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,0.6);
-            display:none;
-            justify-content:center;
-            align-items:center;
-            z-index:3000;
+        input, textarea {
+            width:100%;
+            padding:12px;
+            margin-bottom:12px;
+            border-radius:10px;
+            border:none;
+            background:#1d1d1d;
+            color:white;
         }
 
-        .spinner {
-            border:6px solid #333;
-            border-top:6px solid #ffae00;
-            border-radius:50%;
-            width:65px;
-            height:65px;
-            animation:spin 1s linear infinite;
-        }
+        textarea { height:130px; resize:none; }
 
-        @keyframes spin { 100% { transform:rotate(360deg); } }
-
-        /* SUCCESS BOX */
-        #successOverlay {
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,0.6);
-            display:none;
-            justify-content:center;
-            align-items:center;
-            color:#fff;
-            z-index:3001;
-        }
-
-        .success-box {
-            background:#2ecc71;
-            padding:20px 40px;
-            border-radius:14px;
-            font-size:22px;
-            font-weight:700;
-        }
+        label { color:#ffae00; font-weight:600; }
 
     </style>
+
 </head>
 
 <body>
 
 <!-- HEADER -->
-<!--<div th:replace="fragments/header :: site-header"></div>-->
-
-<!-- Start Header Area -->
 <header class="default-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+            <a class="navbar-brand"><h1 style="color:white;">Gajmor</h1></a>
+            <button class="navbar-toggler"><span class="fa fa-bars"></span></button>
+            <div class="collapse navbar-collapse justify-content-end align-items-center">
                 <ul class="navbar-nav">
                     <li><a href="/">Home</a></li>
                     <li><a href="/aboutUs">About</a></li>
                     <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Pages
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-<!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
-                        </div>
-                    </li>
+                    <li><a href="/view-pro">Projects</a></li>
+                    <li><a href="/viewBlogs">Blog</a></li>
                     <li><a href="/jobs">careers</a></li>
                     <li><a href="/enquiry">Contact</a></li>
                 </ul>
@@ -308,10 +219,10 @@
         </div>
     </nav>
 </header>
-<!-- End Header Area -->
+
 <h1 class="page-title">Admin View Projects</h1>
 
-<!-- PROJECT GRID -->
+<!-- GRID -->
 <div class="project-grid" id="projectGrid"></div>
 
 <!-- VIEW MODAL -->
@@ -330,19 +241,10 @@
     </div>
 </div>
 
-<!-- SPINNER -->
-<div id="spinnerOverlay">
-    <div class="spinner"></div>
-</div>
-
-<!-- SUCCESS -->
-<div id="successOverlay">
-    <div class="success-box">✔ Project Updated Successfully!</div>
-</div>
-
 <!-- EDIT MODAL -->
 <div class="modal" id="editModal">
     <div class="modal-content">
+
         <button class="close-btn" onclick="closeModal('editModal')">Close</button>
 
         <h2>Edit Project</h2>
@@ -375,15 +277,58 @@
             <button type="button" onclick="saveProject()" class="view-btn" style="width:100%; margin-top:15px;">
                 Save Changes
             </button>
-
         </form>
     </div>
 </div>
 
-<!-- FOOTER -->
-<div th:replace="fragments/footer :: site-footer"></div>
-
 <script>
+
+    /* SOFT SUCCESS SOUND */
+    const successSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
+    successSound.volume = 0.7;
+
+    /* CONFETTI */
+    function fireConfetti() {
+        confetti({
+            particleCount:150,
+            spread:70,
+            origin:{ y:0.6 }
+        });
+    }
+
+    /* PREMIUM SUCCESS POPUP */
+    function premiumSuccess(msg) {
+        successSound.play();
+        fireConfetti();
+
+        Swal.fire({
+            title: "Success!",
+            html: `<b>${msg}</b>`,
+            icon: "success",
+            background: "#111",
+            color: "white",
+            showConfirmButton: false,
+            timer: 1800,
+            customClass: {
+                popup: "animate__animated animate__slideInDown"
+            }
+        });
+    }
+
+    /* DELETE CONFIRM POPUP */
+    function premiumDelete(msg) {
+        successSound.play();
+
+        Swal.fire({
+            title: "Deleted!",
+            html: `<b>${msg}</b>`,
+            icon: "error",
+            background: "#1a0000",
+            color: "white",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
 
     /* LOAD PROJECTS */
     fetch('/projects/list')
@@ -413,16 +358,15 @@
             });
         });
 
-    /* OPEN VIEW MODAL */
+    /* OPEN VIEW */
     let currentProject = null;
 
     function openViewModal(project) {
-
         currentProject = project;
 
         document.getElementById('viewTitle').textContent = project.name;
-        document.getElementById('viewLocation').textContent = project.location || "Not provided";
-        document.getElementById('viewArea').textContent = project.area || "Not provided";
+        document.getElementById('viewLocation').textContent = project.location;
+        document.getElementById('viewArea').textContent = project.area;
         document.getElementById('viewDescription').textContent = project.description;
 
         document.getElementById('viewImages').innerHTML =
@@ -431,13 +375,12 @@
         document.getElementById('viewModal').style.display = 'flex';
     }
 
-    /* SWITCH TO EDIT */
     function switchToEdit() {
-        closeModal('viewModal');
+        closeModal("viewModal");
         openEditModal(currentProject);
     }
 
-    /* OPEN EDIT MODAL */
+    /* OPEN EDIT */
     function openEditModal(project) {
 
         document.getElementById('projectId').value = project.id;
@@ -454,7 +397,10 @@
             div.innerHTML += `
                 <div class="image-box">
                     <img src="/uploads/${img.imagePath}">
-                    <button onclick="deleteImage(${project.id}, '${img.imagePath}', this)">x</button>
+                    <button
+                        data-path="${img.imagePath}"
+                        onclick="deleteImage(${project.id}, this.dataset.path, this)"
+                    >×</button>
                 </div>
             `;
         });
@@ -462,7 +408,6 @@
         document.getElementById('editModal').style.display = 'flex';
     }
 
-    /* CLOSE MODAL */
     function closeModal(id) {
         document.getElementById(id).style.display = "none";
     }
@@ -482,34 +427,49 @@
         let files = document.getElementById('newImages').files;
         for (let f of files) fd.append("images", f);
 
-        // Show spinner
-        document.getElementById("spinnerOverlay").style.display = "flex";
-
         fetch(`/projects/save`, { method:"POST", body:fd })
             .then(res => res.text())
             .then(() => {
-                document.getElementById("spinnerOverlay").style.display = "none";
-                document.getElementById("successOverlay").style.display = "flex";
+                closeModal("editModal");
+                premiumSuccess("Project updated successfully!");
                 setTimeout(() => location.reload(), 1500);
             });
     }
 
     /* DELETE PROJECT */
     function deleteProject(id) {
-        if (!confirm("Delete this project?")) return;
 
-        fetch(`/projects/${id}`, { method:"DELETE" })
-            .then(() => location.reload());
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This project will be deleted permanently.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e60000",
+            cancelButtonColor: "#555",
+            confirmButtonText: "Yes, delete it!"
+        }).then(result => {
+            if (result.isConfirmed) {
+
+                fetch(`/projects/${id}`, { method:"DELETE" })
+                    .then(() => {
+                        premiumDelete("Project deleted!");
+                        setTimeout(() => location.reload(), 1200);
+                    });
+            }
+        });
     }
 
-    /* DELETE IMAGE */
-    function deleteImage(id, path, btn) {
-        if (!confirm("Delete this image?")) return;
-
-        fetch(`/projects/${id}/deleteImage?path=${encodeURIComponent(path)}`, { method:"DELETE" })
-            .then(() => btn.parentElement.remove());
-    }
-
+    /* DELETE IMAGE — FINAL FIX */
+   	function deleteImage(projectId, imgPath, btn) {
+	    if (confirm("Delete this image?")) {
+	        fetch(`/projects/${projectId}/deleteImage?path=${encodeURIComponent(imgPath)}`, { method: "DELETE" })
+	            .then(res => {
+	                if (res.ok) {
+	                    btn.parentElement.remove();
+	                }
+	            });
+	    }
+	}
 </script>
 
 </body>

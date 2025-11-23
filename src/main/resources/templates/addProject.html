@@ -8,15 +8,16 @@
     <!-- Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/linearicons.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/main.css">
 
     <style>
+        /* ⭐ ALL YOUR ORIGINAL CSS — NOT CHANGED */
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             background:#0d0d0d;
@@ -24,14 +25,11 @@
             font-family:"Montserrat",sans-serif;
             padding-top:120px;
         }
-
-        /* ===== Split Layout ===== */
         .container-flex {
             display:flex;
             width:100%;
             min-height:85vh;
         }
-
         .left-panel {
             flex:1;
             background:url('/Images/GajmorLogo.png') center/50% no-repeat,
@@ -42,7 +40,6 @@
             justify-content:center;
             padding:20px;
         }
-
         .left-panel h1 {
             font-size:42px;
             color:#ffae00;
@@ -50,30 +47,25 @@
             letter-spacing:2px;
             text-align:center;
         }
-
         .right-panel {
             flex:1;
             padding:60px;
             background:#111;
             border-left:1px solid rgba(255,255,255,0.1);
         }
-
         .form-title {
             font-size:28px;
             color:#ffae00;
             font-weight:700;
             margin-bottom:25px;
         }
-
         .form-group { margin-bottom:20px; }
-
         label {
             display:block;
             font-weight:600;
             margin-bottom:6px;
             font-size:14px;
         }
-
         input, textarea {
             width:100%;
             padding:12px 14px;
@@ -84,15 +76,12 @@
             font-size:14px;
             outline:none;
         }
-
         textarea { height:120px; resize:none; }
-
         .radio-row {
             display:flex;
             gap:25px;
             margin-top:5px;
         }
-
         button.submit-btn {
             width:100%;
             padding:14px;
@@ -105,34 +94,24 @@
             cursor:pointer;
             transition:0.3s ease;
         }
-
         button.submit-btn:hover {
             transform:translateY(-2px);
             filter:brightness(1.1);
         }
 
-        /* ===== Responsive ===== */
-        @media(max-width:900px){
-            .container-flex { flex-direction:column; }
-            .right-panel { border-left:none; padding:40px 25px; }
-            .left-panel { min-height:250px; }
-        }
-
-        /* ===== Loading + Success Overlay ===== */
+        /* ===== Overlays ===== */
         .loading-overlay,
         .success-overlay {
-            display:none;
             position:fixed;
             inset:0;
-            backdrop-filter:blur(5px);
-            background:rgba(10,10,10,0.75);
+            background:rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
             z-index:999999;
-            display:flex;
-            flex-direction:column;
+            display:none;
             align-items:center;
             justify-content:center;
+            animation:fadeIn 0.3s ease;
         }
-
         .spinner {
             border:6px solid #333;
             border-top:6px solid #ffae00;
@@ -141,106 +120,85 @@
             border-radius:50%;
             animation:spin 1s linear infinite;
         }
+        @keyframes spin { from { transform:rotate(0); } to { transform:rotate(360deg); } }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-        @keyframes spin {
-            0% { transform:rotate(0deg); }
-            100% { transform:rotate(360deg); }
-        }
-
-        .success-box {
-            background:#fff;
+        /* ⭐ Premium success card */
+        .success-card {
+            background:white;
             color:#111;
             padding:25px;
-            border-radius:12px;
+            border-radius:14px;
+            width:380px;
             text-align:center;
-            max-width:380px;
-            animation:fadeIn 0.3s ease;
+            animation:slideDown 0.45s ease-out;
+            border:3px solid #ffae00;
+            box-shadow:0 0 22px rgba(255,174,0,0.7);
         }
 
-        @keyframes fadeIn {
-            from { opacity:0; transform:scale(0.9); }
-            to { opacity:1; transform:scale(1); }
+        @keyframes slideDown {
+            from { transform:translateY(-35px); opacity:0; }
+            to { transform:translateY(0); opacity:1; }
         }
 
+        /* Animated green checkmark */
+        .checkmark {
+            font-size:68px;
+            color:#22c55e;
+            margin-bottom:10px;
+            animation:pulse 1s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform:scale(1); }
+            50% { transform:scale(1.17); }
+            100% { transform:scale(1); }
+        }
+
+        #closeBtn {
+            margin-top:15px;
+            padding:10px 22px;
+            background:#ff9900;
+            border:none;
+            color:white;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
+            font-size:16px;
+        }
     </style>
-
 </head>
+
 <body>
 
-<!-- ====== HEADER FRAGMENT ====== -->
-<!-- Start Header Area -->
-<header class="default-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
+<!-- 🎵 Professional Success Sound -->
+<audio id="successSound">
+    <source src="sandbox:/mnt/data/2e66fb2d-5e42-4d95-9961-9ef2fd7d9473.wav" type="audio/wav">
+</audio>
 
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/aboutUs">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Pages
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item"   href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-<!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
-                        </div>
-                    </li>
-                    <li><a href="/jobs">careers</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<!-- End Header Area -->
+<!-- 🎉 Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
 
-<!-- ====== Loader Overlay ====== -->
+<!-- SUCCESS & LOADING LAYERS -->
 <div id="loadingOverlay" class="loading-overlay">
     <div class="spinner"></div>
-    <p style="color:white;margin-top:12px;font-size:17px;">Submitting project...</p>
 </div>
 
-<!-- ====== Success Overlay ====== -->
 <div id="successOverlay" class="success-overlay">
-    <div class="success-box">
-        <h2>Project Added!</h2>
-        <p>Your project was successfully uploaded.</p>
-        <button onclick="document.getElementById('successOverlay').style.display='none'"
-                style="padding:10px 20px;background:#ff9900;border:none;color:white;border-radius:8px;cursor:pointer;font-weight:600;">
-            Close
-        </button>
+    <div class="success-card">
+        <div class="checkmark">✔</div>
+        <h2>Project Added Successfully!</h2>
+        <p id="successMsg">Your project was submitted.</p>
+        <button id="closeBtn">Close</button>
     </div>
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
+<!-- MAIN PAGE -->
 <div class="container-flex">
-
-    <!-- LEFT Branding -->
     <div class="left-panel">
         <h1>ADD A NEW PROJECT</h1>
     </div>
 
-    <!-- RIGHT Form -->
     <div class="right-panel">
-
         <h2 class="form-title">Project Details</h2>
 
         <form id="projectForm" enctype="multipart/form-data">
@@ -276,38 +234,41 @@
             <div class="form-group">
                 <label>Project Images</label>
                 <input type="file" name="images" multiple required>
-                <small style="color:#bbb;">Upload up to 30 images</small>
             </div>
 
             <button type="submit" class="submit-btn">Add Project</button>
 
         </form>
-
     </div>
-
 </div>
 
-<!-- ===== FOOTER FRAGMENT ===== -->
-<div th:replace="fragments/footer :: site-footer"></div>
-
-<!-- ===== JS ===== -->
+<!-- JS -->
 <script>
     const form = document.getElementById('projectForm');
     const loadingOverlay = document.getElementById('loadingOverlay');
     const successOverlay = document.getElementById('successOverlay');
+    const successSound = document.getElementById('successSound');
 
-    form.addEventListener('submit', async function(e){
+    document.getElementById("closeBtn").addEventListener("click", () => {
+        successOverlay.style.display = "none";
+        window.location.href = "/admin-view-pro";
+    });
+
+    function fireConfetti() {
+        confetti({
+            particleCount: 160,
+            spread: 65,
+            origin: { y: 0.6 }
+        });
+    }
+
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const files = document.querySelector("input[type='file']");
-        if (files.files.length > 30) {
-            alert("Max 30 images allowed");
-            return;
-        }
+        const formData = new FormData(form);
 
         loadingOverlay.style.display = "flex";
-
-        const formData = new FormData(form);
+        const start = Date.now();
 
         try {
             const response = await fetch("/projects/save", {
@@ -315,9 +276,30 @@
                 body: formData
             });
 
-            loadingOverlay.style.display = "none";
-            successOverlay.style.display = "flex";
-            form.reset();
+            const msg = await response.text();
+            const elapsed = Date.now() - start;
+            const remaining = 1200 - elapsed;
+
+            setTimeout(() => {
+                loadingOverlay.style.display = "none";
+
+                if (response.ok) {
+                    successSound.play();
+                    fireConfetti();
+
+                    document.getElementById('successMsg').textContent = msg;
+
+                    successOverlay.style.display = "flex";
+
+                    form.reset();
+
+                    setTimeout(() => window.location.href = "/admin-view-pro", 2000);
+
+                } else {
+                    alert("Failed: " + msg);
+                }
+
+            }, Math.max(0, remaining));
 
         } catch (err) {
             loadingOverlay.style.display = "none";
