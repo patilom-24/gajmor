@@ -32,32 +32,64 @@
 
     <style>
         .whatsapp-float {
-position: fixed;
-width: 58px;
-height: 58px;
-bottom: 25px;
-right: 25px;
-background: #25D366; /* WhatsApp green */
-color: #fff;
-border-radius: 50%;
-text-align: center;
-font-size: 30px;
-z-index: 9999;
-display: flex;
-align-items: center;
-justify-content: center;
-box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-transition: all 0.25s ease;
-}
+    position: fixed;
+    width: 58px;
+    height: 58px;
+    bottom: 25px;
+    right: 25px;
+    background: #25D366;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: all 0.25s ease;
 
-.whatsapp-float:hover {
-transform: scale(1.12);
-box-shadow: 0 10px 28px rgba(0,0,0,0.30);
-}
+    /* ✅ Added animations */
+    animation: bounce 1.6s infinite, pulse 2s infinite;
+  }
 
-.whatsapp-float i {
-color: #fff;
-}
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.12);
+    animation-play-state: paused; /* stops animation on hover for effect */
+    box-shadow: 0 10px 28px rgba(0,0,0,0.30);
+  }
+
+  .whatsapp-float i {
+    color: #fff;
+  }
+
+
+          .img1{
+              height: 100px;
+              margin-bottom: 25px;
+          }
+
 
     </style>
 </head>
@@ -126,28 +158,28 @@ color: #fff;
         <div class="row feature_inner">
             <div class="col-lg-3 col-md-6">
                 <div class="feature-item">
-                    <i class="fi flaticon-compass"></i>
+                    <img class="img1" src="Images/drawing-compass.png" alt="">
                     <h4>Creative Design</h4>
                     <p>From concept to final execution, we deliver thoughtful design solutions that enhance brand identity and ensure a consistent visual experience across all platforms.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="feature-item">
-                    <i class="fi flaticon-desk"></i>
+                    <img class="img1" src="Images/workspace.png" alt="">
                     <h4>Experienced Style</h4>
                     <p>With years of hands-on expertise, we deliver refined and reliable design solutions built on proven techniques and thoughtful creativity.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="feature-item">
-                    <i class="fi flaticon-bathroom"></i>
+                    <img class="img1" src="Images/bath.png" alt="">
                     <h4>Product Research</h4>
                     <p>With structured research methods and data-backed analysis, we help you identify opportunities, reduce risks, and build products with confidence </p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="feature-item">
-                    <i class="fi flaticon-beach"></i>
+                    <img class="img1" src="Images/best-price.png" alt="">
                     <h4>Affordable Price</h4>
                     <p>We provide cost-effective solutions tailored to your needs, combining quality, reliability, and affordability in every project. </p>
                 </div>
