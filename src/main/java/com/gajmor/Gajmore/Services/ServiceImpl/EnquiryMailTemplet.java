@@ -3,7 +3,7 @@ package com.gajmor.Gajmore.Services.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EnquiryMailTemplet {
+public class  EnquiryMailTemplet {
     public String buildEnquiryEmail(String name, String email, String phone, String message) {
         String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
 
