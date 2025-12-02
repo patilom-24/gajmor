@@ -4,7 +4,7 @@ package com.gajmor.Gajmore.Controllers;
 import com.gajmor.Gajmore.Model.Enquiry;
 import com.gajmor.Gajmore.Repository.EnquiryRepository;
 import com.gajmor.Gajmore.Services.ServiceImpl.EmailService;
-import com.gajmor.Gajmore.Services.ServiceImpl.EnquiryMailTemplet;
+import com.gajmor.Gajmore.Services.ServiceImpl.EnquiryMailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class SubmitRequest {
     EmailService emailService;
 
     @Autowired
-    EnquiryMailTemplet enquiryMailTemplet;
+    EnquiryMailTemplate enquiryMailTemplate;
 
     @Autowired
     EnquiryRepository enquiryRepository;
@@ -33,20 +33,20 @@ public class SubmitRequest {
 
     @PostMapping("/submitEnquiry")
     private String getEnquiryDetails(@ModelAttribute Enquiry enquiry, RedirectAttributes redirectAttributes){
-        enquiry.setEnquiryFor(enquiryMailTemplet.formatEnquiryValue(enquiry.getEnquiryFor()));
-        String enquiryFor = enquiryMailTemplet.formatEnquiryValue(enquiry.getEnquiryFor());
+        enquiry.setEnquiryFor(enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor()));
+        String enquiryFor = enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor());
         System.out.println(enquiry.getName() +" "+enquiry.getEmail()+" "+enquiry.getMobileNo()+" "+enquiryFor);
         enquiryRepository.save(enquiry);
 
 //        For send the response email to the client
         try {
             // Send Email To the Client
-            String html = enquiryMailTemplet.buildClientEnquiryResponseEmail(enquiry.getName());
+            String html = enquiryMailTemplate.buildClientEnquiryResponseEmail(enquiry.getName());
             emailService.sendEmail(enquiry.getEmail(), "Thank You for Your Enquiry - Gajmor", html);
 
             // Sent Email To The Admin
-            String emailBody = enquiryMailTemplet.buildEnquiryEmail(enquiry.getName(),enquiry.getEmail(),enquiry.getMobileNo(),enquiry.getEnquiryFor());
-            emailService.sendEmail(fromAddress,"Enquiry For the "+enquiryMailTemplet.formatEnquiryValue(enquiry.getEnquiryFor()),emailBody);
+            String emailBody = enquiryMailTemplate.buildEnquiryEmail(enquiry.getName(),enquiry.getEmail(),enquiry.getMobileNo(),enquiry.getEnquiryFor());
+            emailService.sendEmail(fromAddress,"Enquiry For the "+ enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor()),emailBody);
         } catch (Exception e) {
             e.printStackTrace();
         }
