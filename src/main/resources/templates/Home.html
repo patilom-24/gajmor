@@ -427,122 +427,244 @@
             </a>
         </div>
 
-        <!-- ⭐ VIEW ALL PROJECTS BUTTON ⭐ -->
-        <div class="view-all-container">
-            <a href="/view-pro" style="text-decoration:none;" class="view-all-btn">View All Projects</a>
-        </div>
+
 
     </div>
+
+    <!-- ⭐ VIEW ALL PROJECTS BUTTON ⭐ -->
+    <div class="view-all-container">
+        <button class="view-all-btn" onclick="window.location.href='/view-pro'">
+            View All Projects
+        </button>
+    </div>
+    <br><br>
+
 </section>
 
-
 <style>
-    /* Section Base */
-    .project-section {
-        padding: 60px 0;
-        background: #f3f3f3;
-        font-family: 'Poppins', sans-serif;
-    }
 
-    .container {
-        max-width: 1200px;
-        margin: auto;
-    }
+    .project-section .container {
+    max-width: 1400px;
+    padding: 0 24px;
+    margin-bottom:40px;
+}
+
+.project-grid {
+    gap: 20px;
+}
+
 
     .section-heading {
-        text-align: center;
-        font-size: 32px;
-        font-weight: 700;
-        color: #222;
-        margin-bottom: 40px;
-    }
+     position: relative;
+     text-align: center;
+     font-size: 36px;
+     font-weight: 700;
+     color: #1f2937;
+     margin-bottom: 45px;
+     letter-spacing: 0.5px;
+ }
 
-    /* Grid */
-    .project-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 25px;
-    }
+ /* Elegant underline */
+ .section-heading::after {
+     content: "";
+     width: 80px;
+     height: 3px;
+     background: linear-gradient(90deg, #ffae00, #ff7a00);
+     display: block;
+     margin: 14px auto 0;
+     border-radius: 4px;
+ }
 
-    /* Card Styling */
-    .project-card {
-        display: block;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        text-decoration: none;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        transition: transform 0.6s ease, box-shadow 0.6s ease;
-    }
+ /* Subtle fade-in (optional) */
+ .section-heading {
+     animation: fadeUp 0.8s ease-out both;
+ }
 
-    .project-image img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        transition: transform 0.8s ease;
-    }
+ @keyframes fadeUp {
+     from {
+         opacity: 0;
+         transform: translateY(12px);
+     }
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
 
-    .project-info {
-        padding: 18px;
-    }
+ /* Responsive */
+ @media (max-width: 768px) {
+     .section-heading {
+         font-size: 28px;
+     }
 
-    .project-info h3 {
-        font-size: 18px;
-        color: #222;
-        font-weight: 600;
-    }
+     .section-heading::after {
+         width: 60px;
+     }
+ }
 
-    /* Hover */
-    .project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
 
-    .project-card:hover img {
-        transform: scale(1.08);
-    }
 
-    /* ⭐ VIEW ALL BUTTON ⭐ */
-    .view-all-container {
-        text-align: center;
-        margin-top: 45px;
-    }
+     /* ===== PROJECT CARD BASE ===== */
 
-    .view-all-container a{
-        text-decoration:none;
+     .project-grid {
+     display: grid;
+     grid-template-columns: repeat(4, 1fr); /* 4 per row */
+     gap: 25px;
+ }
 
-    }
 
-    .view-all-btn {
-        display: inline-block;
-        padding: 12px 28px;
-        font-size: 16px;
-        font-weight: 600;
-        color: white;
-        background: #222;
-        border-radius: 6px;
-        text-decoration: none;
-        transition: background 0.4s ease, transform 0.4s ease;
-    }
+     .project-card {
+         position: relative;
+         overflow: hidden;
+         display: block;
+         text-decoration: none;
+         border-radius: 8px;
+     }
 
-    .view-all-btn:hover {
-        background: #000;
-        transform: translateY(-3px);
-    }
+     /* ===== IMAGE ===== */
+     .project-image img {
+         width: 100%;
+         height: 180px;
+         object-fit: cover;
+         transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+     }
 
-    /* Responsive */
-    @media (max-width: 992px) {
-        .project-grid { grid-template-columns: repeat(3, 1fr); }
-    }
+     /* ===== WHITE SLIDE PANEL ===== */
+     .project-info {
+         position: absolute;
+         bottom: 0;
+         left: -100%;
+         width: 100%;
+         height: 35%;
+         background: #ffffff;
+         display: flex;
+         align-items: center;
+         padding: 20px;
+         transition: left 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+         z-index: 2;
+     }
 
-    @media (max-width: 768px) {
-        .project-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+     .project-info h3 {
+         font-size: 18px;
+         font-weight: 600;
+         color: #222;
+         line-height: 1.4;
+         margin: 0;
+     }
 
-    @media (max-width: 480px) {
-        .project-grid { grid-template-columns: 1fr; }
+     /* ===== DARK OVERLAY ===== */
+     .project-card::after {
+         content: "";
+         position: absolute;
+         inset: 0;
+         background: rgba(0, 0, 0, 0.35);
+         opacity: 0;
+         transition: opacity 0.8s ease;
+         z-index: 1;
+     }
+
+     /* ===== HOVER EFFECTS (DESKTOP) ===== */
+     .project-card:hover .project-info {
+         left: 0;
+     }
+
+     .project-card:hover img {
+         transform: scale(1.08);
+     }
+
+     .project-card:hover::after {
+         opacity: 1;
+     }
+
+     /* ===== MOBILE TAP EFFECT ===== */
+     @media (max-width: 768px) {
+
+         .project-card:active .project-info,
+         .project-card:focus-within .project-info {
+             left: 0;
+         }
+
+         .project-card:active::after,
+         .project-card:focus-within::after {
+             opacity: 1;
+         }
+
+         .project-card:active img,
+         .project-card:focus-within img {
+             transform: scale(1.05);
+         }
+     }
+
+     @media (max-width: 1200px) {
+     .project-grid {
+         grid-template-columns: repeat(3, 1fr);
+     }
+ }
+
+ @media (max-width: 768px) {
+     .project-grid {
+         grid-template-columns: repeat(2, 1fr);
+     }
+ }
+
+ @media (max-width: 480px) {
+     .project-grid {
+         grid-template-columns: 1fr;
+     }
+ }
+
+
+<!--    button css-->
+
+.view-all-container {
+    width: 100%;
+    margin-top: 50px;
+
+}
+
+/* Button style */
+.view-all-btn {
+    display: block;          /* IMPORTANT */
+    margin: 0 auto;          /* CENTER */
+
+
+    padding: 14px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #111827, #1f2937);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover */
+.view-all-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Optional arrow */
+.view-all-btn::after {
+    content: " →";
+    font-size: 18px;
+}
+
+/* Mobile tap feedback */
+@media (max-width: 768px) {
+    .view-all-btn:active {
+        transform: scale(0.96);
     }
+}
+
+
 </style>
+
 
 
 <a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
