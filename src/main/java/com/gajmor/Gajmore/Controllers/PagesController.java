@@ -29,41 +29,9 @@ public class PagesController {
 		return "ViewProjects";
 	}
 
-	@GetMapping("/devloperSection")
+	@GetMapping("/developerSection")
 	public String showDeveloperSection() {
 		return "developers";
-	}
-
-	// admin
-	@GetMapping("/login")
-	public String showAdminLogin() {
-		return "index";
-	}
-
-	@GetMapping("/adminHome")
-	public String showAdminHome() {
-		return "AdminHome";
-	}
-
-	@GetMapping("/add-Projects")
-	public String showAddProjectForm() {
-		return "addProject";
-	}
-
-	@GetMapping("/admin-view-pro")
-	public String showAdminViewProjects() {
-		return "AdminViewProject";
-	}
-
-	@GetMapping("/add-Blog")
-	public String showAddBlogsForm() {
-		return "AdminAddBlogs";
-	}
-
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-        session.removeAttribute("isAdminLoggedIn");
-        return "index";
 	}
 
     @GetMapping("/aboutUs")
@@ -85,4 +53,52 @@ public class PagesController {
     public String viewBlogs(){
         return "blogs";
     }
+
+	// admin roles
+	@GetMapping("/login")
+	public String showAdminLogin() {
+		return "index";
+	}
+
+	@GetMapping("/adminHome")
+	public String showAdminHome(HttpSession session) {
+        if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+        return "AdminHome";
+	}
+
+	@GetMapping("/add-Projects")
+	public String showAddProjectForm(HttpSession session) {
+		if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+        return "addProject";
+	}
+
+	@GetMapping("/admin-view-pro")
+	public String showAdminViewProjects(HttpSession session) {
+        if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+        return "AdminViewProject";
+	}
+
+	@GetMapping("/add-Blog")
+	public String showAddBlogsForm(HttpSession  session) {
+        if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+        return "AdminAddBlogs";
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+        System.out.println("Session is :: "+ session.getAttribute("adminLogin"));
+        session.removeAttribute("adminLogin");
+        session.invalidate();
+        return "index";
+	}
+
+
 }

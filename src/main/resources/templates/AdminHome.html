@@ -17,13 +17,43 @@
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
 
-    <script>
-        // Protect admin page
-        if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
-            window.location.href = "/login";
-        }
+    <script th:if="${success}">
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '[[${success}]]'
+        });
     </script>
 
+    <script th:if="${error}">
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: '[[${error}]]'
+        });
+    </script>
+
+    <script>
+        function showAlert(title, message, type) {
+            document.getElementById("alertTitle").innerText = title;
+            document.getElementById("alertMessage").innerText = message;
+
+            const box = document.querySelector(".alert-box");
+
+            // Color based on type
+            box.style.borderTop = type === 'success'
+                ? "5px solid #16a34a"
+                : "5px solid #dc2626";
+
+            const overlay = document.getElementById("customAlert");
+            overlay.style.display = "flex";
+
+            // ✅ AUTO CLOSE after 2.5 seconds
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 1500);
+        }
+    </script>
 
     <style>
         body {
@@ -115,6 +145,41 @@
 .blue { background: #0074d9; }
 .orange { background: #ff851b; }
 
+  .alert-overlay {
+       position: fixed;
+       inset: 0;
+       background: rgba(0,0,0,0.45);
+       display: none;
+       align-items: center;
+       justify-content: center;
+       z-index: 9999;
+   }
+
+   .alert-box {
+       background: #fff;
+       padding: 28px;
+       width: 320px;
+       border-radius: 12px;
+       text-align: center;
+       box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+       animation: fadeScale 0.25s ease;
+   }
+
+   .alert-box h3 {
+       margin-bottom: 8px;
+       font-size: 20px;
+   }
+
+   .alert-box p {
+       font-size: 15px;
+       color: #444;
+   }
+
+   @keyframes fadeScale {
+       from { opacity: 0; transform: scale(0.85); }
+       to   { opacity: 1; transform: scale(1); }
+   }
+
 
     </style>
 </head>
@@ -173,26 +238,14 @@
             </div>
         </div>
     </div>
+<!--    <p style="color:red;" th:text="${success}"></p>-->
 </section>
+
+<script th:if="${success}">
+    alert('[[${success}]]');
+</script>
+
 <!-- End top-section Area -->
-
-<!-- MAIN CONTENT -->
-<!--<div class="admin-wrapper">
-
-    <div class="left-side">
-        <img src="/Images/GajmorLogo.png" alt="Gajmor Logo">
-    </div>
-
-    <div class="right-side">
-        <div class="btn-box">
-            <a class="dash-btn" href="/add-Projects">➕ Add Project</a>
-            <a class="dash-btn" href="/admin-view-pro">📂 View Projects</a>
-            <a class="dash-btn" href="/add-Blog">📝 Add Blog</a>
-            <a class="dash-btn logout-btn" href="/logout">🚪 Logout</a>
-        </div>
-    </div>
-
-</div>-->
 
 <section class="feature-section">
     <div class="feature-container">
@@ -242,6 +295,13 @@
     </div>
 </section>
 
+<div id="customAlert" class="alert-overlay">
+    <div class="alert-box">
+        <h3 id="alertTitle"></h3>
+        <p id="alertMessage"></p>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
 
@@ -257,5 +317,7 @@
 <script src="js/jquery.magnific-popup.min.js"></script>
 <script src="js/jquery.sticky.js"></script>
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
