@@ -1,5 +1,6 @@
 package com.gajmor.Gajmore.Controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -60,8 +61,9 @@ public class PagesController {
 	}
 
 	@GetMapping("/logout")
-	public String lohout() {
-		return "index";
+	public String logout(HttpSession session) {
+        session.removeAttribute("isAdminLoggedIn");
+        return "index";
 	}
 
     @GetMapping("/aboutUs")

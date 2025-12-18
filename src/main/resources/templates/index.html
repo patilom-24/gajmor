@@ -270,9 +270,9 @@
             <input type="text" class="form-control login-input"  id="username" placeholder="username">
             <input type="password" class="form-control login-input" id="password" placeholder="Password">
 
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <!--<div class="d-flex justify-content-between align-items-center mb-3">
                 <a href="#" class="forgot-link">Forgot password?</a>
-            </div>
+            </div>-->
 
             <button type="submit" class="btn login-btn" id="btn">Login</button>
         </form>
@@ -289,21 +289,27 @@
 
 
 <script>
-
-    // Admin Login
-    document.getElementById("adminLoginForm").addEventListener("submit", function(event){
+    // Admin Login with Session
+    document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
         event.preventDefault();
 
         let user = document.getElementById("username").value;
         let pass = document.getElementById("password").value;
 
-        if(user === "admin" && pass === "admin123"){
+        if (user === "admin" && pass === "admin123") {
+
+            //Create session
+            sessionStorage.setItem("isAdminLoggedIn", "true");
+
+            // Redirect to admin home
             window.location.href = "/adminHome";
+
         } else {
             alert("Invalid Username or Password");
         }
     });
 </script>
+
 
 <!--footer section-->
 <div th:replace="fragments/footer :: site-footer"></div>
