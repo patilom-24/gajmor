@@ -206,17 +206,15 @@
             </div>
         </div>
     </div>
-<!--    <p style="color:red;" th:text="${success}"></p>-->
 
     <script th:if="${success}">
         Swal.fire({
-                position: "center",
-                title: "Login Success",
-                icon: "success",
-                text: "Welcome Gajanan Morye",
-                showConfirmButton: false,
-                timer: 1500
-                });
+            icon: "success",
+            title: "Login Success",
+            text: "[[${success}]]",
+            timer: 1500,
+            showConfirmButton: false
+        });
     </script>
 </section>
 

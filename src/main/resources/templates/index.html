@@ -346,14 +346,12 @@
 
             <script th:if="${error}">
                 Swal.fire({
-                        position: "center",
-                        title: "Oops !",
-                        icon: "error",
-                        text: "Invalid Credentials",
-                        footer: '<a href="#">Forgot Password?</a>',
-                        showConfirmButton: false,
-                        timer: 1500
-                        });
+                    icon: "error",
+                    title: "Oops!",
+                    text: "[[${error}]]",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
             </script>
 
         </form>
