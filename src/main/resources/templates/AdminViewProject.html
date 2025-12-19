@@ -28,10 +28,9 @@
         body {
             margin:0;
             padding:0;
-            background:#0d0d0d;
+<!--            background:#0d0d0d;-->
             color:white;
             font-family:"Montserrat",sans-serif;
-            padding-top:120px;
         }
 
         .page-title {
@@ -134,7 +133,25 @@
         }
 
         .modal-content {
-            background:#111;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            font-size: 30px;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+
+
+
+        <!--.modal-content {
+            background:#c8c8c8;
             border:1px solid rgba(255,255,255,0.15);
             padding:25px;
             width:95%;
@@ -143,7 +160,7 @@
             overflow-y:auto;
             border-radius:16px;
             animation:pop .4s ease;
-        }
+        }-->
 
         @keyframes pop {
             from { opacity:0; transform:scale(.85); }
@@ -161,12 +178,40 @@
             font-weight:600;
         }
 
-        .image-preview img {
-            height:150px;
-            border-radius:12px;
-        }
+        .modal-content p {
+    font-size: 15px;
+    color: #000000;
+    line-height: 1.6;
+}
 
-        .image-box { position:relative; }
+.modal-content strong {
+    color: #000000;
+    font-weight: 600;
+}
+
+       .image-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.image-preview img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 35px rgba(255,174,0,0.4);
+}
+
 
         .image-box button {
             position:absolute;
@@ -190,9 +235,206 @@
             color:white;
         }
 
-        textarea { height:130px; resize:none; }
+        textarea { height:150px; resize:none; }
 
         label { color:#ffae00; font-weight:600; }
+
+
+        .project-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 50px;
+    margin-top: 20px;
+}
+
+.detail {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: start;
+}
+
+.detail strong {
+    color: #000000;
+    font-weight: 600;
+    font-size: x-large;
+}
+
+.detail span {
+    color: #000000;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-left: 40px;
+}
+
+/* Description takes full width */
+.detail.full {
+    grid-column: 1 / -1;
+}
+
+
+
+<!--        buttons-->
+
+        .buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#btn1{
+    margin-right:20%;
+}
+
+#btn2{
+    margin-left:20%;
+}
+
+.buttons button {
+    width:200px;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.buttons button:hover {
+    transform: translateY(-2px);
+}
+
+
+        .modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(#ffae00, #ff8800);
+    border-radius: 10px;
+}
+
+        @media (max-width: 600px) {
+    .modal-content p {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content p strong {
+        margin-bottom: 4px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .buttons button {
+        width: 100%;
+    }
+}
+
+
+        .image-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+/* Delete button */
+.image-box button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(231, 76, 60, 0.9);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.image-box button:hover {
+    background: #c0392b;
+    transform: scale(1.1);
+}
+
+        .image-box button {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.image-box:hover button {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+        /* Default (Desktop) */
+.modal-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+/* Common button style */
+.modal-actions button {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+/* Close */
+.close-btn {
+    background: #2c2c2c;
+    color: #fff;
+}
+
+/* Save */
+.view-btn {
+    background: linear-gradient(135deg, #ffae00, #ff8c00);
+    color: #000;
+}
+
+/* 📱 MOBILE FIXED BOTTOM BUTTONS */
+@media (max-width: 600px) {
+
+    .modal-actions {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #c8c8c8;
+        padding: 12px 16px;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        display: flex;
+        gap: 12px;
+        z-index: 3000;
+    }
+
+    /* Prevent content hiding behind buttons */
+    .modal-content {
+        padding-bottom: 90px;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        border-radius: 12px;
+    }
+}
+
 
     </style>
 
@@ -221,7 +463,19 @@
     </nav>
 </header>
 
-<h1 class="page-title">Admin View Projects</h1>
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="text-white">Admin View Projects</h1>
+                <p>Explore our latest commercial and residential project portfolio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End top-section Area -->
 
 <!-- GRID -->
 <div class="project-grid" id="projectGrid"></div>
@@ -229,16 +483,32 @@
 <!-- VIEW MODAL -->
 <div class="modal" id="viewModal">
     <div class="modal-content">
-        <button class="close-btn" onclick="closeModal('viewModal')">Close</button>
 
-        <h2 id="viewTitle"></h2>
+
+        <h2 id="viewTitle" ></h2>
         <div id="viewImages" class="image-preview"></div>
 
-        <p><strong>Location:</strong> <span id="viewLocation"></span></p>
-        <p><strong>Area:</strong> <span id="viewArea"></span></p>
-        <p><strong>Description:</strong> <span id="viewDescription"></span></p>
+        <div class="project-details">
+            <div class="detail">
+                <strong>Location:</strong>
+                <span id="viewLocation"></span>
+            </div>
 
-        <button class="edit-btn" onclick="switchToEdit()">Edit This Project</button>
+            <div class="detail">
+                <strong>Area:</strong>
+                <span id="viewArea"></span>
+            </div>
+
+            <div class="detail full">
+                <strong>Description:</strong>
+                <span id="viewDescription"></span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="close-btn" id="btn1" onclick="closeModal('viewModal')">Close</button>
+            <button class="edit-btn" id="btn2" onclick="switchToEdit()">Edit This Project</button>
+        </div>
     </div>
 </div>
 
@@ -246,7 +516,7 @@
 <div class="modal" id="editModal">
     <div class="modal-content">
 
-        <button class="close-btn" onclick="closeModal('editModal')">Close</button>
+
 
         <h2>Edit Project</h2>
 
@@ -254,20 +524,20 @@
 
             <input type="hidden" id="projectId">
 
-            <label>Project Name</label>
+            <label>Project Name <label style="color:red;"> *</label></label>
             <input type="text" id="projectName">
 
-            <label>Project Type</label>
+            <label>Project Type <label style="color:red;"> *</label></label>
             <input type="text" id="projectType">
 
-            <label>Location</label>
+            <label>Location <label style="color:red;"> *</label></label>
             <input type="text" id="projectLocation">
 
-            <label>Area</label>
+            <label>Area <label style="color:red;"> *</label></label>
             <input type="text" id="projectArea">
 
-            <label>Description</label>
-            <textarea id="projectDescription"></textarea>
+            <label>Description <label style="color:red;"> *</label></label>
+            <textarea id="projectDescription" maxlength="4000"></textarea>
 
             <label>Existing Images</label>
             <div id="editImages" class="image-preview"></div>
@@ -275,12 +545,18 @@
             <label>Add More Images</label>
             <input type="file" id="newImages" multiple>
 
-            <button type="button" onclick="saveProject()" class="view-btn" style="width:100%; margin-top:15px;">
-                Save Changes
-            </button>
+            <div class="modal-actions">
+                <button class="close-btn" onclick="closeModal('editModal')">Close</button>
+                <button type="button" onclick="saveProject()" class="view-btn">
+                    Save Changes
+                </button>
+            </div>
+
         </form>
     </div>
 </div>
+
+
 
 <script>
 
@@ -367,7 +643,7 @@
 
         document.getElementById('viewTitle').textContent = project.name;
         document.getElementById('viewLocation').textContent = project.location;
-        document.getElementById('viewArea').textContent = project.area;
+        document.getElementById('viewArea').textContent = project.area + ' sq.ft';
         document.getElementById('viewDescription').textContent = project.description;
 
         document.getElementById('viewImages').innerHTML =
