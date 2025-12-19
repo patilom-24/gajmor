@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--<script>
         function showAlert(title, message, type) {
             document.getElementById("alertTitle").innerText = title;
             document.getElementById("alertMessage").innerText = message;
@@ -41,7 +43,7 @@
                 overlay.style.display = "none";
             }, 1500);
         }
-    </script>
+    </script>-->
 
 
     <style>
@@ -225,6 +227,7 @@
    opacity: 0.85;
 }
 
+<!--
 
             .alert-overlay {
         position: fixed;
@@ -260,6 +263,11 @@
         from { opacity: 0; transform: scale(0.85); }
         to   { opacity: 1; transform: scale(1); }
     }
+-->
+
+        .swal2-select {
+    display: none !important;
+}
 
     </style>
 </head>
@@ -330,22 +338,22 @@
             <input type="text" class="form-control login-input"  id="username" name="username" required placeholder="username">
             <input type="password" class="form-control login-input" id="password" name="password" required placeholder="Password">
 
-            <!--<div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <a href="#" class="forgot-link">Forgot password?</a>
-            </div>-->
+            </div>
 
             <button type="submit" class="btn login-btn" id="btn">Login</button>
 
-<!--            <p style="color:red;" th:text="${error}"></p>-->
-
-
-
-            <!--<script th:if="${error}">
-                showAlert("Login Failed", '[[${error}]]', 'error');
-            </script>
--->
             <script th:if="${error}">
-                alert('[[${error}]]');
+                Swal.fire({
+                        position: "center",
+                        title: "Oops !",
+                        icon: "error",
+                        text: "Invalid Credentials",
+                        footer: '<a href="#">Forgot Password?</a>',
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
             </script>
 
         </form>
@@ -360,38 +368,6 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-<!--<script>
-    // Admin Login with Session
-    document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        let user = document.getElementById("username").value;
-        let pass = document.getElementById("password").value;
-
-        if (user === "admin" && pass === "admin123") {
-
-            //Create session
-            sessionStorage.setItem("isAdminLoggedIn", "login");
-
-            // Redirect to admin home
-            window.location.href = "/adminHome";
-
-        } else {
-            alert("Invalid Username or Password");
-        }
-    });
-</script>-->
-
-
-<div id="customAlert" class="alert-overlay">
-    <div class="alert-box">
-        <h3 id="alertTitle"></h3>
-        <p id="alertMessage"></p>
-    </div>
-</div>
-
 <!--footer section-->
 <div th:replace="fragments/footer :: site-footer"></div>
 
@@ -407,7 +383,7 @@
 <script src="js/jquery.magnific-popup.min.js"></script>
 <script src="js/jquery.sticky.js"></script>
 <script src="js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.gajmor.Gajmore.Controllers;
 
+    import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.net.http.HttpResponse;
 
 @Controller
 public class PagesController {
@@ -56,12 +59,18 @@ public class PagesController {
 
 	// admin roles
 	@GetMapping("/login")
-	public String showAdminLogin() {
-		return "index";
+	public String showAdminLogin(HttpSession session,HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
+        return "index";
 	}
 
 	@GetMapping("/adminHome")
-	public String showAdminHome(HttpSession session) {
+	public String showAdminHome(HttpSession session, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
         if (session.getAttribute("adminLogin") == null){
             return "index";
         }
@@ -69,7 +78,10 @@ public class PagesController {
 	}
 
 	@GetMapping("/add-Projects")
-	public String showAddProjectForm(HttpSession session) {
+	public String showAddProjectForm(HttpSession session, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
 		if (session.getAttribute("adminLogin") == null){
             return "index";
         }
@@ -77,7 +89,10 @@ public class PagesController {
 	}
 
 	@GetMapping("/admin-view-pro")
-	public String showAdminViewProjects(HttpSession session) {
+	public String showAdminViewProjects(HttpSession session, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
         if (session.getAttribute("adminLogin") == null){
             return "index";
         }
@@ -85,7 +100,10 @@ public class PagesController {
 	}
 
 	@GetMapping("/add-Blog")
-	public String showAddBlogsForm(HttpSession  session) {
+	public String showAddBlogsForm(HttpSession  session, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
         if (session.getAttribute("adminLogin") == null){
             return "index";
         }
@@ -93,11 +111,16 @@ public class PagesController {
 	}
 
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
+
+
         System.out.println("Session is :: "+ session.getAttribute("adminLogin"));
         session.removeAttribute("adminLogin");
         session.invalidate();
-        return "index";
+        return "redirect:/login";
 	}
 
 
