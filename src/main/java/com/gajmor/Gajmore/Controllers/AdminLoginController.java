@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AdminLoginController {
@@ -15,24 +14,20 @@ public class AdminLoginController {
     @PostMapping("/loginAdmin")
     public String adminLogin(@RequestParam String username,
                              @RequestParam String password,
-                             HttpSession session,
-                             RedirectAttributes redirectAttributes) {
+                             Model model,
+                             HttpSession session){
 
-        if ("admin".equals(username) && "admin123".equals(password)) {
+        if (username.equals("admin") && password.equals("admin123")){
+            session.setAttribute("adminLogin","loginSuccess");
+            System.out.println("Session activated :: "+session.getAttribute("adminLogin"));
+            model.addAttribute("success", "Welcome Admin!");
 
-            session.setAttribute("adminLogin", "loginSuccess");
-
-            // ✅ success message for next request only
-            redirectAttributes.addFlashAttribute("success", "Welcome Gajanan Morye!");
-
-            return "redirect:/adminHome";
-
-        } else {
-            // ✅ error message for next request only
-            redirectAttributes.addFlashAttribute("error", "Invalid Credentials");
-
-            return "redirect:/login";
+            return "AdminHome";
         }
-    }
+        else {
+            model.addAttribute("error","Invalidate Credentials");
+            return "index";
+        }
 
+    }
 }
