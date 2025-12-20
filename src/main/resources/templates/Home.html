@@ -57,14 +57,28 @@
         }
 
         .home-banner-area .overlay-bg {
-            position: absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background: rgba(0,0,0,0.35) !important;
-            z-index: 1;
-        }
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.35) !important;
+    z-index: 1;
+    pointer-events: none;   /* ✅ ADD THIS */
+}
+
+/* FIX: show social icons on banner */
+.head-bottom-meta {
+    position: absolute;      /* 🔴 REQUIRED */
+    bottom: 30px;            /* adjust as needed */
+    left: 60px;              /* adjust as needed */
+    z-index: 10;             /* above overlay */
+    display: flex;
+}
+
+.home-banner-area .overlay-bg {
+    pointer-events: none;
+}
 
         .banner-content {
             position: relative;
@@ -251,29 +265,28 @@
     <div class="head-bottom-meta">
         <div class="d-flex meta-left no-padding">
 
-            <a href="#">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                 <img src="Images/social-Icons/facebook.png" class="social-icon" alt="Facebook">
             </a>
 
-            <a href="#">
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
                 <img src="Images/social-Icons/youtube.png" class="social-icon" alt="YouTube">
             </a>
 
-            <a href="#">
-                <img src="Images/social-Icons/linkedin.png" class="social-icon" alt="Twitter">
+            <a href="https://www.linkedin.com/company/gajmordesign/" target="_blank" rel="noopener noreferrer">
+                <img src="Images/social-Icons/linkedin.png" class="social-icon" alt="LinkedIn">
             </a>
 
-            <a href="https://www.instagram.com/gajmordesign">
+            <a href="https://www.instagram.com/gajmordesign" target="_blank" rel="noopener noreferrer">
                 <img src="Images/social-Icons/instagram.png" class="social-icon" alt="Instagram">
             </a>
 
-            <a href="#">
-                <img src="Images/social-Icons/pinterest.png" class="social-icon" alt="Instagram">
+            <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer">
+                <img src="Images/social-Icons/pinterest.png" class="social-icon" alt="Pinterest">
             </a>
 
         </div>
     </div>
-
 
 </section>
 <!-- END BANNER -->
