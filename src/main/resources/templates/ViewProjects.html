@@ -1,450 +1,378 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>View Projects</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Projects | Architecture Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Condensed:400,700" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,500" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <!--
-            CSS
-            ============================================= -->
-    <link rel="icon" href="Images/GajmorLogo.png">
-    <link rel="stylesheet" href="/css/linearicons.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/owl.carousel.css">
-    <link rel="stylesheet" href="/css/magnific-popup.css">
-    <link rel="stylesheet" href="/css/nice-select.css">
-    <link rel="stylesheet" href="/css/main.css">
-
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
+        :root{
+          --dark:#1b1b1b;
+          --gray:#666;
+          --light:#f4f4f4;
+          --accent:#ff9800;
+          --card:#fff;
+        }
 
-        .container1{
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
+        body{
+          margin:0;
+          font-family:'Roboto',sans-serif;
+          background:var(--light);
+          color:#222;
+        }
 
+        /* HERO */
+        .hero{
+          background:#1b1b1b;
+          color:#fff;
+          padding:100px 20px;
+          text-align:center;
+        }
+        .hero h1{
+          font-family:'Roboto Condensed';
+          font-size:56px;
+        }
+        .hero p{
+          max-width:700px;
+          margin:15px auto 0;
+          opacity:.85;
+        }
 
-/* Section */
-.section {
-    flex: 1;
-    min-width: 350px;
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+        /* FILTER */
+        .filter-bar{
+          position:sticky;
+          top:0;
+          z-index:10;
+          background:#fff;
+          display:flex;
+          justify-content:center;
+          gap:18px;
+          padding:18px;
+          box-shadow:0 4px 12px rgba(0,0,0,.08);
+        }
+        .filter-bar button{
+          border:none;
+          background:#eee;
+          padding:10px 26px;
+          font-family:'Roboto Condensed';
+          cursor:pointer;
+        }
+        .filter-bar .active{
+          background:var(--accent);
+          color:#fff;
+        }
 
-.section h2 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333;
-    border-bottom: 2px solid #ff9800;
-    padding-bottom: 8px;
-}
+        /* GRID */
+        .container{
+          max-width:1400px;
+          margin:80px auto;
+          padding:0 20px;
+        }
+        .grid{
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+          gap:45px;
+        }
 
-/* Project Grid */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
+        /* CARD */
+        .card{
+          background:var(--card);
+          border-radius:16px;
+          overflow:hidden;
+          box-shadow:0 14px 40px rgba(0,0,0,.14);
+          cursor:pointer;
+          transition:.45s;
+        }
+        .card:hover{transform:translateY(-12px);}
+        .card img{
+          width:100%;
+          height:240px;
+          object-fit:cover;
+        }
+        .card-info{
+          padding:22px;
+        }
+        .card-info h3{
+          font-family:'Roboto Condensed';
+          margin:0 0 6px;
+        }
+        .card-info span{
+          font-size:14px;
+          color:var(--gray);
+        }
 
-/* Project Card */
-.project-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: slideUp 0.5s ease-in-out;
-}
-.project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-.project-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-.project-title {
-    padding: 12px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 16px;
-}
+        /* PROJECT VIEW */
+        .project-view{
+          display:none;
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,.92);
+          overflow-y:auto;
+          z-index:9999;
+        }
+        .project-content{
+          background:#fff;
+          max-width:1200px;
+          margin:70px auto;
+          border-radius:16px;
+          padding:45px;
+        }
+        .close{
+          position:fixed;
+          top:22px;
+          right:26px;
+          background:#000;
+          color:#fff;
+          border:none;
+          padding:10px 20px;
+          border-radius:25px;
+          cursor:pointer;
+        }
 
-/* Modal */
-.modal {
-    position: fixed;
-    top: 0; left: 0;
-    margin:20px;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(6px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 10px;
-    animation: fadeIn 0.4s ease-in-out;
-}
-.modal-content {
-    background: #fff;
-    padding: 20px;
-    max-width: 900px;
-    width: 95%;
-    max-height: 90vh;
-    border-radius: 12px;
-    overflow-y: auto;
-    position: relative;
-    animation: scaleUp 0.4s ease-in-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@keyframes scaleUp {
-    from { transform: scale(0.85); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+        /* PROJECT HERO */
+        .project-hero{
+          height:460px;
+          background-size:cover;
+          background-position:center;
+          border-radius:14px;
+          margin-bottom:35px;
+        }
 
-/* Scrollable images in modal */
-.image-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-}
-.image-scroll img {
-    height: 250px;
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
-.image-scroll img:hover {
-    transform: scale(1.05);
-}
+        /* META */
+        .project-meta{
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+          gap:20px;
+          font-size:14px;
+          color:#555;
+          margin-bottom:40px;
+        }
 
-.description {
-    font-size: 15px;
-    line-height: 1.5;
-    margin-top: 10px;
-}
+        /* STORY */
+        .story{
+          max-width:900px;
+          margin-bottom:45px;
+        }
+        .story h3{
+          font-family:'Roboto Condensed';
+          margin-bottom:10px;
+        }
 
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: #ff5555;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 6px;
-    transition: background 0.3s;
-}
-.close-btn:hover {
-    background: #e33;
-}
+        /* BEFORE AFTER SLIDER */
+        .ba-section{
+          margin-bottom:50px;
+        }
+        .ba-section h3{
+          font-family:'Roboto Condensed';
+          margin-bottom:15px;
+        }
+        .ba-wrap{
+          position:relative;
+          overflow:hidden;
+          border-radius:14px;
+        }
+        .ba-wrap img{
+          width:100%;
+          display:block;
+        }
+        .ba-after{
+          position:absolute;
+          inset:0;
+          width:50%;
+          overflow:hidden;
+        }
+        .ba-slider{
+          position:absolute;
+          top:0;
+          bottom:0;
+          left:50%;
+          width:3px;
+          background:#fff;
+          cursor:ew-resize;
+        }
+        .ba-label{
+          position:absolute;
+          top:12px;
+          background:rgba(0,0,0,.6);
+          color:#fff;
+          padding:4px 10px;
+          font-size:12px;
+        }
+        .ba-label.before{left:12px;}
+        .ba-label.after{right:12px;}
 
-/* Responsive */
-@media (max-width: 600px) {
-    .project-card img { height: 150px; }
-    .modal-content {
-        width: 98%;
-        height: 95%;
-        border-radius: 8px;
-        margin:15px;
-    }
-    .image-scroll img { height: 200px; }
-}
+        /* GALLERY */
+        .gallery{
+          display:flex;
+          gap:18px;
+          overflow-x:auto;
+        }
+        .gallery img{
+          height:280px;
+          border-radius:12px;
+        }
 
-/* WhatsApp button */
-      .social-square {
- position: fixed;
- right: 28px;
- display: inline-flex;
- align-items: center;
- justify-content: center;
- width: 60px;              /* square size */
- height: 60px;
- margin: 8px 0;
- border-radius: 50%;      /* rounded-square */
- text-decoration: none;
- color: #fff;
- font-size: 28px;
- z-index: 9999;
- box-shadow: 0 10px 22px rgba(0,0,0,0.18);
- transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
- will-change: transform, box-shadow;
- pointer-events: auto;
-}
-
-/* stack: place IG above WA */
-.social-square.ig { bottom: 110px; }
-.social-square.wa { bottom: 30px; }
-
-/* Instagram rounded-gradient */
-.social-square.ig {
- background: linear-gradient(135deg, #f58529 0%, #dd2a7b 40%, #8134af 70%, #515bd4 100%);
- /* per-button animations: bounce + tinted pulse */
- animation: gentle-bounce 2.2s infinite ease-in-out, pulse-ig 2.6s infinite ease-out;
-}
-
-/* WhatsApp rounded-green */
-.social-square.wa {
- background: linear-gradient(180deg, #34d058 0%, #25d366 100%);
- animation: gentle-bounce 2.2s infinite ease-in-out, pulse-wa 2.6s infinite ease-out;
-}
-
-/* Icon color (white, crisp) */
-.social-square i { color: #fff; line-height: 1; }
-
-/* Hover / focus: lift & stronger shadow, stop animations */
-.social-square:hover,
-.social-square:focus {
- transform: translateY(-6px) scale(1.05);
- box-shadow: 0 18px 34px rgba(0,0,0,0.26);
- animation-play-state: paused;
- outline: none;
-}
-
-/* Focus visible for keyboard users */
-.social-square:focus-visible {
- box-shadow: 0 18px 34px rgba(0,0,0,0.26), 0 0 0 4px rgba(255,255,255,0.06);
- border-radius: 14px;
-}
-
-/* --- Pulse keyframes (WhatsApp green) --- */
-@keyframes pulse-wa {
- 0% {
-   box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
- }
- 70% {
-   box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
- }
- 100% {
-   box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
- }
-}
-
-/* --- Pulse keyframes (Instagram pink/orange) --- */
-@keyframes pulse-ig {
- 0% {
-   box-shadow: 0 0 0 0 rgba(255, 80, 150, 0.5);
- }
- 70% {
-   box-shadow: 0 0 0 14px rgba(255, 80, 150, 0);
- }
- 100% {
-   box-shadow: 0 0 0 0 rgba(255, 80, 150, 0);
- }
-}
-
-/* Gentle idle bounce (small, subtle) */
-@keyframes gentle-bounce {
- 0%, 100% { transform: translateY(0); }
- 50%     { transform: translateY(-4px); }
-}
-
-/* Make smaller on very small screens */
-@media (max-width: 420px) {
- .social-square { width: 54px; height: 54px; font-size: 24px; right: 18px; }
- .social-square.ig { bottom: 96px; }
- .social-square.wa { bottom: 18px; }
-}
-
-
-.social-icon {
-   width: 35px;      /* adjust size */
-   height: 35px;
-   margin-right: 12px;
-   transition: 0.3s ease;
-}
-
-.social-icon:hover {
-   transform: scale(1.50);
-   opacity: 0.85;
-}
-
-</style>
+        /* CTA */
+        .cta{
+          background:#1b1b1b;
+          color:#fff;
+          padding:80px 20px;
+          text-align:center;
+        }
+        .cta h2{
+          font-family:'Roboto Condensed';
+        }
+        .cta a{
+          display:inline-block;
+          margin-top:18px;
+          padding:14px 36px;
+          background:var(--accent);
+          color:#fff;
+          text-decoration:none;
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- Start Header Area -->
-<header class="default-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/aboutUs">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!-- <a class="dropdown-item" href="elements.html">Elements</a> -->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="/view-blogs" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-                        </div>
-                    </li>
-                    <li><a href="/jobs">careers</a></li>
-                    <li><a href="/enquiry">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<!-- End Header Area -->
-
-<!-- WhatsApp Float -->
-<a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
-    <i class="fa-brands fa-instagram" style="font-size: 40px;" aria-hidden="true"></i>
-</a>
-
-<a href="https://wa.me/7666300048" target="_blank" class="social-square wa" aria-label="WhatsApp - Gajmor Designs"  style="text-decoration: none;">
-    <i class="fa-brands fa-whatsapp" style="font-size: 40px;" aria-hidden="true"></i>
-</a>
-
-<!-- Start top-section Area -->
-<section class="banner-area relative">
-    <div class="overlay overlay-bg"></div>
-    <div class="container">
-        <div class="row justify-content-between align-items-center text-center banner-content">
-            <div class="col-lg-12">
-                <h1 class="text-white">Our Projects</h1>
-                <p>Explore our latest commercial and residential project portfolio.</p>
-            </div>
-        </div>
-    </div>
+<section class="hero">
+    <h1>Our Projects</h1>
+    <p>Architecture shaped by context, clarity and long-term value</p>
 </section>
-<!-- End top-section Area -->
 
+<div class="filter-bar">
+    <button class="active" data-type="all">All</button>
+    <button data-type="Commercial">Commercial</button>
+    <button data-type="Residential">Residential</button>
+</div>
 
-<div class="container1">
-    <!-- Commercial Projects -->
-    <div class="section">
-        <h2>🏢 Commercial Projects</h2>
-        <div class="project-grid" id="commercialGrid"></div>
-    </div>
+<div class="container">
+    <div class="grid" id="grid"></div>
+</div>
 
-    <!-- Residential Projects -->
-    <div class="section">
-        <h2>🏠 Residential Projects</h2>
-        <div class="project-grid" id="residentialGrid"></div>
+<div class="project-view" id="view">
+    <button class="close" onclick="closeProject()">Close</button>
+    <div class="project-content">
+        <div class="project-hero" id="heroImg"></div>
+
+        <h2 id="title"></h2>
+
+        <div class="project-meta">
+            <div><strong>Location</strong><br><span id="loc"></span></div>
+            <div><strong>Area</strong><br><span id="area"></span></div>
+            <div><strong>Floors</strong><br><span id="floors"></span></div>
+            <div><strong>Units</strong><br><span id="units"></span></div>
+            <div><strong>Type</strong><br><span id="type"></span></div>
+        </div>
+
+        <div class="story">
+            <h3>Design Narrative</h3>
+            <p id="desc"></p>
+        </div>
+
+        <div class="ba-section">
+            <h3>Transformation</h3>
+            <div class="ba-wrap" id="baWrap">
+                <img id="beforeImg">
+                <div class="ba-after" id="afterWrap">
+                    <img id="afterImg">
+                </div>
+                <div class="ba-slider" id="baSlider"></div>
+                <div class="ba-label before">Before</div>
+                <div class="ba-label after">After</div>
+            </div>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal" id="projectModal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()">✖ Close</button>
-        <h2 id="modalTitle"></h2>
-        <div class="image-scroll" id="modalImages"></div>
-        <p><strong>📍 Location:</strong> <span id="modalLocation"></span></p>
-        <p><strong>📐 Area:</strong> <span id="modalArea"></span></p>
-        <div class="description"><strong>📝 Description:</strong> <span id="modalDescription"></span></div>
-    </div>
-</div>
-
-
-<!-- WhatsApp Float -->
-<a href="https://wa.me/7666300048" target="_blank" class="whatsapp-float">
-    <i class="fa-brands fa-whatsapp" style="color: #128C7E;"></i>
-</a>
+<section class="cta">
+    <h2>Let’s design something meaningful</h2>
+    <a href="https://wa.me/7666300048" target="_blank">Contact Us</a>
+</section>
 
 <script>
-// Fetch projects from backend
-fetch('/projects/list')
-    .then(res => res.json())
-    .then(projects => {
-        const commercialGrid = document.getElementById('commercialGrid');
-        const residentialGrid = document.getElementById('residentialGrid');
+    let all=[];
+    const grid=document.getElementById("grid");
 
-        projects.forEach(project => {
-            let card = document.createElement('div');
-            card.classList.add('project-card');
-
-            // Use first image if exists
-            const firstImage = project.images.length > 0 
-                ? `http://localhost:8080/uploads/${project.images[0].imagePath}`
-                : 'https://via.placeholder.com/300x200?text=No+Image';
-
-            card.innerHTML = `
-                <img src="${firstImage}" alt="${project.name}">
-                <div class="project-title">${project.name}</div>
-            `;
-
-            card.onclick = () => openModal(project);
-
-            if (project.projectType === "Commercial") {
-                commercialGrid.appendChild(card);
-            } else {
-                residentialGrid.appendChild(card);
-            }
-        });
+    fetch("/projects/list")
+    .then(r=>r.json())
+    .then(data=>{
+      all=data;
+      render(data);
+      document.querySelectorAll(".filter-bar button").forEach(btn=>{
+        btn.onclick=()=>{
+          document.querySelectorAll(".filter-bar button").forEach(b=>b.classList.remove("active"));
+          btn.classList.add("active");
+          const t=btn.dataset.type;
+          render(t==="all"?all:all.filter(p=>p.projectType===t));
+        }
+      });
     });
 
-// Open Modal
-function openModal(project) {
-    document.getElementById('modalImages').innerHTML =
-        project.images.map(img => `<img src="http://localhost:8080/uploads/${img.imagePath}">`).join('');
-    document.getElementById('modalTitle').textContent = project.name;
-    document.getElementById('modalLocation').textContent = project.location || "Not Available";
-    document.getElementById('modalArea').textContent = project.area || "Not Available";
-    document.getElementById('modalDescription').textContent = project.description || "No description available.";
-    document.getElementById('projectModal').style.display = 'flex';
-}
+    function render(list){
+      grid.innerHTML="";
+      list.forEach(p=>{
+        const c=document.createElement("div");
+        c.className="card";
+        c.innerHTML=`
+          <img src="http://localhost:8080/uploads/${p.images[0].imagePath}">
+          <div class="card-info">
+            <h3>${p.name}</h3>
+            <span>${p.location||''}</span>
+          </div>`;
+        c.onclick=()=>openProject(p);
+        grid.appendChild(c);
+      });
+      gsap.from(".card",{y:40,opacity:0,stagger:.12});
+    }
 
-// Close Modal
-function closeModal() {
-    document.getElementById('projectModal').style.display = 'none';
-}
+    function openProject(p){
+      heroImg.style.backgroundImage=`url(http://localhost:8080/uploads/${p.images[0].imagePath})`;
+      title.textContent=p.name;
+      loc.textContent=p.location||'-';
+      area.textContent=p.area||'-';
+      floors.textContent=p.floors||'-';
+      units.textContent=p.units||'-';
+      type.textContent=p.projectType||'-';
+      desc.textContent=p.description||'';
+      beforeImg.src=`http://localhost:8080/uploads/${p.beforeImage}`;
+      afterImg.src=`http://localhost:8080/uploads/${p.afterImage}`;
+
+      gallery.innerHTML="";
+      p.images.forEach(i=>gallery.innerHTML+=`<img src="http://localhost:8080/uploads/${i.imagePath}">`);
+      view.style.display="block";
+      initBA();
+    }
+
+    function closeProject(){view.style.display="none";}
+
+    function initBA(){
+      const wrap=document.getElementById("baWrap");
+      const after=document.getElementById("afterWrap");
+      const slider=document.getElementById("baSlider");
+
+      let dragging=false;
+      slider.onmousedown=()=>dragging=true;
+      window.onmouseup=()=>dragging=false;
+      window.onmousemove=e=>{
+        if(!dragging) return;
+        const rect=wrap.getBoundingClientRect();
+        let x=e.clientX-rect.left;
+        x=Math.max(0,Math.min(x,rect.width));
+        after.style.width=x+"px";
+        slider.style.left=x+"px";
+      }
+    }
 </script>
 
-
-<!-- FOOTER -->
-<div th:replace="fragments/footer :: site-footer"></div>
-
-<script src="js/vendor/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/jquery.ajaxchimp.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/isotope.pkgd.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery.sticky.js"></script>
-<script src="js/main.js"></script>
 </body>
-
 </html>
