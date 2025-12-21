@@ -11,13 +11,25 @@ public class WebConfig implements WebMvcConfigurer {
 	@Value("${project.upload.dir}")
 	private String dir;
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-		registry.addResourceHandler("/uploads/**").addResourceLocations("file:" + dir + "/");
+        // uploads (correct)
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + dir + "/");
 
-		// Keep static resources (CSS/JS) working
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        // FIX: serve static files at ROOT
+        registry.addResourceHandler(
+                "/css/**",
+                "/js/**",
+                "/images/**",
+                "/fonts/**"
+        ).addResourceLocations(
+                "classpath:/static/css/",
+                "classpath:/static/js/",
+                "classpath:/static/images/",
+                "classpath:/static/fonts/"
+        );
+    }
 
-	}
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Projects | Architecture Studio</title>
@@ -11,6 +11,20 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="icon" href="Images/GajmorLogo.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,500" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <style>
         :root{
@@ -28,35 +42,32 @@
           color:#222;
         }
 
-        /* HERO */
-        .hero{
-          background:#1b1b1b;
-          color:#fff;
-          padding:100px 20px;
-          text-align:center;
-        }
-        .hero h1{
-          font-family:'Roboto Condensed';
-          font-size:56px;
-        }
-        .hero p{
-          max-width:700px;
-          margin:15px auto 0;
-          opacity:.85;
-        }
-
         /* FILTER */
         .filter-bar{
-          position:sticky;
-          top:0;
-          z-index:10;
-          background:#fff;
-          display:flex;
-          justify-content:center;
-          gap:18px;
-          padding:18px;
-          box-shadow:0 4px 12px rgba(0,0,0,.08);
-        }
+  position: sticky;
+  top: 70px;          /* MATCH NAVBAR HEIGHT */
+  z-index: 9;         /* below navbar */
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+:root {
+  --nav-height: 70px;
+}
+
+.filter-bar{
+  position: sticky;
+  top: var(--nav-height);
+}
+
+        .banner-area {
+  margin-top: 70px;
+}
+
         .filter-bar button{
           border:none;
           background:#eee;
@@ -237,15 +248,162 @@
           color:#fff;
           text-decoration:none;
         }
+
+
+ /* WhatsApp button */
+      .social-square {
+ position: fixed;
+ right: 28px;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ width: 60px;              /* square size */
+ height: 60px;
+ margin: 8px 0;
+ border-radius: 50%;      /* rounded-square */
+ text-decoration: none;
+ color: #fff;
+ font-size: 28px;
+ z-index: 9999;
+ box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+ transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+ will-change: transform, box-shadow;
+ pointer-events: auto;
+}
+
+/* stack: place IG above WA */
+.social-square.ig { bottom: 110px; }
+.social-square.wa { bottom: 30px; }
+
+/* Instagram rounded-gradient */
+.social-square.ig {
+ background: linear-gradient(135deg, #f58529 0%, #dd2a7b 40%, #8134af 70%, #515bd4 100%);
+ /* per-button animations: bounce + tinted pulse */
+ animation: gentle-bounce 2.2s infinite ease-in-out, pulse-ig 2.6s infinite ease-out;
+}
+
+/* WhatsApp rounded-green */
+.social-square.wa {
+ background: linear-gradient(180deg, #34d058 0%, #25d366 100%);
+ animation: gentle-bounce 2.2s infinite ease-in-out, pulse-wa 2.6s infinite ease-out;
+}
+
+/* Icon color (white, crisp) */
+.social-square i { color: #fff; line-height: 1; }
+
+/* Hover / focus: lift & stronger shadow, stop animations */
+.social-square:hover,
+.social-square:focus {
+ transform: translateY(-6px) scale(1.05);
+ box-shadow: 0 18px 34px rgba(0,0,0,0.26);
+ animation-play-state: paused;
+ outline: none;
+}
+
+/* Focus visible for keyboard users */
+.social-square:focus-visible {
+ box-shadow: 0 18px 34px rgba(0,0,0,0.26), 0 0 0 4px rgba(255,255,255,0.06);
+ border-radius: 14px;
+}
+
+/* --- Pulse keyframes (WhatsApp green) --- */
+@keyframes pulse-wa {
+ 0% {
+   box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+ }
+ 70% {
+   box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+ }
+ 100% {
+   box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+ }
+}
+
+/* --- Pulse keyframes (Instagram pink/orange) --- */
+@keyframes pulse-ig {
+ 0% {
+   box-shadow: 0 0 0 0 rgba(255, 80, 150, 0.5);
+ }
+ 70% {
+   box-shadow: 0 0 0 14px rgba(255, 80, 150, 0);
+ }
+ 100% {
+   box-shadow: 0 0 0 0 rgba(255, 80, 150, 0);
+ }
+}
+
+/* Gentle idle bounce (small, subtle) */
+@keyframes gentle-bounce {
+ 0%, 100% { transform: translateY(0); }
+ 50%     { transform: translateY(-4px); }
+}
+
+/* Make smaller on very small screens */
+@media (max-width: 420px) {
+ .social-square { width: 54px; height: 54px; font-size: 24px; right: 18px; }
+ .social-square.ig { bottom: 96px; }
+ .social-square.wa { bottom: 18px; }
+}
+
     </style>
 </head>
 
 <body>
+<!-- Start Header Area -->
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <h1 style="color: aliceblue;">Gajmor</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
 
-<section class="hero">
-    <h1>Our Projects</h1>
-    <p>Architecture shaped by context, clarity and long-term value</p>
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a  href="/aboutUs">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li class="dropdown">
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/view-pro">Projects</a>
+                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Blog
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
+                            <!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
+                        </div>
+                    </li>
+                    <li><a href="/jobs">careers</a></li>
+                    <li><a href="/enquiry">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- End Header Area -->
+
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="text-white">View Projects</h1>
+                <p>Turning ideas into stunning experiences</p>
+            </div>
+        </div>
+    </div>
 </section>
+<!-- End top-section Area -->
 
 <div class="filter-bar">
     <button class="active" data-type="all">All</button>
@@ -373,6 +531,33 @@
       }
     }
 </script>
+
+<!-- WhatsApp Float -->
+<a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
+    <i class="fa-brands fa-instagram" style="font-size: 40px;" aria-hidden="true"></i>
+</a>
+
+<a href="https://wa.me/7666300048" target="_blank" class="social-square wa" aria-label="WhatsApp - Gajmor Designs"  style="text-decoration: none;">
+    <i class="fa-brands fa-whatsapp" style="font-size: 40px;" aria-hidden="true"></i>
+</a>
+
+
+<div th:replace="fragments/footer :: site-footer"></div>
+<!-- End footer Area -->
+
+<!-- Scripts -->
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="/js/vendor/bootstrap.min.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/parallax.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/main.js"></script>
+
 
 </body>
 </html>
