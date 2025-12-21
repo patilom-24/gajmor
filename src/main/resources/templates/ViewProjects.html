@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
 
+    <script>
+        const BASE_URL = /*[[${baseUrl}]]*/ "";
+    </script>
+
     <style>
         :root{
           --dark:#1b1b1b;
@@ -45,7 +49,7 @@
         /* FILTER */
         .filter-bar{
   position: sticky;
-  top: 70px;          /* MATCH NAVBAR HEIGHT */
+  top: 0;          /* MATCH NAVBAR HEIGHT */
   z-index: 9;         /* below navbar */
   background: #fff;
   display: flex;
@@ -55,9 +59,9 @@
   box-shadow: 0 4px 12px rgba(0,0,0,.08);
 }
 
-:root {
-  --nav-height: 70px;
-}
+<!--:root {
+  &#45;&#45;nav-height: 70px;
+}-->
 
 .filter-bar{
   position: sticky;
@@ -86,27 +90,40 @@
           margin:80px auto;
           padding:0 20px;
         }
-        .grid{
-          display:grid;
-          grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-          gap:45px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 45px;
+            align-items: stretch;   /* 🔥 KEY */
         }
+
 
         /* CARD */
         .card{
           background:var(--card);
-          border-radius:16px;
+          border-radius:10px;
           overflow:hidden;
           box-shadow:0 14px 40px rgba(0,0,0,.14);
           cursor:pointer;
-          transition:.45s;
+          transition: transform .35s ease, box-shadow .35s ease;
         }
-        .card:hover{transform:translateY(-12px);}
-        .card img{
-          width:100%;
-          height:240px;
-          object-fit:cover;
-        }
+        .card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.18);
+}
+       /* CARD IMAGE WRAPPER */
+.card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;   /* 🔥 KEY: equal height */
+  object-fit: cover;
+  display: block;
+  background: #f4f4f4;     /* neutral background for logos */
+}
+
+.card {
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
         .card-info{
           padding:22px;
         }
@@ -118,6 +135,34 @@
           font-size:14px;
           color:var(--gray);
         }
+
+        /* FORCE full visibility of project cards */
+.card {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.card img {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.card-img-wrap {
+  width: 100%;
+  height: 240px;          /* 🔥 SAME height for all cards */
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
 
         /* PROJECT VIEW */
         .project-view{
@@ -135,22 +180,33 @@
           border-radius:16px;
           padding:45px;
         }
-        .close{
-          position:fixed;
-          top:22px;
-          right:26px;
-          background:#000;
-          color:#fff;
-          border:none;
-          padding:10px 20px;
-          border-radius:25px;
-          cursor:pointer;
+        .close {
+            position: fixed;
+            top: 22px;
+            right: 26px;
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 9999;              /* 🔥 IMPORTANT */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            transition: all 0.25s ease;
         }
+
+        .close:hover {
+            background: #222;
+            transform: scale(1.05);
+        }
+
 
         /* PROJECT HERO */
         .project-hero{
           height:460px;
-          background-size:cover;
+          background-size:contain;
+          background-repeat: no-repeat;
           background-position:center;
           border-radius:14px;
           margin-bottom:35px;
@@ -164,6 +220,26 @@
           font-size:14px;
           color:#555;
           margin-bottom:40px;
+        }
+
+        @media (max-width: 768px) {
+            .close {
+                top: 14px;
+                right: 14px;
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+
+            .project-hero {
+                height: 45vh;
+            }
+        }
+
+
+        .project-meta strong{
+            font-size:20px;
+            color:#000000;
+            letter-spacing:1px;
         }
 
         /* STORY */
@@ -227,27 +303,9 @@
         }
         .gallery img{
           height:280px;
-          border-radius:12px;
+          border-radius:10px;
         }
 
-        /* CTA */
-        .cta{
-          background:#1b1b1b;
-          color:#fff;
-          padding:80px 20px;
-          text-align:center;
-        }
-        .cta h2{
-          font-family:'Roboto Condensed';
-        }
-        .cta a{
-          display:inline-block;
-          margin-top:18px;
-          padding:14px 36px;
-          background:var(--accent);
-          color:#fff;
-          text-decoration:none;
-        }
 
 
  /* WhatsApp button */
@@ -345,11 +403,165 @@
  .social-square.wa { bottom: 18px; }
 }
 
+
+        #gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.gallery-item {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  width: 300px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.06);
+}
+.hero-img {
+  width: 100%;
+  min-height: 70vh;              /* 🔥 gives space to show image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .hero-img {
+    min-height: 45vh;
+  }
+}
+
+
+        #title1{
+            text-align:center;
+            margin-bottom:30px;
+            font-size:50px;
+        }
+
+
+
+        /* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.lightbox img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+        .lightbox img {
+  animation: zoomIn .3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Stack container */
+.social-stack {
+  position: fixed;
+  right: 28px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10000;
+}
+
+/* Chat with us pill */
+.social-text-pill {
+  background: #000;
+  color: #fff;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  white-space: nowrap;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.social-stack a{
+    text-decoration: none;
+}
+
+/* Arrow under text */
+.social-text-pill::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+}
+
+/* Hover effect */
+.social-text-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+
+/* Override old fixed positions */
+.social-square {
+  position: static;   /* 🔥 important */
+}
+
+/* Mobile tuning */
+@media (max-width: 420px) {
+  .social-stack {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .social-text-pill {
+    font-size: 12px;
+    padding: 5px 14px;
+  }
+}
+
+
     </style>
 </head>
 
 <body>
-<!-- Start Header Area -->
+<!-- Start Header Area
 <header class="default-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -370,7 +582,7 @@
 
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
+                                                        &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>
                         </div>
                     </li>
                     <li class="dropdown">
@@ -379,7 +591,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/viewBlogs">Blog</a>
-                            <!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
+                                                        <a class="dropdown-item" href="blog-single.html">Blog Details</a>
                         </div>
                     </li>
                     <li><a href="/jobs">careers</a></li>
@@ -389,9 +601,9 @@
         </div>
     </nav>
 </header>
-<!-- End Header Area -->
+ End Header Area
 
-<!-- Start top-section Area -->
+ Start top-section Area
 <section class="banner-area relative">
     <div class="overlay overlay-bg"></div>
     <div class="container">
@@ -403,7 +615,7 @@
         </div>
     </div>
 </section>
-<!-- End top-section Area -->
+ End top-section Area -->
 
 <div class="filter-bar">
     <button class="active" data-type="all">All</button>
@@ -416,46 +628,77 @@
 </div>
 
 <div class="project-view" id="view">
-    <button class="close" onclick="closeProject()">Close</button>
+
     <div class="project-content">
+        <button class="close" onclick="closeProject()">Close</button>
         <div class="project-hero" id="heroImg"></div>
 
-        <h2 id="title"></h2>
+        <h2 id="title1"></h2>
 
         <div class="project-meta">
-            <div><strong>Location</strong><br><span id="loc"></span></div>
-            <div><strong>Area</strong><br><span id="area"></span></div>
-            <div><strong>Floors</strong><br><span id="floors"></span></div>
-            <div><strong>Units</strong><br><span id="units"></span></div>
-            <div><strong>Type</strong><br><span id="type"></span></div>
+            <div><strong>Location <label for="" style="color: red;">*</label></strong><br><span id="loc"></span></div>
+            <div><strong>Area <label for="" style="color: red;">*</label></strong><br><span id="area"></span></div>
+            <div><strong>Floors <label for="" style="color: red;">*</label></strong><br><span id="floors"></span></div>
+            <div><strong>Units <label for="" style="color: red;">*</label></strong><br><span id="units"></span></div>
+            <div><strong>Type <label for="" style="color: red;">*</label></strong><br><span id="type"></span></div>
         </div>
 
         <div class="story">
-            <h3>Design Narrative</h3>
+            <h3>Design Narrative <label for="" style="color: red;">*</label></h3>
             <p id="desc"></p>
-        </div>
-
-        <div class="ba-section">
-            <h3>Transformation</h3>
-            <div class="ba-wrap" id="baWrap">
-                <img id="beforeImg">
-                <div class="ba-after" id="afterWrap">
-                    <img id="afterImg">
-                </div>
-                <div class="ba-slider" id="baSlider"></div>
-                <div class="ba-label before">Before</div>
-                <div class="ba-label after">After</div>
-            </div>
         </div>
 
         <div class="gallery" id="gallery"></div>
     </div>
 </div>
 
-<section class="cta">
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImg">
+</div>
+
+<script>
+    const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const closeBtn = document.querySelector(".lightbox-close");
+
+// Open lightbox
+document.addEventListener("click", e => {
+  if (e.target.tagName === "IMG" && e.target.closest(".gallery, .card")) {
+    lightboxImg.src = e.target.src;
+    lightbox.style.display = "flex";
+  }
+});
+
+// Close lightbox (X button)
+closeBtn.onclick = () => {
+  lightbox.style.display = "none";
+  lightboxImg.src = "";
+};
+
+// Close on background click
+lightbox.onclick = e => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+  }
+};
+
+// Close on ESC key
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+  }
+});
+
+</script>
+
+
+<!--<section class="cta">
     <h2>Let’s design something meaningful</h2>
     <a href="https://wa.me/7666300048" target="_blank">Contact Us</a>
-</section>
+</section>-->
 
 <script>
     let all=[];
@@ -477,41 +720,69 @@
     });
 
     function render(list){
-      grid.innerHTML="";
-      list.forEach(p=>{
-        const c=document.createElement("div");
-        c.className="card";
-        c.innerHTML=`
-          <img src="http://localhost:8080/uploads/${p.images[0].imagePath}">
-          <div class="card-info">
-            <h3>${p.name}</h3>
-            <span>${p.location||''}</span>
-          </div>`;
-        c.onclick=()=>openProject(p);
-        grid.appendChild(c);
-      });
-      gsap.from(".card",{y:40,opacity:0,stagger:.12});
-    }
+  grid.innerHTML = "";
+
+  list.forEach(p => {
+    const c = document.createElement("div");
+    c.className = "card";
+
+    c.innerHTML = `
+      <div class="card-img-wrap">
+        <img src="${BASE_URL}/uploads/${p.images[0].imagePath}" alt="${p.name}">
+      </div>
+      <div class="card-info">
+        <h3>${p.name}</h3>
+        <span>${p.location || ''}</span>
+      </div>
+    `;
+
+    c.onclick = () => openProject(p);
+    grid.appendChild(c);
+  });
+
+  gsap.from(".card", { y: 40, opacity: 0, stagger: 0.12 });
+}
+
 
     function openProject(p){
-      heroImg.style.backgroundImage=`url(http://localhost:8080/uploads/${p.images[0].imagePath})`;
-      title.textContent=p.name;
+      heroImg.style.backgroundImage=`url(${BASE_URL}/uploads/${p.images[0].imagePath})`;
+      title1.textContent=p.name;
       loc.textContent=p.location||'-';
       area.textContent=p.area||'-';
       floors.textContent=p.floors||'-';
       units.textContent=p.units||'-';
       type.textContent=p.projectType||'-';
       desc.textContent=p.description||'';
-      beforeImg.src=`http://localhost:8080/uploads/${p.beforeImage}`;
-      afterImg.src=`http://localhost:8080/uploads/${p.afterImage}`;
 
-      gallery.innerHTML="";
-      p.images.forEach(i=>gallery.innerHTML+=`<img src="http://localhost:8080/uploads/${i.imagePath}">`);
-      view.style.display="block";
-      initBA();
+      gallery.innerHTML = "";
+
+      p.images.forEach(i => {
+      gallery.innerHTML += `
+        <div class="gallery-item">
+            <img src="${BASE_URL}/uploads/${i.imagePath}" alt="Project Image">
+        </div>
+        `;
+      });
+
+view.style.display = "block";
+initBA();
     }
 
     function closeProject(){view.style.display="none";}
+
+    /* ✅ Close when clicking outside the modal content */
+view.addEventListener("click", function (e) {
+  if (e.target === view) {
+    closeProject();
+  }
+});
+
+/* ✅ Close when pressing ESC key */
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && view.style.display === "block") {
+    closeProject();
+  }
+});
 
     function initBA(){
       const wrap=document.getElementById("baWrap");
@@ -532,7 +803,13 @@
     }
 </script>
 
-<!-- WhatsApp Float -->
+<!--
+<div class="social-text">
+    <a href="https://wa.me/7666300048">Chat with us</a>
+</div>
+
+
+&lt;!&ndash; WhatsApp Float &ndash;&gt;
 <a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
     <i class="fa-brands fa-instagram" style="font-size: 40px;" aria-hidden="true"></i>
 </a>
@@ -540,6 +817,35 @@
 <a href="https://wa.me/7666300048" target="_blank" class="social-square wa" aria-label="WhatsApp - Gajmor Designs"  style="text-decoration: none;">
     <i class="fa-brands fa-whatsapp" style="font-size: 40px;" aria-hidden="true"></i>
 </a>
+-->
+
+<div class="social-stack">
+
+    <!-- Text -->
+    <a href="https://wa.me/7666300048"
+       class="social-text-pill"
+       aria-label="Chat with us on WhatsApp">
+        Chat with us
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/gajmordesign"
+       target="_blank"
+       class="social-square ig"
+       aria-label="Instagram - Gajmor Designs">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/7666300048"
+       target="_blank"
+       class="social-square wa"
+       aria-label="WhatsApp - Gajmor Designs">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+</div>
+
 
 
 <div th:replace="fragments/footer :: site-footer"></div>

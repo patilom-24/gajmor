@@ -1,11 +1,11 @@
 package com.gajmor.Gajmore.Controllers;
 
-    import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.ui.Model;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.net.http.HttpResponse;
 
 @Controller
 public class PagesController {
@@ -27,8 +27,11 @@ public class PagesController {
 		return "careers";
 	}
 
+    @Value("${app.base-url}")
+    private String baseUrl;
 	@GetMapping("/view-pro")
-	public String showViewProjects() {
+	public String showViewProjects(Model model) {
+        model.addAttribute("baseUrl", baseUrl);
 		return "ViewProjects";
 	}
 
