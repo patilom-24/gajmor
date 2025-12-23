@@ -28,6 +28,8 @@
 
     <script>
         const BASE_URL = /*[[${baseUrl}]]*/ "";
+        let currentImages = [];
+        let currentIndex = 0;
     </script>
 
     <style>
@@ -92,14 +94,16 @@
         }
         .grid {
             display: grid;
+            justify-content: center;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 45px;
-            align-items: stretch;   /* 🔥 KEY */
         }
 
 
         /* CARD */
         .card{
+        display: flex;
+            flex-direction: column;
           background:var(--card);
           border-radius:10px;
           overflow:hidden;
@@ -114,7 +118,6 @@
        /* CARD IMAGE WRAPPER */
 .card img {
   width: 100%;
-  aspect-ratio: 16 / 10;   /* 🔥 KEY: equal height */
   object-fit: cover;
   display: block;
   background: #f4f4f4;     /* neutral background for logos */
@@ -125,6 +128,7 @@
 }
 
         .card-info{
+        margin-top: auto;
           padding:22px;
         }
         .card-info h3{
@@ -180,26 +184,39 @@
           border-radius:16px;
           padding:45px;
         }
-        .close {
-            position: fixed;
-            top: 22px;
-            right: 26px;
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-            z-index: 9999;              /* 🔥 IMPORTANT */
-            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-            transition: all 0.25s ease;
-        }
+        /* Make modal container relative */
+.project-content {
+  position: relative;   /* 🔥 REQUIRED */
+}
 
-        .close:hover {
-            background: #222;
-            transform: scale(1.05);
-        }
+/* Close button INSIDE frame */
+.close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #111;
+  color: red;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.close:hover {
+color:red;
+  background: #000;
+  transform: scale(1.1);
+}
+
 
 
         /* PROJECT HERO */
@@ -224,11 +241,12 @@
 
         @media (max-width: 768px) {
             .close {
-                top: 14px;
-                right: 14px;
-                padding: 8px 18px;
-                font-size: 13px;
-            }
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    font-size: 24px;
+  }
 
             .project-hero {
                 height: 45vh;
@@ -421,7 +439,6 @@
 .gallery-item img {
   width: 100%;
   height: 250px;
-  width: 300px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -556,66 +573,18 @@
   }
 }
 
+        .card-info h2{
+            text-align:center;
+        }
+
+        .card-info span{
+            text-align:center;
+        }
 
     </style>
 </head>
 
 <body>
-<!-- Start Header Area
-<header class="default-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a  href="/aboutUs">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                                                        &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-                                                        <a class="dropdown-item" href="blog-single.html">Blog Details</a>
-                        </div>
-                    </li>
-                    <li><a href="/jobs">careers</a></li>
-                    <li><a href="/enquiry">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
- End Header Area
-
- Start top-section Area
-<section class="banner-area relative">
-    <div class="overlay overlay-bg"></div>
-    <div class="container">
-        <div class="row justify-content-between align-items-center text-center banner-content">
-            <div class="col-lg-12">
-                <h1 class="text-white">View Projects</h1>
-                <p>Turning ideas into stunning experiences</p>
-            </div>
-        </div>
-    </div>
-</section>
- End top-section Area -->
 
 <div class="filter-bar">
     <button class="active" data-type="all">All</button>
@@ -630,7 +599,10 @@
 <div class="project-view" id="view">
 
     <div class="project-content">
-        <button class="close" onclick="closeProject()">Close</button>
+        <button class="close" onclick="closeProject()" aria-label="Close">
+            &times;
+        </button>
+
         <div class="project-hero" id="heroImg"></div>
 
         <h2 id="title1"></h2>
@@ -662,11 +634,27 @@ const closeBtn = document.querySelector(".lightbox-close");
 
 // Open lightbox
 document.addEventListener("click", e => {
-  if (e.target.tagName === "IMG" && e.target.closest(".gallery, .card")) {
-    lightboxImg.src = e.target.src;
-    lightbox.style.display = "flex";
+  if (e.target.tagName !== "IMG") return;
+
+  // CASE 1: Gallery images (multiple)
+  if (e.target.closest(".gallery")) {
+    const gallery = e.target.closest(".gallery");
+    currentImages = [...gallery.querySelectorAll("img")].map(img => img.src);
+    currentIndex = currentImages.indexOf(e.target.src);
   }
+
+  // CASE 2: Card image (single)
+  else if (e.target.closest(".card")) {
+    currentImages = [e.target.src];
+    currentIndex = 0;
+  } else {
+    return;
+  }
+
+  lightboxImg.src = currentImages[currentIndex];
+  lightbox.style.display = "flex";
 });
+
 
 // Close lightbox (X button)
 closeBtn.onclick = () => {
@@ -689,6 +677,55 @@ document.addEventListener("keydown", e => {
     lightboxImg.src = "";
   }
 });
+
+document.addEventListener("keydown", e => {
+  if (lightbox.style.display !== "flex") return;
+
+  if (e.key === "ArrowRight") showNext();
+  if (e.key === "ArrowLeft") showPrev();
+  if (e.key === "Escape") closeLightbox();
+});
+
+
+function showNext() {
+  if (currentImages.length <= 1) return;
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  lightboxImg.src = currentImages[currentIndex];
+}
+
+function showPrev() {
+  if (currentImages.length <= 1) return;
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  lightboxImg.src = currentImages[currentIndex];
+}
+
+
+function closeLightbox() {
+  lightbox.style.display = "none";
+  lightboxImg.src = "";
+  currentImages = [];
+  currentIndex = 0;
+}
+
+
+
+    let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener("touchstart", e => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener("touchend", e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  if (touchEndX < touchStartX - 40) showNext();   // swipe left
+  if (touchEndX > touchStartX + 40) showPrev();   // swipe right
+}
+
 
 </script>
 
@@ -729,8 +766,9 @@ document.addEventListener("keydown", e => {
         <img src="${BASE_URL}/uploads/${p.images[0].imagePath}" alt="${p.name}">
       </div>
       <div class="card-info">
-        <h3>${p.name}</h3>
-        <span>${p.location || ''}</span>
+        <h2>${p.name}</h2>
+        <h4>Location : <span>${p.location || ''}</span></h4>
+        <h4>Project Type : <span>${p.projectType || ''}</span></h4>
       </div>
     `;
 
