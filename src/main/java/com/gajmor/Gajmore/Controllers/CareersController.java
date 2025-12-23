@@ -78,7 +78,7 @@ public class CareersController {
         redirectAttributes.addFlashAttribute("applicantName", name);
 
         // ✅ Redirect to avoid form resubmission + prevent modal on refresh
-        return "redirect:/careers";// same page reload with animation
+        return "redirect:/jobs";// same page reload with animation
     }
 
     @GetMapping("/careers")
@@ -88,7 +88,7 @@ public class CareersController {
             model.addAttribute("success", true);
             session.removeAttribute("emailSent"); // ✅ prevents showing again
         }
-        return "careers";
+        return "jobs";
     }
 
 }

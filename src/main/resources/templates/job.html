@@ -283,6 +283,71 @@
 }
 
 
+        /* SUCCESS OVERLAY */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+        }
+
+        .success-card {
+            background: #161616;
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            animation: fadeUp 0.4s;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .success-card h2 {
+            color: #4CAF50;
+            margin-top: 10px;
+            font-size: 26px;
+        }
+
+        .success-card button {
+            margin-top: 25px;
+            padding: 12px 22px;
+            background: #ffae00;
+            border-radius: 8px;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 900px){
+            .career-wrapper {
+                flex-direction: column;
+                height: auto;
+            }
+            .career-left {
+                height: 250px;
+            }
+        }
+
     </style>
 </head>
 
@@ -417,9 +482,30 @@
 </section>
 <!-- End About Area -->
 
+<!-- SUCCESS OVERLAY -->
+<div id="successOverlay" class="success-overlay">
+    <div class="success-card">
+        <h2>Application Submitted!</h2>
+        <p>Thank you! We will review your application and contact you soon.</p>
+        <button id="closeSuccess">Close</button>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
+<script>
+    const successOverlay = document.getElementById("successOverlay");
+    const closeBtn = document.getElementById("closeSuccess");
 
+    closeBtn.onclick = () => successOverlay.style.display = "none";
+
+    // Show success after submission (Thymeleaf boolean)
+    const success = /*[[${success}]]*/ false;
+
+    if(success){
+        successOverlay.style.display = "flex";
+    }
+</script>
 <!-- Scripts -->
 <script src="/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
