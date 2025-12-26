@@ -723,6 +723,45 @@
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
 
+<style>
+    /* Hide navbar initially on mobile & tablet */
+@media (max-width: 1024px) {
+.default-header {
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+}
+
+.default-header.show-nav {
+    transform: translateY(0);
+}
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const header = document.querySelector(".default-header");
+
+        window.addEventListener("scroll", function () {
+
+            // Only apply on mobile & tablet
+            if (window.innerWidth <= 1024) {
+
+                if (window.scrollY > 40) {
+                    header.classList.add("show-nav");
+                } else {
+                    header.classList.remove("show-nav");
+                }
+            } else {
+                // Ensure navbar is always visible on desktop
+                header.classList.remove("show-nav");
+                header.style.transform = "translateY(0)";
+            }
+        });
+    });
+</script>
+
 <!-- Script -->
 <script>
     // Navbar Scroll Effect
