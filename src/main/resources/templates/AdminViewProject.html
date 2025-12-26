@@ -22,6 +22,11 @@
 
     <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
+    <script>
+        let currentImages = [];
+let currentIndex = 0;
+
+    </script>
 
     <style>
 
@@ -113,7 +118,7 @@
             font-size:14px;
         }
 
-        .view-btn { background:#ffae00; color:black; }
+        .view-btn { background:#ffae00; color:black; border:none; }
         .edit-btn { background:#3498db; color:white; }
         .delete-btn { background:#e74c3c; color:white; }
 
@@ -225,15 +230,42 @@
             height:25px;
         }
 
-        input, textarea {
-            width:100%;
-            padding:12px;
-            margin-bottom:12px;
-            border-radius:10px;
-            border:none;
-            background:#1d1d1d;
-            color:white;
-        }
+       input,
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: #1e1e1e;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+}
+
+/* Textarea specific */
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Focus effect */
+input:focus,
+textarea:focus {
+    border-color: #ff9f00;          /* orange accent */
+    box-shadow: 0 0 0 2px rgba(255,159,0,0.25);
+    background: #222;
+}
+
+/* Placeholder style */
+input::placeholder,
+textarea::placeholder {
+    color: #aaa;
+    font-size: 14px;
+}
+
 
         textarea { height:150px; resize:none; }
 
@@ -272,67 +304,51 @@
     grid-column: 1 / -1;
 }
 
-
-
-<!--        buttons-->
-
-        .buttons {
+.buttons {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    gap: 18px;
     margin-top: 25px;
 }
 
-#btn1{
-    margin-right:20%;
-}
-
-#btn2{
-    margin-left:20%;
-}
-
 .buttons button {
-    width:200px;
-    padding: 10px 22px;
-    border-radius: 12px;
-    font-size: 14px;
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 600;
-    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
-.buttons button:hover {
-    transform: translateY(-2px);
+.buttons .close-btn {
+    background: #ff3b3b;
+    color: #fff;
 }
 
-
-        .modal-content::-webkit-scrollbar {
-    width: 6px;
+.buttons .edit-btn {
+    background: linear-gradient(135deg, #3498db, #227cbf);
+    color: #fff;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(#ffae00, #ff8800);
-    border-radius: 10px;
-}
+@media (max-width: 600px) {
 
-        @media (max-width: 600px) {
-    .modal-content p {
+    .project-details {
         grid-template-columns: 1fr;
+        gap: 14px;
     }
 
-    .modal-content p strong {
-        margin-bottom: 4px;
+    .image-preview img {
+        height: 150px;
     }
 
     .buttons {
         flex-direction: column;
-        gap: 12px;
     }
 
     .buttons button {
         width: 100%;
     }
 }
-
 
         .image-box {
     position: relative;
@@ -381,31 +397,35 @@
         /* Default (Desktop) */
 .modal-actions {
     display: flex;
-    gap: 14px;
-    margin-top: 22px;
+    gap: 16px;
+    margin-top: 30px;
 }
 
-/* Common button style */
 .modal-actions button {
     flex: 1;
-    padding: 12px 20px;
+    padding: 14px;
     border-radius: 14px;
     font-size: 15px;
     font-weight: 600;
-    border: none;
     cursor: pointer;
+    transition: all 0.25s ease;
 }
 
 /* Close */
-.close-btn {
+.modal-actions .close-btn {
     background: #2c2c2c;
     color: #fff;
 }
 
 /* Save */
-.view-btn {
-    background: linear-gradient(135deg, #ffae00, #ff8c00);
+.modal-actions .view-btn {
+    background: linear-gradient(135deg, #ffae00, #ff8800);
     color: #000;
+    border:none;
+}
+
+.modal-actions button:hover {
+    transform: translateY(-2px);
 }
 
 /* 📱 MOBILE FIXED BOTTOM BUTTONS */
@@ -436,7 +456,204 @@
 }
 
 
+        /* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.lightbox img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+        .lightbox img {
+  animation: zoomIn .3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+        .top-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: white;
+    font-size: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.top-close:hover {
+    background: #ff3b3b;
+    transform: scale(1.1);
+}
+
+
+        .project-info {
+    padding: 16px;
+    text-align: center;
+}
+
+.project-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 14px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.card-actions .btn {
+    flex: 1;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+        @media (max-width: 576px) {
+    .card-actions {
+        flex-direction: column;
+    }
+}
+
+/* SweetAlert above all modals */
+.swal2-container {
+    z-index: 10000 !important;
+}
+
+
     </style>
+
+
+    <script>
+        const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const closeBtn = document.querySelector(".lightbox-close");
+
+    // Open lightbox
+    let currentImages = [];
+let currentIndex = 0;
+
+document.addEventListener("click", e => {
+
+    if (e.target.tagName !== "IMG") return;
+
+    const preview = e.target.closest(".image-preview");
+    if (!preview) return;   // ✅ prevents null error
+
+    const imgs = preview.querySelectorAll("img");
+    if (!imgs.length) return;
+
+    currentImages = [...imgs].map(img => img.src);
+    currentIndex = currentImages.indexOf(e.target.src);
+
+    lightboxImg.src = currentImages[currentIndex];
+    lightbox.style.display = "flex";
+});
+
+
+
+    // Close lightbox (X button)
+    closeBtn.onclick = () => {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+    };
+
+    // Close on background click
+    lightbox.onclick = e => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+        lightboxImg.src = "";
+      }
+    };
+
+    // Close on ESC key
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        lightbox.style.display = "none";
+        lightboxImg.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (lightbox.style.display !== "flex") return;
+
+      if (e.key === "ArrowRight") showNext();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "Escape") closeLightbox();
+    });
+
+
+    function showNext() {
+      if (currentImages.length <= 1) return;
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      lightboxImg.src = currentImages[currentIndex];
+    }
+
+    function showPrev() {
+      if (currentImages.length <= 1) return;
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      lightboxImg.src = currentImages[currentIndex];
+    }
+
+
+    function closeLightbox() {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+      currentImages = [];
+      currentIndex = 0;
+    }
+
+
+
+        let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener("touchstart", e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    lightbox.addEventListener("touchend", e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 40) showNext();   // swipe left
+      if (touchEndX > touchStartX + 40) showPrev();   // swipe right
+    }
+
+
+    </script>
 
 </head>
 
@@ -483,7 +700,9 @@
 <!-- VIEW MODAL -->
 <div class="modal" id="viewModal">
     <div class="modal-content">
-
+        <button class="top-close" onclick="closeModal('viewModal')">
+            <i class="fa fa-times"></i>
+        </button>
 
         <h2 id="viewTitle" ></h2>
         <div id="viewImages" class="image-preview"></div>
@@ -515,8 +734,9 @@
 <!-- EDIT MODAL -->
 <div class="modal" id="editModal">
     <div class="modal-content">
-
-
+        <button class="top-close" onclick="closeModal('editModal')">
+            <i class="fa fa-times"></i>
+        </button>
 
         <h2>Edit Project</h2>
 
@@ -622,18 +842,56 @@
                     : 'https://via.placeholder.com/400x250?text=No+Image';
 
                 card.innerHTML = `
-                    <img src="${firstImage}">
-                    <div class="project-title">${project.name}</div>
-                    <div class="card-actions">
-                        <button class="btn view-btn" onclick='openViewModal(${JSON.stringify(project)})'>View</button>
-                        <button class="btn edit-btn" onclick='openEditModal(${JSON.stringify(project)})'>Edit</button>
-                        <button class="btn delete-btn" onclick="deleteProject(${project.id})">Delete</button>
-                    </div>
-                `;
+    <img src="${firstImage}">
+
+    <div class="project-info">
+        <div class="project-title">${project.name}</div>
+
+        <div class="card-actions">
+            <button class="btn view-btn" onclick='openViewModal(${JSON.stringify(project)})'>
+                View
+            </button>
+
+            <button class="btn edit-btn" onclick='openEditModal(${JSON.stringify(project)})'>
+                Edit
+            </button>
+
+            <button class="btn delete-btn" onclick="deleteProject(${project.id})">
+                Delete
+            </button>
+        </div>
+    </div>
+`;
+
 
                 grid.appendChild(card);
             });
         });
+
+
+        function deleteImage(projectId, imgPath, btn) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Delete image?",
+        text: "This image will be permanently removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#e74c3c",
+        confirmButtonText: "Yes, delete",
+        backdrop: true
+    }).then(result => {
+        if (result.isConfirmed) {
+            fetch(`/projects/${projectId}/deleteImage?path=${encodeURIComponent(imgPath)}`, {
+                method: "DELETE"
+            }).then(res => {
+                if (res.ok) {
+                    btn.closest(".image-box").remove();
+                }
+            });
+        }
+    });
+}
 
     /* OPEN VIEW */
     let currentProject = null;
@@ -675,9 +933,11 @@
                 <div class="image-box">
                     <img src="/uploads/${img.imagePath}">
                     <button
+                        type="button"
                         data-path="${img.imagePath}"
                         onclick="deleteImage(${project.id}, this.dataset.path, this)"
                     >×</button>
+
                 </div>
             `;
         });
@@ -736,18 +996,13 @@
         });
     }
 
-    /* DELETE IMAGE — FINAL FIX */
-   	function deleteImage(projectId, imgPath, btn) {
-	    if (confirm("Delete this image?")) {
-	        fetch(`/projects/${projectId}/deleteImage?path=${encodeURIComponent(imgPath)}`, { method: "DELETE" })
-	            .then(res => {
-	                if (res.ok) {
-	                    btn.parentElement.remove();
-	                }
-	            });
-	    }
-	}
 </script>
+
+
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImg">
+</div>
 
 <!-- FOOTER -->
 <div th:replace="fragments/footer :: site-footer"></div>
