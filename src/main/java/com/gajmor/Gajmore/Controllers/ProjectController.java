@@ -45,8 +45,8 @@ public class ProjectController {
 				return ResponseEntity.badRequest().body("Please upload at least one image for a new project.");
 			}
 
-			if (files != null && files.length > 10) {
-				return ResponseEntity.badRequest().body("⚠️ Maximum 10 images allowed per request.");
+			if (files != null && files.length > 25) {
+				return ResponseEntity.badRequest().body("⚠️ Maximum 25 images allowed per request.");
 			}
 
 			Project project = projectService.saveProject(id, name, projectType, location, area, description, files);
