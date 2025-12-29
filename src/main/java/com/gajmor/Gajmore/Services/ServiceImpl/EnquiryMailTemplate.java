@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EnquiryMailTemplate {
     public String buildEnquiryEmail(String name, String email, String phone, String message) {
-        String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
 
         StringBuilder sb = new StringBuilder();
 
@@ -46,7 +46,7 @@ public class EnquiryMailTemplate {
         // Footer
         sb.append("<div class=\"footer\">");
         sb.append("This enquiry was submitted via <strong>Gajmor</strong> | ");
-        sb.append("<a href=\"https://gajmor.com\">Visit our website</a>");
+        sb.append("<a href=\"https://gajmordesign.com\">Visit our website</a>");
         sb.append("<br>© Gajmor Interiors - All rights reserved.");
         sb.append("</div>");
 
@@ -73,7 +73,7 @@ public class EnquiryMailTemplate {
 
 
     public String buildClientEnquiryResponseEmail(String clientName) {
-        String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
 
         StringBuilder sb = new StringBuilder();
 
@@ -110,9 +110,129 @@ public class EnquiryMailTemplate {
 
         // Footer
         sb.append("<div class=\"footer\">This is an automated response. Please do not reply directly to this email.</div>");
+        sb.append("<a href=\"https://gajmordesign.com\">www.gajmordesign.com</a>");
         sb.append("</div></body></html>");
 
         return sb.toString();
     }
+
+//    Quote Email Templates Generation
+
+    public String buildQuoteConfirmationEmail(String name) {
+
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<!DOCTYPE html>");
+        sb.append("<html><head><meta charset=\"UTF-8\">");
+        sb.append("<style>");
+        sb.append("body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; }");
+        sb.append(".navbar { background-color: #1a1a2e; padding: 20px; text-align: center; }");
+        sb.append(".navbar img { max-height: 100px; }");
+        sb.append(".email-container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }");
+        sb.append(".title { font-size: 24px; color: #1a1a2e; text-align: center; font-weight: bold; margin-bottom: 25px; }");
+        sb.append(".content { font-size: 16px; color: #333333; line-height: 1.7; text-align:center; }");
+        sb.append(".cta-btn { display:inline-block; margin-top:20px; padding:12px 26px; background:#e1767e; color:#ffffff; border-radius:30px; font-weight:600; text-decoration:none; }");
+        sb.append(".footer { background-color: #1a1a2e; color: #ffffff; text-align: center; padding: 20px; font-size: 14px; border-radius: 0 0 12px 12px; }");
+        sb.append("a { color: #f8d90f; text-decoration: none; }");
+        sb.append("</style></head><body>");
+
+        // Header
+        sb.append("<div class=\"navbar\">");
+        sb.append("<img src=\"").append(logoUrl).append("\" alt=\"Gajmor Logo\" />");
+        sb.append("</div>");
+
+        // Body
+        sb.append("<div class=\"email-container\">");
+        sb.append("<div class=\"title\">Thank You for Contacting Gajmor</div>");
+        sb.append("<div class=\"content\">");
+
+        sb.append("<p>Dear <strong>").append(name).append("</strong>,</p>");
+        sb.append("<p>Thank you for reaching out to <strong>Gajmor Interiors</strong>.</p>");
+        sb.append("<p>Your enquiry has been successfully received.</p>");
+        sb.append("<p>One of our interior design experts will contact you shortly to understand your requirements better.</p>");
+
+        sb.append("<a href=\"https://gajmor.com\" class=\"cta-btn\">Visit Our Website</a>");
+
+        sb.append("<p style='margin-top:25px;'>We look forward to working with you.</p>");
+        sb.append("<p>Warm regards,<br><strong>Team Gajmor</strong></p>");
+
+        sb.append("</div>");
+        sb.append("</div>");
+
+        // Footer
+        sb.append("<div class=\"footer\">");
+        sb.append("© Gajmor Interiors - All rights reserved.<br>");
+        sb.append("<a href=\"https://gajmordesign.com\">www.gajmordesign.com</a>");
+        sb.append("</div>");
+
+        sb.append("</body></html>");
+
+        return sb.toString();
+    }
+
+    public String buildAdminQuoteEmail(String name, String email, String phone) {
+
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<!DOCTYPE html>");
+        sb.append("<html><head><meta charset=\"UTF-8\">");
+        sb.append("<style>");
+        sb.append("body { font-family: 'Segoe UI', sans-serif; background-color:#f4f6f8; margin:0; padding:0; }");
+        sb.append(".navbar { background:#1a1a2e; padding:20px; text-align:center; }");
+        sb.append(".navbar img { max-height:90px; }");
+        sb.append(".email-container { max-width:600px; margin:20px auto; background:#ffffff; border-radius:12px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.12); }");
+        sb.append(".title { font-size:24px; font-weight:700; color:#1a1a2e; text-align:center; margin-bottom:25px; }");
+        sb.append(".content { font-size:15px; color:#333333; line-height:1.7; }");
+        sb.append(".label { font-weight:600; color:#1a1a2e; }");
+        sb.append(".data-box { background:#f1f1f1; padding:14px; border-radius:8px; margin:8px 0 18px; }");
+        sb.append(".footer { background:#1a1a2e; color:#ffffff; text-align:center; padding:18px; font-size:13px; border-radius:0 0 12px 12px; }");
+        sb.append(".cta { display:inline-block; margin-top:15px; padding:10px 20px; background:#e1767e; color:#ffffff; border-radius:25px; text-decoration:none; font-size:14px; font-weight:600; }");
+        sb.append("a { color:#f8d90f; text-decoration:none; }");
+        sb.append("</style></head><body>");
+
+        // Header
+        sb.append("<div class=\"navbar\">");
+        sb.append("<img src=\"").append(logoUrl).append("\" alt=\"Gajmor Logo\" />");
+        sb.append("</div>");
+
+        // Main container
+        sb.append("<div class=\"email-container\">");
+        sb.append("<div class=\"title\">New Enquiry Received</div>");
+        sb.append("<div class=\"content\">");
+
+        sb.append("<p>Hello Team,</p>");
+        sb.append("<p>A new enquiry has been submitted via the <strong>Gajmor website</strong>. Details are below:</p>");
+
+        sb.append("<p class=\"label\">Customer Name</p>");
+        sb.append("<div class=\"data-box\">").append(name).append("</div>");
+
+        sb.append("<p class=\"label\">Email Address</p>");
+        sb.append("<div class=\"data-box\">").append(email).append("</div>");
+
+        sb.append("<p class=\"label\">Mobile Number</p>");
+        sb.append("<div class=\"data-box\">").append(phone).append("</div>");
+
+        sb.append("<p>Please contact the customer at the earliest.</p>");
+
+        sb.append("<a href=\"mailto:").append(email).append("\" class=\"cta\">Reply to Customer</a>");
+
+        sb.append("</div>");
+        sb.append("</div>");
+
+        // Footer
+        sb.append("<div class=\"footer\">");
+        sb.append("This is an automated notification from <strong>Gajmor Interiors</strong><br>");
+        sb.append("<a href=\"https://gajmordesign.com\">www.gajmordesign.com</a>");
+        sb.append("</div>");
+
+        sb.append("</body></html>");
+
+        return sb.toString();
+    }
+
 
 }

@@ -8,7 +8,7 @@ public class CareerMailService {
     public String buildCareerAdminEmail(String name, String qualification, int age, String email,
                                         String position, String exp1) {
 
-        String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
         StringBuilder sb = new StringBuilder();
 
         sb.append("<!DOCTYPE html>");
@@ -43,13 +43,14 @@ public class CareerMailService {
 
         // Footer
         sb.append("<div class='footer'>This application was submitted via <strong>Gajmor Careers</strong></div>");
+        sb.append("<a href=\"https://gajmordesign.com\">www.gajmordesign.com</a>");
         sb.append("</body></html>");
 
         return sb.toString();
     }
 
     public String buildCareerApplicantEmail(String name) {
-        String logoUrl = "https://i.ibb.co/LzVYZnpV/Gajmor-Logo.png";
+        String logoUrl = "https://res.cloudinary.com/dbakcsfdz/image/upload/v1766310035/GajmorLogo_eubrc1.png";
         StringBuilder sb = new StringBuilder();
 
         sb.append("<!DOCTYPE html>");
@@ -78,6 +79,7 @@ public class CareerMailService {
         sb.append("</div>");
 
         sb.append("<div class='footer'>This is an automated confirmation from Gajmor Careers Portal</div>");
+        sb.append("<a href=\"https://gajmordesign.com\">www.gajmordesign.com</a>");
         sb.append("</div></body></html>");
 
         return sb.toString();
