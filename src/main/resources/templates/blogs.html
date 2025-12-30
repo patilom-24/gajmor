@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="/css/magnific-popup.css">
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script>
+        <script>
+        const BASE_URL = /*[[${baseUrl}]]*/ "";
+        let currentImages = [];
+        let currentIndex = 0;
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,6 +105,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%;
+            z-index: 99999;
             height: 100%;
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(3px);
@@ -107,6 +114,12 @@
             animation: fadeIn 0.3s;
             padding: 10px;
         }
+
+        .modal-box {
+    position: relative;
+    z-index: 100000; /* 🔥 highest */
+}
+
 
         /* Modal Box */
         .modal-box {
@@ -370,7 +383,7 @@
     const blogsPerPage = 4;
 
     async function loadBlogs() {
-        const response = await fetch("http://localhost:8080/blogs");
+        const response = await fetch(`${BASE_URL}/blogs`);
         blogs = await response.json();
         filteredBlogs = blogs;
         displayBlogs();
@@ -385,7 +398,7 @@
 
         filteredBlogs.slice(start, end).forEach(blog => {
             const img = blog.imagePath
-                ? `http://localhost:8080/uploads/${blog.imagePath}`
+                ? `${BASE_URL}/uploads/${blog.imagePath}`
                 : "https://via.placeholder.com/250x150?text=No+Image";
 
             blogList.innerHTML += `
@@ -420,7 +433,7 @@
         document.getElementById("modalAuthor").innerText = "By " + blog.author;
         document.getElementById("modalContent").innerText = blog.content;
         document.getElementById("modalImage").src = blog.imagePath
-            ? `http://localhost:8080/uploads${blog.imagePath}`
+            ? `${BASE_URL}/uploads${blog.imagePath}`
             : "https://via.placeholder.com/350x200?text=No+Image";
         document.getElementById("modalBackground").style.display = "flex";
     }
