@@ -45,10 +45,7 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
-    public void deleteBlogById(Long id) {
-        blogRepository.deleteById(id);
-    }
-
+ 
     public List<Blog> getAllBlogs() {
         return blogRepository.findAll();
     }

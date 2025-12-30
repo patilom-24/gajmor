@@ -32,16 +32,6 @@ public class BlogController {
             return ResponseEntity.status(500).body("Error saving blog: " + e.getMessage());
         }
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBlog(@PathVariable Long id) {
-        try {
-            blogService.deleteBlogById(id);
-            return ResponseEntity.ok("Blog deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error deleting blog: " + e.getMessage());
-        }
-    }
-
 
     @GetMapping
     public ResponseEntity<?> getAllBlogs() {
