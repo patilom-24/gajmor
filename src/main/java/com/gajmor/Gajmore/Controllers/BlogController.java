@@ -16,7 +16,7 @@ import java.io.IOException;
 public class BlogController {
 
     @Autowired
-	private BlogService blogService;
+    private BlogService blogService;
 
     @PostMapping("/add")
     public ResponseEntity<?> addBlog(
@@ -33,6 +33,15 @@ public class BlogController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBlog(@PathVariable Long id) {
+        try {
+            blogService.deleteBlogById(id);
+            return ResponseEntity.ok("Blog deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error deleting blog: " + e.getMessage());
+        }
+    }
     @GetMapping
     public ResponseEntity<?> getAllBlogs() {
         return ResponseEntity.ok(blogService.getAllBlogs());
