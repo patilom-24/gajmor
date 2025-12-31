@@ -1304,6 +1304,236 @@ border-radius: 14px;
     <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
 </a>
 
+<!--project completed section -->
+<section class="stats-section">
+
+    <!-- Section Heading -->
+    <div class="stats-header">
+        <h2>Our Journey in Numbers</h2>
+        <p>Delivering excellence through design, space, and innovation</p>
+    </div>
+    <br>
+
+    <div class="stats-container">
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="150">0+</h2>
+            <p>Completed Projects</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="800000" >0+</h2>
+            <p>Crafted Sqft Area</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="15">0+</h2>
+            <p>Years Of Experience</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="130">0+</h2>
+            <p>Residential</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="30">0+</h2>
+            <p>Commercial</p>
+        </div>
+
+
+    </div>
+</section>
+
+<style>
+    /* =========================
+   STATS SECTION
+   ========================= */
+
+.stats-section {
+    background: #ffffff;
+    padding: 70px 20px;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Heading */
+.stats-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.stats-header h2 {
+    font-size: 34px;
+    font-weight: 600;
+    color: #2f4f4f;
+    margin-bottom: 10px;
+}
+
+.stats-header p {
+    font-size: 15px;
+    color: #777;
+    max-width: 650px;
+    margin: auto;
+}
+
+/* Stats container */
+.stats-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Each stat */
+.stat-item {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.stat-item h2 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #2f4f4f;
+    margin-bottom: 6px;
+}
+
+.stat-item p {
+    font-size: 15px;
+    color: #555;
+}
+
+/* Vertical divider */
+.divider {
+    width: 1px;
+    height: 60px;
+    background: #ddd;
+}
+
+    /* Tablet */
+@media (max-width: 900px) {
+
+    .stats-header h2 {
+        font-size: 30px;
+    }
+
+    .stat-item h2 {
+        font-size: 32px;
+    }
+
+    .stats-container {
+        gap: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .stats-container {
+        flex-direction: column;
+    }
+
+    .divider {
+        width: 60%;
+        height: 1px;
+    }
+
+    .stat-item {
+        padding: 10px 0;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+
+    .stats-header h2 {
+        font-size: 26px;
+    }
+
+    .stats-header p {
+        font-size: 14px;
+    }
+
+    .stat-item h2 {
+        font-size: 28px;
+    }
+
+    .stat-item p {
+        font-size: 14px;
+    }
+}
+
+    /* Fade-up animation */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const counters = document.querySelectorAll(".counter");
+        const fadeItems = document.querySelectorAll(".fade-up");
+
+        let started = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute("data-target");
+                const suffix = counter.textContent.includes("+") ? "+" : "";
+                let count = 0;
+
+                const increment = Math.ceil(target / 360);
+
+                const updateCount = () => {
+                    count += increment;
+
+                    if (count < target) {
+                        counter.textContent = count.toLocaleString() + suffix;
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.textContent = target.toLocaleString() + suffix;
+                    }
+                };
+
+                updateCount();
+            });
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !started) {
+                    started = true;
+
+                    fadeItems.forEach(item => item.classList.add("show"));
+                    animateCounters();
+                }
+            });
+        }, { threshold: 0.4 });
+
+        observer.observe(document.querySelector(".stats-section"));
+    });
+</script>
+
+<!--project completed section ends -->
 
 <!--Reviews Section Start-->
 <section class="reviews-section">
@@ -1429,7 +1659,6 @@ document.addEventListener("DOMContentLoaded", loadReviews);
     /* ===== REVIEWS SLIDER ===== */
 .reviews-section {
     padding: 80px 20px;
-    background: #f9f9f9;
     text-align: center;
 }
 
@@ -1443,7 +1672,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
     display: flex;
     gap: 25px;
     overflow: hidden;
-    max-width: 1100px;
+    max-width: 100%;
     margin: auto;
     position: relative;
 }
@@ -1459,7 +1688,8 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 }
 
 .review-card p {
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: 600;
     color: #444;
     line-height: 1.6;
 }
@@ -1473,7 +1703,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 .review-stars {
     color: #f4b400;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 30px;
 }
 
 /* Responsive */
@@ -1492,92 +1722,94 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 
 <style>
     /* Section */
+/* ===== REVIEWS SECTION ===== */
 .reviews-section {
-    padding: 80px 20px;
-    background: #f8f9fa;
+    padding: 90px 20px;
     text-align: center;
-    overflow: hidden;
+    background: #f7f7f5; /* warm neutral background */
 }
 
 .reviews-section h2 {
     font-size: 34px;
-    margin-bottom: 45px;
-    color: #222;
+    margin-bottom: 50px;
+    color: #1f2a2e;
+    font-weight: 600;
 }
 
-/* Container acts as viewport */
+/* Container */
 .reviews-container {
     display: flex;
-    gap: 24px;
+    gap: 28px;
     max-width: 1200px;
     margin: auto;
-    transition: transform 0.7s ease-in-out;
-    will-change: transform;
+    overflow: hidden;
 }
 
-/* Review Card */
+/* ===== REVIEW CARD (PRO LOOK) ===== */
 .review-card {
     min-width: 360px;
-    background: #ffffff;
-    padding: 28px;
-    border-radius: 18px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    background: linear-gradient(
+        180deg,
+        #1c2431 0%,
+        #151c27 100%
+    );
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
     text-align: left;
     position: relative;
+    color: #e6e6e6;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Header */
-.review-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.review-header img {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Name */
-.review-header h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #111;
+/* Hover polish */
+.review-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
 }
 
 /* Stars */
 .review-stars {
-    color: #f6b100;
+    color: #ffae00;
     font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
 }
 
-/* Text */
-.review-text {
-    margin-top: 16px;
+/* Review text */
+.review-card p {
     font-size: 15px;
-    color: #555;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: #d6d6d6;
 }
 
-/* Quote icon (pro touch) */
+/* Author */
+.review-author {
+    margin-top: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.85;
+}
+
+/* Quote icon (soft, premium) */
 .review-card::before {
     content: "“";
-    font-size: 60px;
-    color: #ececec;
+    font-size: 90px;
     position: absolute;
-    top: 10px;
+    top: -10px;
     right: 18px;
+    color: rgba(255,255,255,0.05);
+    font-family: serif;
 }
 
-/* Mobile */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .review-card {
         min-width: 85%;
     }
 }
+
 
 </style>
 

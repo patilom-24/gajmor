@@ -522,7 +522,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="card__title">7+ Years Experience</h3>
+                        <h3 class="card__title">15+ Years Experience</h3>
                         <p class="card__text">Hands-on work in residential & commercial architecture, and end-to-end project delivery.</p>
                     </div>
                 </div>
@@ -583,11 +583,242 @@
             <figure class="ceo-figure" role="img" aria-label="Portrait of Gajanan Morye">
                 <!-- Replace the src with your CEO image path. Keep the aspect ratio natural (portrait) -->
 <!--                <img src="/Images/ceo.jpg" alt="Gajanan Morye — CEO & Founder, Gajmor Designs">-->
-                <img src="Images/Tejas-Image.jpg" alt="Gajanan Morye — CEO & Founder, Gajmor Designs">
+                <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767190196/gajanan_qurvkf.jpg" alt="Gajanan Morye — CEO & Founder, Gajmor Designs">
             </figure>
         </div>
     </div>
 </section>
+
+<!--project completed section -->
+<section class="stats-section">
+
+    <!-- Section Heading -->
+    <div class="stats-header">
+        <h2>Our Journey in Numbers</h2>
+        <p>Delivering excellence through design, space, and innovation</p>
+    </div>
+    <br>
+
+    <div class="stats-container">
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="150">0+</h2>
+            <p>Completed Projects</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="800000" >0+</h2>
+            <p>Crafted Sqft Area</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="15">0+</h2>
+            <p>Years Of Experience</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="130">0+</h2>
+            <p>Residential</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stat-item fade-up">
+            <h2 class="counter" data-target="30">0+</h2>
+            <p>Commercial</p>
+        </div>
+
+
+    </div>
+</section>
+
+<style>
+    /* =========================
+   STATS SECTION
+   ========================= */
+
+.stats-section {
+    background: #ffffff;
+    padding: 70px 20px;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Heading */
+.stats-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.stats-header h2 {
+    font-size: 34px;
+    font-weight: 600;
+    color: #2f4f4f;
+    margin-bottom: 10px;
+}
+
+.stats-header p {
+    font-size: 15px;
+    color: #777;
+    max-width: 650px;
+    margin: auto;
+}
+
+/* Stats container */
+.stats-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Each stat */
+.stat-item {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.stat-item h2 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #2f4f4f;
+    margin-bottom: 6px;
+}
+
+.stat-item p {
+    font-size: 15px;
+    color: #555;
+}
+
+/* Vertical divider */
+.divider {
+    width: 1px;
+    height: 60px;
+    background: #ddd;
+}
+
+    /* Tablet */
+@media (max-width: 900px) {
+
+    .stats-header h2 {
+        font-size: 30px;
+    }
+
+    .stat-item h2 {
+        font-size: 32px;
+    }
+
+    .stats-container {
+        gap: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .stats-container {
+        flex-direction: column;
+    }
+
+    .divider {
+        width: 60%;
+        height: 1px;
+    }
+
+    .stat-item {
+        padding: 10px 0;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+
+    .stats-header h2 {
+        font-size: 26px;
+    }
+
+    .stats-header p {
+        font-size: 14px;
+    }
+
+    .stat-item h2 {
+        font-size: 28px;
+    }
+
+    .stat-item p {
+        font-size: 14px;
+    }
+}
+
+    /* Fade-up animation */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const counters = document.querySelectorAll(".counter");
+        const fadeItems = document.querySelectorAll(".fade-up");
+
+        let started = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute("data-target");
+                const suffix = counter.textContent.includes("+") ? "+" : "";
+                let count = 0;
+
+                const increment = Math.ceil(target / 360);
+
+                const updateCount = () => {
+                    count += increment;
+
+                    if (count < target) {
+                        counter.textContent = count.toLocaleString() + suffix;
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.textContent = target.toLocaleString() + suffix;
+                    }
+                };
+
+                updateCount();
+            });
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !started) {
+                    started = true;
+
+                    fadeItems.forEach(item => item.classList.add("show"));
+                    animateCounters();
+                }
+            });
+        }, { threshold: 0.4 });
+
+        observer.observe(document.querySelector(".stats-section"));
+    });
+</script>
+
+<!--project completed section ends -->
 
 
 <div th:replace="fragments/footer :: site-footer"></div>
