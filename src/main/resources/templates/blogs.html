@@ -377,72 +377,130 @@
     <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
 </a>
 <script>
-    let blogs = [];
-    let filteredBlogs = [];
-    let currentPage = 1;
-    const blogsPerPage = 4;
+    /* ===== GLOBAL STATE ===== */
+ let blogs = [];
+ let filteredBlogs = [];
+ let currentPage = 1;
+ const blogsPerPage = 4;
 
-    async function loadBlogs() {
-        const response = await fetch(`${BASE_URL}/blogs`);
-        blogs = await response.json();
-        filteredBlogs = blogs;
-        displayBlogs();
-    }
+ /* ===== LOAD BLOGS ===== */
+ async function loadBlogs() {
+     try {
+         const response = await fetch("/blogs");
+         blogs = await response.json();
 
-    function displayBlogs() {
-        const blogList = document.getElementById("blogList");
-        blogList.innerHTML = "";
+         // DEBUG (optional – remove later)
+         console.log("Blogs loaded:", blogs);
 
-        const start = (currentPage - 1) * blogsPerPage;
-        const end = start + blogsPerPage;
+         filteredBlogs = blogs;
+         displayBlogs();
+     } catch (e) {
+         console.error("Failed to load blogs", e);
+     }
+ }
 
-        filteredBlogs.slice(start, end).forEach(blog => {
-            const img = blog.imagePath
-                ? `${BASE_URL}/uploads/${blog.imagePath}`
-                : "https://via.placeholder.com/250x150?text=No+Image";
+ /* ===== DISPLAY BLOGS ===== */
+ function displayBlogs() {
+     const blogList = document.getElementById("blogList");
+     if (!blogList) {
+         console.error("blogList element not found");
+         return;
+     }
 
-            blogList.innerHTML += `
-                <div class="blog-card" onclick="openModal(${blog.id})">
-                    <img src="${img}">
-                    <p class="blog-title">${blog.title}</p>
-                    <p class="blog-author">By ${blog.author}</p>
-                </div>
-            `;
-        });
+     blogList.innerHTML = "";
 
-        document.getElementById("prevBtn").disabled = currentPage === 1;
-        document.getElementById("nextBtn").disabled = currentPage * blogsPerPage >= filteredBlogs.length;
-    }
+     if (!filteredBlogs || filteredBlogs.length === 0) {
+         blogList.innerHTML = "<p style='text-align:center'>No blogs found</p>";
+         return;
+     }
 
-    document.getElementById("prevBtn").onclick = () => { currentPage--; displayBlogs(); };
-    document.getElementById("nextBtn").onclick = () => { currentPage++; displayBlogs(); };
+     const start = (currentPage - 1) * blogsPerPage;
+     const end = start + blogsPerPage;
 
-    document.getElementById("searchInput").addEventListener("input", function() {
-        const searchValue = this.value.toLowerCase();
-        filteredBlogs = blogs.filter(blog =>
-            blog.title.toLowerCase().includes(searchValue) ||
-            blog.author.toLowerCase().includes(searchValue)
-        );
-        currentPage = 1;
-        displayBlogs();
-    });
+     filteredBlogs.slice(start, end).forEach(blog => {
+         const img = blog.imagePath
+             ? "/uploads/" + blog.imagePath     // ✅ ADMIN MATCH
+             : "https://via.placeholder.com/250x150?text=No+Image";
 
-    function openModal(id) {
-        const blog = blogs.find(b => b.id === id);
-        document.getElementById("modalTitle").innerText = blog.title;
-        document.getElementById("modalAuthor").innerText = "By " + blog.author;
-        document.getElementById("modalContent").innerText = blog.content;
-        document.getElementById("modalImage").src = blog.imagePath
-            ? `${BASE_URL}/uploads${blog.imagePath}`
-            : "https://via.placeholder.com/350x200?text=No+Image";
-        document.getElementById("modalBackground").style.display = "flex";
-    }
+         blogList.innerHTML += `
+             <div class="blog-card" onclick="openModal(${blog.id})">
+                 <img src="${img}" alt="Blog Image">
+                 <p class="blog-title">${blog.title}</p>
+                 <p class="blog-author">By ${blog.author}</p>
+             </div>
+         `;
+     });
 
-    function closeModal() {
-        document.getElementById("modalBackground").style.display = "none";
-    }
+     /* Pagination buttons */
+     const prevBtn = document.getElementById("prevBtn");
+     const nextBtn = document.getElementById("nextBtn");
 
-    loadBlogs();
+     if (prevBtn) prevBtn.disabled = currentPage === 1;
+     if (nextBtn) nextBtn.disabled = currentPage * blogsPerPage >= filteredBlogs.length;
+ }
+
+ /* ===== PAGINATION ===== */
+ const prevBtn = document.getElementById("prevBtn");
+ const nextBtn = document.getElementById("nextBtn");
+
+ if (prevBtn) {
+     prevBtn.onclick = () => {
+         if (currentPage > 1) {
+             currentPage--;
+             displayBlogs();
+         }
+     };
+ }
+
+ if (nextBtn) {
+     nextBtn.onclick = () => {
+         if (currentPage * blogsPerPage < filteredBlogs.length) {
+             currentPage++;
+             displayBlogs();
+         }
+     };
+ }
+
+ /* ===== SEARCH ===== */
+ const searchInput = document.getElementById("searchInput");
+ if (searchInput) {
+     searchInput.addEventListener("input", function () {
+         const searchValue = this.value.toLowerCase();
+
+         filteredBlogs = blogs.filter(blog =>
+             blog.title.toLowerCase().includes(searchValue) ||
+             blog.author.toLowerCase().includes(searchValue)
+         );
+
+         currentPage = 1;
+         displayBlogs();
+     });
+ }
+
+ /* ===== MODAL OPEN ===== */
+ function openModal(id) {
+     const blog = blogs.find(b => b.id === id);
+     if (!blog) return;
+
+     document.getElementById("modalTitle").innerText = blog.title;
+     document.getElementById("modalAuthor").innerText = "By " + blog.author;
+     document.getElementById("modalContent").innerText = blog.content;
+
+     document.getElementById("modalImage").src = blog.imagePath
+         ? "/uploads/" + blog.imagePath      // ✅ ADMIN MATCH
+         : "https://via.placeholder.com/350x200?text=No+Image";
+
+     document.getElementById("modalBackground").style.display = "flex";
+ }
+
+ /* ===== MODAL CLOSE ===== */
+ function closeModal() {
+     document.getElementById("modalBackground").style.display = "none";
+ }
+
+ /* ===== INIT ===== */
+ document.addEventListener("DOMContentLoaded", loadBlogs);
+
 </script>
 
 <div th:replace="fragments/footer :: site-footer"></div>
