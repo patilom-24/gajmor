@@ -18,9 +18,9 @@ public class Feedback {
 
     private String name;
     private String email;
+    private int rating;
 
     @Column(length = 2000)
     private String message;
 
-    // getters & setters
 }

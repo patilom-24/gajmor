@@ -160,15 +160,207 @@
             </div>
 
 
-            <!-- HOURS -->
-            <div>
+            <!-- WORKING HOURS + RATING -->
+            <div class="hours-feedback">
+
                 <h3>Working Hours</h3>
                 <p>Mon–Fri: 9.30 AM – 6.30 PM</p>
                 <p>Sat: 9.30 AM – 6.30 PM</p>
                 <p>Sun: Closed</p>
-            </div>
 
+                <!-- RATING CTA -->
+                <div class="footer-rating" onclick="openFeedbackModal()">
+                    <span>Rate your experience</span>
+                    <div class="stars">
+                        ★★★★★
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+        <style>
+            .footer-rating {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.footer-rating span {
+    font-size: 13px;
+    color: #ccc;
+}
+
+.footer-rating .stars {
+    color: #ffae00;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.footer-rating:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+        </style>
+        <!-- FEEDBACK MODAL -->
+        <div class="feedback-modal" id="feedbackModal">
+            <div class="feedback-box">
+                <h3>Rate Your Experience</h3>
+
+                <form action="/feedback" method="post">
+
+                    <div class="star-rating modal-stars">
+                        <input type="radio" name="rating" value="5" id="m5" required>
+                        <label for="m5">★</label>
+
+                        <input type="radio" name="rating" value="4" id="m4">
+                        <label for="m4">★</label>
+
+                        <input type="radio" name="rating" value="3" id="m3">
+                        <label for="m3">★</label>
+
+                        <input type="radio" name="rating" value="2" id="m2">
+                        <label for="m2">★</label>
+
+                        <input type="radio" name="rating" value="1" id="m1">
+                        <label for="m1">★</label>
+                    </div>
+
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+
+                    <textarea name="message" rows="3" placeholder="Your Feedback..." required></textarea>
+
+                    <button type="submit">Send Feedback</button>
+                </form>
+
+                <span class="close-modal" onclick="closeFeedbackModal()">×</span>
+            </div>
+        </div>
+
+        <style>
+            .feedback-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.feedback-box {
+    background: #111a30;
+    padding: 26px;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 14px;
+    text-align: center;
+    position: relative;
+}
+
+.feedback-box h3 {
+    color: #ffae00;
+    margin-bottom: 14px;
+}
+
+.feedback-box input,
+.feedback-box textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: #fff;
+}
+
+.feedback-box button {
+    width: 100%;
+    background: linear-gradient(135deg, #ffae00, #ff8c00);
+    border: none;
+    padding: 11px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+            /* ======================
+   STAR RATING – FINAL FIX
+   ====================== */
+
+.star-rating {
+    display: inline-flex;              /* FORCE HORIZONTAL */
+    flex-direction: row-reverse;        /* correct fill direction */
+    justify-content: center;
+    gap: 6px;
+    margin: 18px 0 20px;
+}
+
+.star-rating input {
+    display: none;                      /* remove radio dots */
+}
+
+.star-rating label {
+    font-size: 26px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.25s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffae00;
+    transform: scale(1.1);
+}
+
+/* Selected stars */
+.star-rating input:checked ~ label {
+    color: #ffae00;
+}
+
+            .feedback-box input:focus,
+.feedback-box textarea:focus {
+    outline: none;
+    border-color: #ffae00;
+    box-shadow: 0 0 0 2px rgba(255,174,0,0.2);
+}
+
+            .feedback-box {
+    padding: 24px 26px 22px;
+}
+
+        </style>
+        <script>
+            function openFeedbackModal() {
+                document.getElementById("feedbackModal").style.display = "flex";
+            }
+
+            function closeFeedbackModal() {
+                document.getElementById("feedbackModal").style.display = "none";
+            }
+
+            feedbackModal.addEventListener("click", function (e) {
+        if (e.target === feedbackModal) {
+            closeFeedbackModal();
+        }
+    });
+        </script>
+
+
 
         <div class="footer-bottom">
             © 2025 <strong>Gajmor Design Studio</strong> — All rights reserved.
