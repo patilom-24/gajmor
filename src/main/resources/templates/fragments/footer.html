@@ -234,7 +234,11 @@
 
                     <textarea name="message" rows="3" placeholder="Your Feedback..." required></textarea>
 
-                    <button type="submit">Send Feedback</button>
+                    <button type="submit" id="feedbackBtn">
+                        <i class="fa fa-paper-plane send-icon"></i>
+                        <span class="btn-text">Send</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </form>
 
                 <span class="close-modal" onclick="closeFeedbackModal()">×</span>
@@ -278,15 +282,49 @@
     color: #fff;
 }
 
-.feedback-box button {
+/* Button base */
+#feedbackBtn {
     width: 100%;
     background: linear-gradient(135deg, #ffae00, #ff8c00);
     border: none;
-    padding: 11px;
     border-radius: 10px;
+    padding: 11px;
     font-weight: 600;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
 }
+
+/* Send icon */
+.send-icon {
+    font-size: 14px;
+}
+
+/* Loader */
+.btn-loader {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(0,0,0,0.25);
+    border-top: 3px solid #000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Disable state */
+#feedbackBtn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+/* Loader animation */
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
 
 .close-modal {
     position: absolute;
@@ -343,7 +381,29 @@
     padding: 24px 26px 22px;
 }
 
+            #feedbackBtn:disabled .send-icon {
+    transform: translateX(6px);
+    opacity: 0.6;
+}
+
+
         </style>
+
+<!--        loader script-->
+        <script>
+            const feedbackForm = document.querySelector("#feedbackModal form");
+            const btn = document.getElementById("feedbackBtn");
+            const btnText = btn.querySelector(".btn-text");
+            const loader = btn.querySelector(".btn-loader");
+
+            feedbackForm.addEventListener("submit", function () {
+                btnText.textContent = "Sending";
+                loader.style.display = "inline-block";
+                btn.disabled = true;
+            });
+        </script>
+
+
         <script>
             function openFeedbackModal() {
                 document.getElementById("feedbackModal").style.display = "flex";
@@ -355,6 +415,12 @@
 
             feedbackModal.addEventListener("click", function (e) {
         if (e.target === feedbackModal) {
+            closeFeedbackModal();
+        }
+    });
+
+             document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && feedbackModal.style.display === "flex") {
             closeFeedbackModal();
         }
     });
