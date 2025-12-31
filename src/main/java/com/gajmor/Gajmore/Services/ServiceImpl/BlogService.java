@@ -45,6 +45,42 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
+    public Blog updateBlog(Long id, String title, String author, String content, MultipartFile imageFile)
+            throws IOException {
+
+        Blog blog = blogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Blog not found"));
+
+        blog.setTitle(title);
+        blog.setAuthor(author);
+        blog.setContent(content);
+
+        // ✅ FIX: use SAME uploadDir as addBlog
+        if (imageFile != null && !imageFile.isEmpty()) {
+
+            // 1️⃣ Delete old image (from correct folder)
+            if (blog.getImagePath() != null && !blog.getImagePath().isEmpty()) {
+                Path oldImagePath = Paths.get(uploadDir, blog.getImagePath());
+                Files.deleteIfExists(oldImagePath);
+            }
+
+            // 2️⃣ Save new image
+            String newFileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+            Path newImagePath = Paths.get(uploadDir, newFileName);
+
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            Files.write(newImagePath, imageFile.getBytes());
+
+            // 3️⃣ Update DB with new filename
+            blog.setImagePath(newFileName);
+        }
+
+        return blogRepository.save(blog);
+    }
+
+
     public void deleteBlogById(Long id) {
         blogRepository.deleteById(id);
     }

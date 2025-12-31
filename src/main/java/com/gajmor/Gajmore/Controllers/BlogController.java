@@ -46,4 +46,21 @@ public class BlogController {
     public ResponseEntity<?> getAllBlogs() {
         return ResponseEntity.ok(blogService.getAllBlogs());
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateBlog(
+            @PathVariable Long id,
+            @RequestParam("title") String title,
+            @RequestParam("author") String author,
+            @RequestParam("content") String content,
+            @RequestParam(value = "image", required = false) MultipartFile imageFile
+    ) {
+        try {
+            Blog updated = blogService.updateBlog(id, title, author, content, imageFile);
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Update failed: " + e.getMessage());
+        }
+    }
+
 }
