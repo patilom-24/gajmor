@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.gajmor.Gajmore.Model.Feedback;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/feedback")
 @CrossOrigin("*")
@@ -17,5 +19,10 @@ public class FeedbackController {
     @PostMapping("/add")
     public ResponseEntity<?> addFeedback(@RequestBody Feedback feedback) {
         return ResponseEntity.ok(service.saveFeedback(feedback));
+    }
+
+    @GetMapping("/feedbacks")
+    public List<Feedback> getFeedbacks() {
+        return  service.getAllFeedbacks();
     }
 }

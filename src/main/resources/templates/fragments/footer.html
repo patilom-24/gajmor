@@ -210,7 +210,7 @@
             <div class="feedback-box">
                 <h3>Rate Your Experience</h3>
 
-                <form action="/feedback" method="post">
+                <form id="feedbackForm">
 
                     <div class="star-rating modal-stars">
                         <input type="radio" name="rating" value="5" id="m5" required>
@@ -424,7 +424,59 @@
             closeFeedbackModal();
         }
     });
+
+/* ==========================
+   SEND FEEDBACK (ON CLICK)
+   ========================== */
+
+document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // stop page reload
+
+    const rating = document.querySelector('input[name="rating"]:checked')?.value;
+    const name = this.querySelector('input[name="name"]').value;
+    const email = this.querySelector('input[name="email"]').value;
+    const message = this.querySelector('textarea[name="message"]').value;
+
+    if (!rating) {
+        alert("Please select a rating");
+        return;
+    }
+
+    const feedbackData = {
+        rating: rating,
+        name: name,
+        email: email,
+        message: message
+    };
+
+    fetch("/feedback/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(feedbackData)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Failed");
+        return res.json();
+    })
+    .then(() => {
+        alert("Thank you for your feedback!");
+
+        // reset form
+        document.getElementById("feedbackForm").reset();
+
+        // close modal
+        closeFeedbackModal();
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Something went wrong. Please try again.");
+    });
+});
         </script>
+
+
 
 
 

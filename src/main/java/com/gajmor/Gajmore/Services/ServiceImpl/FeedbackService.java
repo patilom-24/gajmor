@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.gajmor.Gajmore.Model.Feedback;
 import com.gajmor.Gajmore.Repository.FeedbackRepository;
+
+import java.util.List;
+
 @Service
 public class FeedbackService{
 
@@ -13,5 +16,9 @@ public class FeedbackService{
 
     public Feedback saveFeedback(Feedback feedback) {
         return repository.save(feedback);
+    }
+
+    public List<Feedback> getAllFeedbacks() {
+        return repository.findAll();
     }
 }
