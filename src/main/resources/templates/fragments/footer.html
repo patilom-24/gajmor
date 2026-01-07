@@ -18,9 +18,11 @@
 <footer th:fragment="site-footer">
 
     <style>
+
+        
         .footer-section {
         padding-top:30px;
-        background-color:#f7f7f7;
+        background-color:#333;
             padding: 70px 40px 30px;
             font-family: "Montserrat", sans-serif;
             color: #eee;
@@ -55,7 +57,8 @@
         }-->
 
         .footer-grid a {
-            color:black;
+            font-family:revert;
+            color:#c6c5c3;
             display: inline-block;
             margin: 6px 0;
             text-decoration: none;
@@ -92,11 +95,12 @@
 
         /* Footer Bottom */
         .footer-bottom {
-            color:black;
+            font-family:monospace;
+            color:#fff;
             margin-top: 45px;
             text-align: center;
             padding-top: 18px;
-            border-top: 1px solid rgba(255,255,255,0.12);
+            border-top: 3px solid #0000001a;
             font-size: 18px;
             font-weight:500;
         }
@@ -119,7 +123,7 @@
         }
 
         p{
-            color:black;
+            color:#c6c5c3;
         }
     </style>
 
@@ -176,7 +180,7 @@
 
                 <!-- RATING CTA -->
                 <div class="footer-rating" onclick="openFeedbackModal()">
-                    <span>Rate your experience</span>
+                    <span>Rate your experience with us</span>
                     <div class="stars">
                         ★★★★★
                     </div>
@@ -189,7 +193,7 @@
             .footer-rating {
     margin-top: 16px;
     padding: 10px 14px;
-    background: rgba(255,255,255,0.06);
+    background: #49505742;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -197,17 +201,13 @@
 
 .footer-rating span {
     font-size: 13px;
-    color: #ccc;
+    color:  #f9f9ff;
 }
 
 .footer-rating .stars {
     color: #ffae00;
-    font-size: 16px;
+    font-size: 20px;
     margin-top: 4px;
-}
-
-.footer-rating:hover {
-    background: rgba(255,255,255,0.12);
 }
 
         </style>

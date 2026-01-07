@@ -263,12 +263,7 @@ border-radius: 14px;
                                 <a class="dropdown-item" href="/view-pro">Projects</a>
                             </div>
                         </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Blog </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/viewBlogs">Blog</a>
-                            </div>
-                        </li>
+                        <li><a href="/viewBlogs">Blog</a></li>
                         <li><a href="/jobs">careers</a></li>
                         <li><a href="/enquiry">Contact</a></li>
                     </ul>
@@ -1520,7 +1515,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 <style>
     /* ===== REVIEWS SLIDER ===== */
 .reviews-section {
-    padding: 80px 20px;
+    padding: 40px 10px;
     text-align: center;
 }
 
@@ -1541,17 +1536,17 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 
 .review-card {
     min-width: 320px;
-    height:300px;
+    height:250px;
     background: white;
     border-radius: 16px;
     padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+<!--    box-shadow: 0 10px 30px rgba(0,0,0,0.12);-->
     transition: transform 0.6s ease;
 }
 
 .review-card p {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 400;
     color: #444;
     line-height: 1.6;
 }
@@ -1599,6 +1594,9 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 /* Container */
 .reviews-container {
     display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
     gap: 28px;
     max-width: 90%;
     margin: auto;
@@ -1607,15 +1605,11 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 
 /* ===== REVIEW CARD (PRO LOOK) ===== */
 .review-card {
-    min-width: 360px;
-    background: linear-gradient(
-        180deg,
-        #1c2431 0%,
-        #151c27 100%
-    );
+    min-width: 260px;
+    background: #f3f3f3;
     padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    border-radius: 10px;
+<!--    box-shadow: 0 20px 45px rgba(0,0,0,0.25);-->
     text-align: left;
     position: relative;
     color: #e6e6e6;
@@ -1630,25 +1624,31 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 
 /* Stars */
 .review-stars {
+    display:flex;
+    justify-content:center;
+<!--    align-item:center;-->
     color: #ffae00;
-    font-size: 18px;
+<!--    font-size: 25px;-->
     letter-spacing: 2px;
     margin-bottom: 14px;
 }
 
 /* Review text */
 .review-card p {
+
+    text-align:center;
     font-size: 15px;
     line-height: 1.7;
-    color: #d6d6d6;
+    color: #000000;
 }
 
 /* Author */
 .review-author {
+    text-align:center;
     margin-top: 18px;
     font-size: 15px;
-    font-weight: 600;
-    color: #ffffff;
+    font-weight: 400;
+    color: #212529;
     opacity: 0.85;
 }
 
