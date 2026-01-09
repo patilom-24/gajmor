@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="/css/magnific-popup.css">
     <link rel="stylesheet" href="/css/nice-select.css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
-
     <style>
         /* WhatsApp button */
       .social-square {
@@ -154,11 +153,20 @@
 <body>
 
 <!-- Start Header Area -->
+
+<style>
+    .default-header img{
+        height: 55px;
+        width: 190px;
+    }
+</style>
+
 <header class="default-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <h1 style="color: aliceblue;">Gajmor</h1>
+<!--                <h1 style="color: aliceblue;">Gajmor</h1>-->
+                <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767970598/gajmore_gay8kv.png" alt="gajmor-logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,22 +178,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a class="active" href="/aboutUs">About</a></li>
                     <li><a href="/services">Services</a></li>
-                    <li class="dropdown">
-
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/view-pro">Projects</a>
-                            <!--                            &lt;!&ndash; <a class="dropdown-item" href="elements.html">Elements</a>-->
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            Blog
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/viewBlogs">Blog</a>
-<!--                            <a class="dropdown-item" href="blog-single.html">Blog Details</a>-->
-                        </div>
-                    </li>
+                    <li><a href="/viewBlogs">Blog</a></li>
                     <li><a href="/jobs">careers</a></li>
                     <li><a href="/enquiry">Contact</a></li>
                 </ul>
@@ -236,7 +229,7 @@
 
 <style>
     #ban{
-            background-image: url(https://res.cloudinary.com/dbakcsfdz/image/upload/v1766849318/2202_w037_n003_217b_p1_217_axrisu.jpg);
+            background-image: url(https://res.cloudinary.com/dbakcsfdz/image/upload/v1767974251/freepik__adjust__72690_shcfl7.png);
             background-repeat: no-repeat;
             background-position: top;
             background-size: cover;
@@ -254,8 +247,8 @@
     <div class="container">
         <div class="row justify-content-between align-items-center text-center banner-content">
             <div class="col-lg-12">
-                <h1 class="text-black" style="color:black;letter-spacing:2px;">About Us</h1>
-                <p style="color:black;">Turning ideas into stunning experiences</p>
+                <h1 class="text-black" style="color:aliceblue;letter-spacing:2px;">About Us</h1>
+                <p style="color:aliceblue;">Turning ideas into stunning experiences</p>
             </div>
         </div>
     </div>

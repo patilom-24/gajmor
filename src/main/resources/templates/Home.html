@@ -242,12 +242,21 @@ border-radius: 14px;
 
     <div class="overlay-bg overlay"></div>
 
+    <style>
+        .default-header img{
+            height: 55px;
+            width: 190px;
+        }
+    </style>
+
     <!-- Header inside banner -->
-    <header class="default-header" style="position:absolute; top:0; width:100%; z-index:10;">
+    <header class="default-header" style="position:absolute; top:0; width:100%; z-index:10; background-color:#212529;">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <h1 style="color: aliceblue;">Gajmor</h1>
+<!--                    <h1 style="color: aliceblue;">Gajmor</h1>-->
+                    <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767970598/gajmore_gay8kv.png" alt="gajmor-logo">
+<!--                    <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767970764/IMG_20260109_201640_suytzs.png" alt="gajmor-logo">-->
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                     <span class="fa fa-bars"></span>
@@ -317,7 +326,7 @@ border-radius: 14px;
     <div class="container">
         <div class="row fullscreen">
             <div class="banner-content col-lg-12">
-                <p style="font-size:25px;font-weight:700;font-family:inherit;">Best Interior Designer's Studio in Pune</p>
+                <p style="font-size:20px;font-weight:700;font-family:inherit;">Best Interior Designer's in Pune</p>
                 <h1>Gajmor <br> Design</h1>
                 <a href="/view-pro" class="primary-btn">View project</a>
             </div>
@@ -1166,7 +1175,7 @@ border-radius: 14px;
 
     <!-- Section Heading -->
     <div class="stats-header">
-        <h2>Our Journey in Numbers</h2>
+        <h2 class="section-heading text-center mb-md-5 mb-4">Our Journey in Numbers</h2>
         <p>Delivering excellence through design, space, and innovation</p>
     </div>
     <br>
@@ -1394,7 +1403,7 @@ border-radius: 14px;
 
 <!--Reviews Section Start-->
 <section class="reviews-section">
-    <h2>What Our Clients Say</h2>
+    <h2 class="section-heading text-center mb-md-5 mb-4" style="color:#2f4f4f;">What Our Clients Say</h2>
 
     <div class="reviews-container" id="reviewsContainer">
         <!-- Reviews will load dynamically here -->
@@ -1519,6 +1528,15 @@ document.addEventListener("DOMContentLoaded", loadReviews);
     text-align: center;
 }
 
+<!--.reviews-section::after {
+    content: "";
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #ffae00, #ff7a00);
+    display: block;
+    margin: 14px auto 0;
+    border-radius: 4px;-->
+
 .reviews-section h2 {
     font-size: 32px;
     margin-bottom: 40px;
@@ -1606,6 +1624,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 /* ===== REVIEW CARD (PRO LOOK) ===== */
 .review-card {
     min-width: 260px;
+    height: 250px;
     background: #f3f3f3;
     padding: 30px;
     border-radius: 10px;
@@ -1626,9 +1645,8 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 .review-stars {
     display:flex;
     justify-content:center;
-<!--    align-item:center;-->
-    color: #ffae00;
-<!--    font-size: 25px;-->
+    color: darkorange;
+    font-size: 25px;
     letter-spacing: 2px;
     margin-bottom: 14px;
 }
@@ -1646,7 +1664,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 .review-author {
     text-align:center;
     margin-top: 18px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     color: #212529;
     opacity: 0.85;
@@ -1678,7 +1696,7 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 
 <!--how to reach us section -->
 <section class="reach-section">
-    <h2 class="section-heading text-center mb-md-5 mb-4">How To Reach Us</h2>
+    <h2 class="section-heading text-center mb-md-5 mb-4" style="color:#2f4f4f;">How To Reach Us</h2>
 
     <div class="reach-container">
         <!-- LEFT CONTENT -->
