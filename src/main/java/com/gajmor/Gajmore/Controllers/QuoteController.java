@@ -31,7 +31,7 @@ public class QuoteController {
             @ModelAttribute QuoteRequest quote,
             RedirectAttributes redirectAttributes) {
 
-        // ✅ Server-side mobile validation
+        // Server-side mobile validation
         if (!quote.getMobile().matches("^[6-9]\\d{9}$")) {
             redirectAttributes.addFlashAttribute(
                     "error",
@@ -40,7 +40,6 @@ public class QuoteController {
             return "redirect:/";
         }
 
-        // 🔥 TODO: Save to DB / Send Email / WhatsApp
         System.out.println("Quote Request Received:");
         System.out.println("Name: " + quote.getName());
         System.out.println("Email: " + quote.getEmail());
@@ -55,7 +54,7 @@ public class QuoteController {
         quoteRepository.save(quote);
         System.out.println("Quote request save ");
 
-        // ✅ Success message
+        //  Success message
         redirectAttributes.addFlashAttribute(
                 "success",
                 "Thank you! Our designer will contact you shortly."
