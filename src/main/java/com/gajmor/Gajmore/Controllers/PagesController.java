@@ -1,5 +1,7 @@
 package com.gajmor.Gajmore.Controllers;
 
+import com.gajmor.Gajmore.Services.ServiceImpl.FeedbackService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PagesController {
+
+    @Autowired
+    FeedbackService feedbackService;
 
 	// user
 	@GetMapping("/")
@@ -74,9 +79,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        /*if (session.getAttribute("adminLogin") == null){
+        if (session.getAttribute("adminLogin") == null){
             return "index";
-        }*/
+        }
         return "AdminHome";
 	}
 
@@ -112,6 +117,32 @@ public class PagesController {
         }
         return "AdminAddBlogs";
 	}
+
+    @GetMapping("/manage-reviews")
+	public String showReviews(HttpSession  session, HttpServletResponse response, Model model) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
+        if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+        model.addAttribute("reviews", feedbackService.getAllFeedbacks() );
+        return "ManageReviews";
+	}
+
+    @GetMapping("/all-enquiries")
+	public String showAllEnquiries(HttpSession  session, HttpServletResponse response, Model model) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        response.setDateHeader("Expires", 0); // Proxies
+        if (session.getAttribute("adminLogin") == null){
+            return "index";
+        }
+
+        return "ManageEnquiries";
+	}
+
+
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletResponse response) {

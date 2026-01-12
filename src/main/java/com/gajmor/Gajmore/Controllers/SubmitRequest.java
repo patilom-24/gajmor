@@ -55,17 +55,4 @@ public class SubmitRequest {
         return "redirect:/?success=true";
     }
 
-
-    @GetMapping("/enquires")
-    public String getAllEnquires(Model model){
-        try {
-            List<Enquiry> enquiryList = enquiryRepository.fetchAll();
-            model.addAttribute("enquires",enquiryList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return "allEnquires";
-    }
 }

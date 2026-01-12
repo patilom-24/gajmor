@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gajmor Design - All Enquiries</title>
+    <!-- Icons & Bootstrap -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/Images/GajmorLogo.png">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        .swal2-select {
+            display: none !important;}
+            .d-flex.meta-left span {
+            font-size: 25px;
+            color: #fff;
+            transition: font-size 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <!--                <h1 style="color: aliceblue;">Gajmor</h1>-->
+                <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767970598/gajmore_gay8kv.png" alt="gajmor-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/aboutUs">About</a></li>
+                    <li><a href="/viewBlogs">Blog</a></li>
+                    <li><a href="/jobs">careers</a></li>
+                    <li><a href="/enquiry">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <style>
+        .default-header img{
+            height: 55px;
+            width: 190px;
+        }
+
+            /* Hide navbar initially on mobile & tablet */
+            @media (max-width: 1024px) {
+                .default-header {
+                    transform: translateY(-100%);
+                    transition: transform 0.35s ease;
+                }
+
+                .default-header.show-nav {
+                    transform: translateY(0);
+                }
+            }
+
+    </style>
+</header>
+<!-- End Header Area -->
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const header = document.querySelector(".default-header");
+
+        window.addEventListener("scroll", function () {
+
+            // Only apply on mobile & tablet
+            if (window.innerWidth <= 1024) {
+
+                if (window.scrollY > 40) {
+                    header.classList.add("show-nav");
+                } else {
+                    header.classList.remove("show-nav");
+                }
+            } else {
+                // Ensure navbar is always visible on desktop
+                header.classList.remove("show-nav");
+                header.style.transform = "translateY(0)";
+            }
+        });
+    });
+</script>
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg" id="ban"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="admin-title" style="color:white;">Customer Enquiries</h1>
+                <p class="admin-subtitle" style="color:white;">
+                    All contact requests and service enquiries in one place
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #ban{
+                background-image: url(https://res.cloudinary.com/dbakcsfdz/image/upload/v1768213773/interior-web-65127eabc6dfa_p6gtvk.webp);
+                background-repeat: no-repeat;
+                background-position: top;
+                background-size: cover;
+            }
+        @media (max-width: 1024px) {
+
+    #ban{
+        background-position:right;
+    }
+    </style>
+</section>
+
+<!--enquiry section start-->
+<section class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-primary">Customer Enquiries</h3>
+        <span class="badge bg-primary">Enquiry Requests</span>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Enquiry For</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="enquiry, i : ${enquiries}">
+                        <td th:text="${i.index + 1}"></td>
+                        <td th:text="${enquiry.name}"></td>
+                        <td th:text="${enquiry.email}"></td>
+                        <td th:text="${enquiry.mobileNo}"></td>
+                        <td>
+                            <span class="badge bg-info text-dark" th:text="${enquiry.enquiryFor}"></span>
+                        </td>
+
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#enquiryModal"
+                                    th:attr="
+                                        data-name=${enquiry.name},
+                                        data-email=${enquiry.email},
+                                        data-mobile=${enquiry.mobileNo},
+                                        data-enquiry=${enquiry.enquiryFor}">
+                                View
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger"
+                                    th:attr="data-id=${enquiry.id}"
+                                    onclick="deleteEnquiry(this)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<div class="modal fade" id="enquiryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content enquiry-modal">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" >Customer Enquiry</h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="enquiry-user mb-3">
+                    <div>
+                        <h6 id="eName" class="fw-bold mb-0"></h6>
+                        <small id="eEmail" class="text-muted"></small><br>
+                        <small id="eMobile" class="text-muted"></small>
+                    </div>
+                    <span id="eType" class="badge bg-info text-dark"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="deleteEnquiryModal" class="btn btn-danger">Delete Enquiry</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .enquiry-modal{
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.enquiry-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+</style>
+
+<script>
+    function updateSerialNumbers() {
+    document.querySelectorAll("tbody tr").forEach((row, index) => {
+        row.querySelector("td").innerText = index + 1;
+    });
+}
+    let currentEnquiryId = null;
+
+const enquiryModal = document.getElementById("enquiryModal");
+
+enquiryModal.addEventListener("show.bs.modal", function (event) {
+    const btn = event.relatedTarget;
+
+    currentEnquiryId = btn.getAttribute("data-id");
+
+    document.getElementById("eName").innerText = btn.getAttribute("data-name");
+    document.getElementById("eEmail").innerText = btn.getAttribute("data-email");
+    document.getElementById("eMobile").innerText = btn.getAttribute("data-mobile");
+    document.getElementById("eType").innerText = btn.getAttribute("data-enquiry");
+});
+
+    function deleteEnquiry(btn){
+    currentEnquiryId = btn.getAttribute("data-id");
+
+    Swal.fire({
+        title: "Delete Enquiry?",
+        text: "This enquiry will be permanently removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DC2626",
+        cancelButtonColor: "#64748B",
+        confirmButtonText: "Yes, Delete"
+    }).then(result => {
+        if(result.isConfirmed){
+            performEnquiryDelete(btn);
+        }
+    });
+}
+
+document.getElementById("deleteEnquiryModal").addEventListener("click", function(){
+    Swal.fire({
+        title: "Delete Enquiry?",
+        text: "This enquiry will be permanently removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DC2626",
+        cancelButtonColor: "#64748B",
+        confirmButtonText: "Yes, Delete"
+    }).then(result => {
+        if(result.isConfirmed){
+            performEnquiryDelete();
+        }
+    });
+});
+
+function performEnquiryDelete(btn=null){
+    fetch("/enquiry/delete/" + currentEnquiryId, {
+        method: "DELETE"
+    })
+    .then(res=>{
+        if(res.ok){
+            Swal.fire("Deleted!","Enquiry removed successfully","success");
+
+            if(btn){
+                btn.closest("tr").remove();
+            } else {
+                document.querySelector(`[data-id='${currentEnquiryId}']`).closest("tr").remove();
+                bootstrap.Modal.getInstance(enquiryModal).hide();
+            }
+
+            updateSerialNumbers();
+        }
+    });
+}
+
+    function loadEnquiries(){
+    fetch("/enquiry/all")
+        .then(res=>res.json())
+        .then(data=>rebuildEnquiryTable(data));
+}
+
+function rebuildEnquiryTable(data){
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = "";
+
+    data.forEach((e,i)=>{
+        tbody.innerHTML += `
+        <tr>
+            <td>${i+1}</td>
+            <td>${e.name}</td>
+            <td>${e.email}</td>
+            <td>${e.mobileNo}</td>
+            <td><span class="badge bg-info">${e.enquiryFor}</span></td>
+            <td class="text-center">
+                <button class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#enquiryModal"
+                    data-id="${e.id}"
+                    data-name="${e.name}"
+                    data-email="${e.email}"
+                    data-mobile="${e.mobileNo}"
+                    data-enquiry="${e.enquiryFor}">
+                    View
+                </button>
+                <button class="btn btn-sm btn-outline-danger" data-id="${e.id}" onclick="deleteEnquiry(this)">Delete</button>
+            </td>
+        </tr>`;
+    });
+}
+
+setInterval(loadEnquiries, 8000);
+loadEnquiries();
+
+</script>
+
+<!--enquiry section end-->
+
+<!-- FOOTER -->
+<br><br>
+<div th:replace="fragments/footer :: site-footer"></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="/js/vendor/bootstrap.min.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/parallax.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+</html>

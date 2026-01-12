@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface EnquiryRepository extends JpaRepository<Enquiry,Long> {
-    @Query("select e from Enquiry e")
-    List<Enquiry> fetchAll();
+
+    List<Enquiry> findAll();
 }

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gajmor Design Reviews</title>
+
+    <!-- Icons & Bootstrap -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/Images/GajmorLogo.png">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/linearicons.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        .swal2-select {
+            display: none !important;}
+            .d-flex.meta-left span {
+            font-size: 25px;
+            color: #fff;
+            transition: font-size 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+<header class="default-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <!--                <h1 style="color: aliceblue;">Gajmor</h1>-->
+                <img src="https://res.cloudinary.com/dbakcsfdz/image/upload/v1767970598/gajmore_gay8kv.png" alt="gajmor-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/aboutUs">About</a></li>
+                    <li><a href="/viewBlogs">Blog</a></li>
+                    <li><a href="/jobs">careers</a></li>
+                    <li><a href="/enquiry">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <style>
+        .default-header img{
+            height: 55px;
+            width: 190px;
+        }
+
+            /* Hide navbar initially on mobile & tablet */
+            @media (max-width: 1024px) {
+                .default-header {
+                    transform: translateY(-100%);
+                    transition: transform 0.35s ease;
+                }
+
+                .default-header.show-nav {
+                    transform: translateY(0);
+                }
+            }
+
+    </style>
+</header>
+<!-- End Header Area -->
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const header = document.querySelector(".default-header");
+
+        window.addEventListener("scroll", function () {
+
+            // Only apply on mobile & tablet
+            if (window.innerWidth <= 1024) {
+
+                if (window.scrollY > 40) {
+                    header.classList.add("show-nav");
+                } else {
+                    header.classList.remove("show-nav");
+                }
+            } else {
+                // Ensure navbar is always visible on desktop
+                header.classList.remove("show-nav");
+                header.style.transform = "translateY(0)";
+            }
+        });
+    });
+</script>
+<!-- Start top-section Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg" id="ban"></div>
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center banner-content">
+            <div class="col-lg-12">
+                <h1 class="admin-title" style="color:white;">Manage Reviews</h1>
+                <p class="admin-subtitle" style="color:white;">View, approve, edit and control customer feedback</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #ban{
+                background-image: url(https://res.cloudinary.com/dbakcsfdz/image/upload/v1768213783/styling-for-interiors_pghkon.webp);
+                background-repeat: no-repeat;
+                background-position: top;
+                background-size: cover;
+            }
+        @media (max-width: 1024px) {
+
+    #ban{
+        background-position:right;
+    }
+    </style>
+</section>
+
+<!-- End top-section Area -->
+
+<!--Enquiries Section start-->
+<section class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-primary">Customer Reviews</h3>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="review, i : ${reviews}">
+                    <td th:text="${i.index + 1}"></td>
+                    <td th:text="${review.name}"></td>
+                    <td th:text="${review.email}"></td>
+                    <td>
+                        <span class="badge bg-warning text-dark" th:text="${review.rating} + ' ★'"></span>
+                    </td>
+                    <td th:text="${#strings.abbreviate(review.message, 40)}"></td>
+
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewModal"
+                                th:attr="
+                                    data-id=${review.id},
+                                    data-name=${review.name},
+                                    data-email=${review.email},
+                                    data-msg=${review.message},
+                                    data-rating=${review.rating}">
+                            View
+                        </button>
+
+
+
+                        <button class="btn btn-sm btn-outline-danger"
+                                th:attr="data-id=${review.id}"
+                                onclick="deleteReview(this)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <script>
+        function updateSerialNumbers() {
+    document.querySelectorAll("tbody tr").forEach((row, index) => {
+        row.querySelector("td").innerText = index + 1;
+    });
+}
+
+        function deleteReview(btn) {
+    const id = btn.getAttribute("data-id");
+
+    Swal.fire({
+        title: "Delete Review?",
+        text: "This review will be permanently removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DC2626",
+        cancelButtonColor: "#64748B",
+        confirmButtonText: "Yes, Delete",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch("/feedback/delete-review/" + id, {
+    method: "DELETE"
+})
+.then(res => {
+    if (res.ok) {
+        Swal.fire("Deleted!", "Review removed successfully.", "success");
+
+        btn.closest("tr").remove();
+
+        // 🔥 Fix the serial numbers
+        updateSerialNumbers();
+    } else {
+        Swal.fire("Error", "Failed to delete review", "error");
+    }
+});
+
+
+        }
+    });
+}
+
+    </script>
+
+
+
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content review-modal">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Customer Review</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="review-user mb-3">
+                        <div>
+                            <h6 id="mName" class="mb-0 fw-bold"></h6>
+                            <small id="mEmail" class="text-muted"></small>
+                        </div>
+                        <div class="rating-badge">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="mRating"></span>
+                        </div>
+                    </div>
+
+                    <div class="review-message" id="mMsg"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="deleteFromModal" class="btn btn-danger">Delete Review</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .review-modal {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.review-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.review-message {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #0f172a;
+    box-shadow: inset 0 0 0 1px #e2e8f0;
+}
+
+        .rating-badge{
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #1f2937;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 15px rgba(251,191,36,.45);
+}
+
+.rating-badge i{
+    color: #92400e;
+    font-size: 18px;
+}
+
+    </style>
+
+    <script>
+        let currentReviewId = null;
+
+const modal = document.getElementById("viewModal");
+
+modal.addEventListener("show.bs.modal", function (event) {
+    const btn = event.relatedTarget;
+
+    currentReviewId = btn.getAttribute("data-id"); // 🔥 store id
+
+    document.getElementById("mName").innerText = btn.getAttribute("data-name");
+    document.getElementById("mEmail").innerText = btn.getAttribute("data-email");
+    document.getElementById("mMsg").innerText = btn.getAttribute("data-msg");
+    document.getElementById("mRating").innerText = btn.getAttribute("data-rating");
+});
+
+
+        document.getElementById("deleteFromModal").addEventListener("click", function () {
+    Swal.fire({
+        title: "Delete Review?",
+        text: "This review will be permanently removed",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DC2626",
+        cancelButtonColor: "#64748B",
+        confirmButtonText: "Yes, Delete"
+    }).then(result => {
+        if (result.isConfirmed) {
+            fetch("/feedback/delete-review/" + currentReviewId, {
+                method: "DELETE"
+            }).then(res => {
+                if (res.ok) {
+                    Swal.fire("Deleted!", "Review removed successfully.", "success");
+
+                    document.querySelector(`[data-id='${currentReviewId}']`).closest("tr").remove();
+                    updateSerialNumbers();
+                    bootstrap.Modal.getInstance(modal).hide();
+                }
+            });
+        }
+    });
+});
+
+
+    </script>
+
+
+</section>
+
+<!--Enquiries Section end-->
+
+<!-- FOOTER -->
+<br><br>
+<div th:replace="fragments/footer :: site-footer"></div>
+
+<!-- Scripts -->
+<script>
+    function loadReviews() {
+        fetch("/feedback/feedbacks")
+            .then(res => res.json())
+            .then(data => rebuildTable(data));
+    }
+
+    function rebuildTable(reviews) {
+        const tbody = document.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        reviews.forEach((r, i) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${r.name}</td>
+                    <td>${r.email}</td>
+                    <td><span class="badge bg-warning text-dark">${r.rating} ★</span></td>
+                    <td>${r.message.substring(0, 40)}...</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#viewModal"
+                            data-id="${r.id}"
+                            data-name="${r.name}"
+                            data-email="${r.email}"
+                            data-msg="${r.message}"
+                            data-rating="${r.rating}">
+                            View
+                        </button>
+
+                        <button class="btn btn-sm btn-outline-danger"
+                            data-id="${r.id}"
+                            onclick="deleteReview(this)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    /* 🔁 Auto refresh every 8 seconds */
+    setInterval(loadReviews, 8000);
+
+    /* Load once when page opens */
+    loadReviews();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="/js/vendor/bootstrap.min.js"></script>
+<script src="/js/jquery.ajaxchimp.min.js"></script>
+<script src="/js/parallax.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/isotope.pkgd.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.sticky.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+</html>
