@@ -243,8 +243,8 @@
                     <button type="submit" id="feedbackBtn">
                         <i class="fa fa-paper-plane send-icon"></i>
                         <span class="btn-text">Send</span>
-
                     </button>
+
                 </form>
 
                 <span class="close-modal" onclick="closeFeedbackModal()">×</span>
@@ -384,96 +384,89 @@
 
         </style>
 
-<!--        loader script-->
         <script>
-            const feedbackForm = document.querySelector("#feedbackModal form");
-            const btn = document.getElementById("feedbackBtn");
-            const btnText = btn.querySelector(".btn-text");
-            const loader = btn.querySelector(".btn-loader");
+            const feedbackModal = document.getElementById("feedbackModal");
+            const feedbackForm = document.getElementById("feedbackForm");
+            const feedbackBtn = document.getElementById("feedbackBtn");
+            const btnText = feedbackBtn.querySelector(".btn-text");
 
-            feedbackForm.addEventListener("submit", function () {
-                btnText.textContent = "Sending";
-                loader.style.display = "inline-block";
-                btn.disabled = true;
+            /* GLOBAL so footer onclick works */
+            window.openFeedbackModal = function () {
+                feedbackModal.style.display = "flex";
+            }
+
+            window.closeFeedbackModal = function () {
+                feedbackModal.style.display = "none";
+            }
+
+            /* Close on outside click */
+            feedbackModal.addEventListener("click", function (e) {
+                if (e.target === feedbackModal) closeFeedbackModal();
+            });
+
+            /* Close on ESC */
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && feedbackModal.style.display === "flex") {
+                    closeFeedbackModal();
+                }
+            });
+
+            /* =====================
+               SUBMIT FEEDBACK
+               ===================== */
+            feedbackForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const rating = document.querySelector('input[name="rating"]:checked')?.value;
+                const name = this.name.value;
+                const email = this.email.value;
+                const message = this.message.value;
+
+                if (!rating) {
+                    Swal.fire("Rating Required", "Please select a star rating", "warning");
+                    return;
+                }
+
+                const data = { rating, name, email, message };
+
+                feedbackBtn.disabled = true;
+                btnText.innerText = "Sending...";
+
+                Swal.fire({
+                    title: "Submitting...",
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch("/feedback/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error();
+                    return res.json();
+                })
+                .then(() => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thank you!",
+                        text: "Your feedback has been submitted successfully.",
+                        confirmButtonColor: "#ffae00"
+                    });
+
+                    feedbackForm.reset();
+                    closeFeedbackModal();
+                })
+                .catch(() => {
+                    Swal.fire("Error", "Something went wrong. Please try again.", "error");
+                })
+                .finally(() => {
+                    feedbackBtn.disabled = false;
+                    btnText.innerText = "Send";
+                });
             });
         </script>
-
-
-        <script>
-            function openFeedbackModal() {
-                document.getElementById("feedbackModal").style.display = "flex";
-            }
-
-            function closeFeedbackModal() {
-                document.getElementById("feedbackModal").style.display = "none";
-            }
-
-            feedbackModal.addEventListener("click", function (e) {
-        if (e.target === feedbackModal) {
-            closeFeedbackModal();
-        }
-    });
-
-             document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && feedbackModal.style.display === "flex") {
-            closeFeedbackModal();
-        }
-    });
-
-/* ==========================
-   SEND FEEDBACK (ON CLICK)
-   ========================== */
-
-document.getElementById("feedbackForm").addEventListener("submit", function (e) {
-    e.preventDefault(); // stop page reload
-
-    const rating = document.querySelector('input[name="rating"]:checked')?.value;
-    const name = this.querySelector('input[name="name"]').value;
-    const email = this.querySelector('input[name="email"]').value;
-    const message = this.querySelector('textarea[name="message"]').value;
-
-    if (!rating) {
-        alert("Please select a rating");
-        return;
-    }
-
-    const feedbackData = {
-        rating: rating,
-        name: name,
-        email: email,
-        message: message
-    };
-
-    fetch("/feedback/add", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(feedbackData)
-    })
-    .then(res => {
-        if (!res.ok) throw new Error("Failed");
-        return res.json();
-    })
-    .then(() => {
-        alert("Thank you for your feedback!");
-
-        // reset form
-        document.getElementById("feedbackForm").reset();
-
-        // close modal
-        closeFeedbackModal();
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Something went wrong. Please try again.");
-    });
-});
-        </script>
-
-
-
-
 
         <div class="footer-bottom">
             © 2025 <strong>Gajmor Design Studio</strong> — All rights reserved.

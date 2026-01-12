@@ -2,9 +2,10 @@ package com.gajmor.Gajmore.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -28,5 +29,13 @@ public class Enquiry {
     @Column(name = "enquiry_for", nullable = false)
     private String enquiryFor;
 
-    		
+    @Column(name = "date_of_enquiry", nullable = false)
+    private LocalDateTime enquiryDate;
+
+    @PrePersist
+    public void setEnquiryDate() {
+        this.enquiryDate = LocalDateTime.now();
+    }
+
+
 }

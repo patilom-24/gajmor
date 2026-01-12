@@ -1393,6 +1393,12 @@ border-radius: 14px;
 
         observer.observe(document.querySelector(".stats-section"));
     });
+
+    /* 🔄 Auto refresh reviews every 10 seconds */
+setInterval(() => {
+    loadReviews();
+}, 10000);
+
 </script>
 
 <!--project completed section ends -->
@@ -1585,11 +1591,6 @@ document.addEventListener("DOMContentLoaded", loadReviews);
 }
 
 </style>
-<!-- Google Maps API (LAST) -->
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=loadGoogleReviews"
-        async defer>
-</script>
 
 <style>
     /* Section */

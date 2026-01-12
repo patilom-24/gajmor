@@ -544,7 +544,7 @@
 
                 <div class="form-group">
                     <select name="enquiryFor" required>
-                        <option value="" disabled selected>Enquiry For</option>
+                        <option value="" hidden selected>Enquiry For</option>
                         <option value="Living_room">Living Room</option>
                         <option value="Bedroom">Bedroom</option>
                         <option value="Kitchen">Kitchen</option>
@@ -605,6 +605,7 @@
         });
 
         document.getElementById("enquiryForm").reset();
+        document.querySelector("select[name='enquiryFor']").selectedIndex = 0;
     })
     .catch(() => {
         overlay.style.display = "none";

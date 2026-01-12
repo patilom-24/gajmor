@@ -7,13 +7,17 @@ import com.gajmor.Gajmore.Services.ServiceImpl.EmailService;
 import com.gajmor.Gajmore.Services.ServiceImpl.EnquiryMailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -32,27 +36,33 @@ public class SubmitRequest {
     private String fromAddress;
 
     @PostMapping("/submitEnquiry")
-    private String getEnquiryDetails(@ModelAttribute Enquiry enquiry, RedirectAttributes redirectAttributes){
+    @ResponseBody
+    public ResponseEntity<?> submitEnquiry(@ModelAttribute Enquiry enquiry) {
+
         enquiry.setEnquiryFor(enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor()));
-        String enquiryFor = enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor());
-        System.out.println(enquiry.getName() +" "+enquiry.getEmail()+" "+enquiry.getMobileNo()+" "+enquiryFor);
         enquiryRepository.save(enquiry);
 
-//        For send the response email to the client
         try {
-            // Send Email To the Client
+            // Email to client
             String html = enquiryMailTemplate.buildClientEnquiryResponseEmail(enquiry.getName());
             emailService.sendEmail(enquiry.getEmail(), "Thank You for Your Enquiry - Gajmor", html);
 
-            // Sent Email To The Admin
-            String emailBody = enquiryMailTemplate.buildEnquiryEmail(enquiry.getName(),enquiry.getEmail(),enquiry.getMobileNo(),enquiry.getEnquiryFor());
-            emailService.sendEmail(fromAddress,"Enquiry For the "+ enquiryMailTemplate.formatEnquiryValue(enquiry.getEnquiryFor()),emailBody);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            // Email to admin
+            String emailBody = enquiryMailTemplate.buildEnquiryEmail(
+                    enquiry.getName(),
+                    enquiry.getEmail(),
+                    enquiry.getMobileNo(),
+                    enquiry.getEnquiryFor()
+            );
+            emailService.sendEmail(fromAddress, "New Enquiry - Gajmor", emailBody);
 
-        redirectAttributes.addFlashAttribute("successMessage", "We will connect with you within 2 to 3 days. Thank you!");
-        return "redirect:/?success=true";
+            return ResponseEntity.ok().build();   // 🔥 return 200 to fetch
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Email failed");
+        }
     }
+
 
 }
