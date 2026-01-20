@@ -28,12 +28,16 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 
     <script>
+        let currentProjectImages = [];
         const BASE_URL = /*[[${baseUrl}]]*/ "";
         let currentImages = [];
         let currentIndex = 0;
     </script>
 
     <style>
+        body {
+            overscroll-behavior: none;
+        }
         :root{
           --dark:#1b1b1b;
           --gray:#666;
@@ -179,8 +183,7 @@
         }
         .project-content{
           background:#fff;
-          max-width:1200px;
-          margin:70px auto;
+          max-width:100%;
           padding:45px;
         }
         /* Make modal container relative */
@@ -189,42 +192,64 @@
 }
 
 /* Close button INSIDE frame */
+/* ================= PRO CLOSE BUTTON ================= */
+/* ================= PROJECT CLOSE BUTTON ================= */
 .close {
   position: absolute;
   top: 18px;
   right: 18px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #111;
-  color: red;
-  border: none;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
+
+  width: 44px;
+  height: 44px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease, background 0.2s ease;
+
+  font-size: 22px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  z-index: 10020;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.1);
+
+  transition: all 0.2s ease;
 }
 
 .close:hover {
-color:red;
-  background: #000;
-  transform: scale(1.1);
+  background: rgba(0,0,0,0.85);
+  transform: scale(1.08);
+}
+
+.close:active {
+  transform: scale(0.95);
+}
+
+
+/* Keyboard focus (accessibility) */
+.close:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,0.25),
+    0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 
 
         /* PROJECT HERO */
         .project-hero{
-          height:460px;
+          height:500px;
           background-size:contain;
           background-repeat: no-repeat;
           background-position:center;
-          border-radius:14px;
           margin-bottom:35px;
         }
 
@@ -240,11 +265,11 @@ color:red;
 
         @media (max-width: 768px) {
             .close {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
     top: 12px;
     right: 12px;
-    width: 34px;
-    height: 34px;
-    font-size: 24px;
   }
 
             .project-hero {
@@ -315,12 +340,11 @@ color:red;
         /* GALLERY */
         .gallery{
           display:flex;
-          gap:18px;
+          gap:25px;
           overflow-x:auto;
         }
         .gallery img{
           height:280px;
-          border-radius:10px;
         }
 
 
@@ -436,7 +460,7 @@ color:red;
 
 .gallery-item img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -466,40 +490,6 @@ color:red;
             font-size:50px;
         }
 
-
-
-        /* LIGHTBOX */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-.lightbox img {
-  max-width: 92%;
-  max-height: 92%;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-.lightbox-close {
-  position: fixed;
-  top: 20px;
-  right: 30px;
-  font-size: 40px;
-  color: #fff;
-  cursor: pointer;
-  z-index: 10001;
-}
-
-        .lightbox img {
-  animation: zoomIn .3s ease;
-}
-
 @keyframes zoomIn {
   from { transform: scale(.85); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -514,7 +504,7 @@ color:red;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  z-index: 10000;
+  z-index: 9999;
 }
 
 /* Chat with us pill */
@@ -584,6 +574,221 @@ color:red;
 
 <body>
 
+<style>
+    /* ================= LIGHTBOX ================= */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: #000;
+  display: none;
+
+  z-index: 20000;
+}
+
+/* TOP BAR */
+.lightbox-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 14px;
+  z-index: 10002;
+}
+
+.lightbox-close {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* MAIN IMAGE */
+.lightbox img {
+  position: absolute;
+  inset: 48px 0 120px 0;   /* top | right | bottom | left */
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;      /* 🔥 KEY CHANGE */
+  object-position: center;
+
+  pointer-events: none;
+}
+
+
+.lightbox ~ .social-stack {
+  display: none;
+}
+
+.lightbox-top {
+  backdrop-filter: blur(6px);
+}
+
+.thumb-strip,
+.lightbox-arrow {
+  backdrop-filter: none;
+}
+
+
+/* ARROWS */
+/* ================= LIGHTBOX ARROWS ================= */
+
+.lightbox-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+  color: #fff;
+
+  background: rgba(0,0,0,0.55);
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+  z-index: 10010;
+
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-arrow:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* LEFT & RIGHT POSITION */
+.lightbox-arrow.left {
+  left: 12px;
+}
+
+.lightbox-arrow.right {
+  right: 12px;
+}
+
+@media (max-width: 768px) {
+
+  .lightbox-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+
+    /* shift slightly up because of thumb strip */
+    top: calc(90% - 40px);
+  }
+
+  .lightbox-arrow.left {
+    left: 8px;
+  }
+
+  .lightbox-arrow.right {
+    right: 8px;
+  }
+}
+
+.lightbox-arrow:active {
+  transform: translateY(-50%) scale(0.9);
+}
+
+
+/* THUMB STRIP */
+.thumb-strip {
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  bottom: 12px;
+  height: 90px;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  z-index: 999999; /* 🔥 ABOVE EVERYTHING */
+
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+.thumb-strip::-webkit-scrollbar { display: none; }
+
+.thumb {
+  height: 72px;
+  aspect-ratio: 16 / 9;
+
+  cursor: pointer;
+  opacity: 0.45;
+
+  border-radius: 6px;
+  border: 2px solid transparent;
+
+  transition:
+    opacity 0.2s ease,
+    border 0.2s ease,
+    transform 0.2s ease;
+}
+
+.thumb.active {
+  opacity: 1;
+  border-color: #fff;
+  transform: scale(1.06);
+}
+
+.thumb:hover {
+  opacity: 0.85;
+}
+
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+    .social-stack.hide {
+  display: none;
+}
+
+</style>
+
+<script>
+    let uiTimeout;
+
+    function showUI() {
+      document.querySelector('.lightbox-top').style.opacity = '1';
+      document.querySelector('.thumb-strip').style.opacity = '1';
+
+      clearTimeout(uiTimeout);
+      uiTimeout = setTimeout(() => {
+        document.querySelector('.lightbox-top').style.opacity = '0';
+        document.querySelector('.thumb-strip').style.opacity = '0';
+      }, 2500);
+    }
+
+    lightbox.addEventListener('mousemove', showUI);
+    lightbox.addEventListener('touchstart', showUI);
+
+</script>
+
+
 <div class="filter-bar">
     <button class="active" data-type="all">All</button>
     <button data-type="Commercial">Commercial</button>
@@ -605,14 +810,14 @@ color:red;
 
         <h2 id="title1"></h2>
 
-        <div class="project-meta">
+        <div class="project-meta meta-card">
             <div><strong>Location <label for="" style="color: red;">*</label></strong><br><span id="loc"></span></div>
             <div><strong>Area <label for="" style="color: red;">*</label></strong><br><span id="area"></span></div>
             <div><strong>Type <label for="" style="color: red;">*</label></strong><br><span id="type"></span></div>
         </div>
 
         <div class="story">
-            <h3>Design Narrative <label for="" style="color: red;">*</label></h3>
+            <h3>Design Description <label for="" style="color: red;">*</label></h3>
             <p id="desc"></p>
         </div>
 
@@ -620,109 +825,222 @@ color:red;
     </div>
 </div>
 
+<style>
+    /* ================= PROJECT META ================= */
+.meta-card {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 28px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.project-meta div {
+  text-align: center;
+}
+
+.project-meta strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.project-meta span {
+  font-size: 15px;
+  color: #555;
+}
+
+/* Mobile stacking */
+@media (max-width: 768px) {
+  .project-meta {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+</style>
+
 <div id="lightbox" class="lightbox">
-    <span class="lightbox-close">&times;</span>
-    <img id="lightboxImg">
+
+    <!-- TOP BAR -->
+    <div class="lightbox-top">
+        <span id="imgCounter">1 / 1</span>
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    </div>
+
+    <!-- LEFT ARROW -->
+    <button class="lightbox-arrow left"
+            onclick="event.stopPropagation(); showPrev()">
+        &#10094;
+    </button>
+
+    <!-- MAIN IMAGE -->
+    <img id="lightboxImg" onclick="event.stopPropagation()">
+
+    <!-- RIGHT ARROW -->
+    <button class="lightbox-arrow right"
+            onclick="event.stopPropagation(); showNext()">
+        &#10095;
+    </button>
+
+    <!-- THUMB STRIP -->
+    <!--    <div class="thumb-strip" onclick="event.stopPropagation()"></div>-->
 </div>
 
 <script>
-    const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightboxImg");
-const closeBtn = document.querySelector(".lightbox-close");
+    function openLightbox() {
+   document.body.style.overflow = "hidden";
+   document.querySelector(".social-stack")?.classList.add("hide");
+ }
 
-// Open lightbox
-document.addEventListener("click", e => {
-  if (e.target.tagName !== "IMG") return;
+ function closeLightbox() {
+   lightbox.style.display = "none";
+   document.body.style.overflow = "";
+   currentImages = [];
+   currentIndex = 0;
+   document.querySelector(".social-stack")?.classList.remove("hide");
+ }
+</script>
 
-  // CASE 1: Gallery images (multiple)
-  if (e.target.closest(".gallery")) {
-    const gallery = e.target.closest(".gallery");
-    currentImages = [...gallery.querySelectorAll("img")].map(img => img.src);
-    currentIndex = currentImages.indexOf(e.target.src);
+<script>
+    const thumbStrip = document.querySelector(".thumb-strip");
+    const imgCounter = document.getElementById("imgCounter");
+
+    /* Build thumbnails */
+    function renderThumbs() {
+      thumbStrip.innerHTML = "";
+
+      currentImages.forEach((src, index) => {
+        const t = document.createElement("div");
+        t.className = "thumb" + (index === currentIndex ? " active" : "");
+        t.innerHTML = `<img src="${src}">`;
+
+        t.onclick = () => {
+          currentIndex = index;
+          updateLightboxImage();
+        };
+
+        thumbStrip.appendChild(t);
+      });
+    }
+
+    /* Update image + counter + active thumb */
+    function updateLightboxImage() {
+      lightboxImg.style.opacity = "0";
+
+      setTimeout(() => {
+        lightboxImg.src = currentImages[currentIndex];
+        lightboxImg.style.opacity = "1";
+      }, 120);
+
+      imgCounter.textContent =
+        `${currentIndex + 1} / ${currentImages.length}`;
+
+      document.querySelectorAll(".thumb").forEach((t, i) => {
+        t.classList.toggle("active", i === currentIndex);
+        if (i === currentIndex) {
+          t.scrollIntoView({ behavior: "smooth", inline: "center" });
+        }
+      });
+    }
+
+
+
+
+        const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const closeBtn = document.querySelector(".lightbox-close");
+
+    // Open lightbox
+    document.addEventListener("click", e => {
+
+  if (e.target.closest("#lightbox")) return;
+
+  if (e.target.closest(".gallery img")) {
+    const img = e.target;
+    currentImages = [...document.querySelectorAll(".gallery img")].map(i => i.src);
+    currentIndex = currentImages.indexOf(img.src);
   }
+  else if (e.target.closest(".project-hero")) {
+  if (!currentProjectImages || currentProjectImages.length === 0) return;
 
-  // CASE 2: Card image (single)
-  else if (e.target.closest(".card")) {
-    currentImages = [e.target.src];
-    currentIndex = 0;
-  } else {
-    return;
-  }
-
-  lightboxImg.src = currentImages[currentIndex];
-  lightbox.style.display = "flex";
-});
-
-
-// Close lightbox (X button)
-closeBtn.onclick = () => {
-  lightbox.style.display = "none";
-  lightboxImg.src = "";
-};
-
-// Close on background click
-lightbox.onclick = e => {
-  if (e.target === lightbox) {
-    lightbox.style.display = "none";
-    lightboxImg.src = "";
-  }
-};
-
-// Close on ESC key
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    lightbox.style.display = "none";
-    lightboxImg.src = "";
-  }
-});
-
-document.addEventListener("keydown", e => {
-  if (lightbox.style.display !== "flex") return;
-
-  if (e.key === "ArrowRight") showNext();
-  if (e.key === "ArrowLeft") showPrev();
-  if (e.key === "Escape") closeLightbox();
-});
-
-
-function showNext() {
-  if (currentImages.length <= 1) return;
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  lightboxImg.src = currentImages[currentIndex];
-}
-
-function showPrev() {
-  if (currentImages.length <= 1) return;
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  lightboxImg.src = currentImages[currentIndex];
-}
-
-
-function closeLightbox() {
-  lightbox.style.display = "none";
-  lightboxImg.src = "";
-  currentImages = [];
+  currentImages = [...currentProjectImages];
   currentIndex = 0;
 }
 
+  else if (e.target.closest(".card img")) {
+    currentImages = [e.target.src];
+    currentIndex = 0;
+  }
+  else {
+    return;
+  }
 
-
-    let touchStartX = 0;
-let touchEndX = 0;
-
-lightbox.addEventListener("touchstart", e => {
-  touchStartX = e.changedTouches[0].screenX;
+  openLightbox();
+  lightbox.style.display = "flex";   // 🔥 important
+  updateLightboxImage();
+  renderThumbs();
 });
 
-lightbox.addEventListener("touchend", e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-});
+    // Close lightbox (X button)
+    closeBtn.onclick = () => {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+    };
 
-function handleSwipe() {
-  if (touchEndX < touchStartX - 40) showNext();   // swipe left
-  if (touchEndX > touchStartX + 40) showPrev();   // swipe right
-}
+    // Close on background click
+    lightbox.onclick = e => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+        lightboxImg.src = "";
+      }
+    };
+
+    // Close on ESC key
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        lightbox.style.display = "none";
+        lightboxImg.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (!lightbox || lightbox.style.display === "none") return;
+      if (e.key === "ArrowRight") showNext();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "Escape") closeLightbox();
+    });
+
+
+    function showNext() {
+      if (currentImages.length <= 1) return;
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      updateLightboxImage();
+    }
+
+    function showPrev() {
+      if (currentImages.length <= 1) return;
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      updateLightboxImage();
+    }
+
+        let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener("touchstart", e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    lightbox.addEventListener("touchend", e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 40) showNext();   // swipe left
+      if (touchEndX > touchStartX + 40) showPrev();   // swipe right
+    }
 
 
 </script>
@@ -778,27 +1096,31 @@ function handleSwipe() {
 }
 
 
-    function openProject(p){
-      heroImg.style.backgroundImage=`url(${BASE_URL}/uploads/${p.images[0].imagePath})`;
-      title1.textContent=p.name;
-      loc.textContent=p.location||'-';
-      area.textContent=p.area||'-';
-      type.textContent=p.projectType||'-';
-      desc.textContent=p.description||'';
+    function openProject(p) {
+  heroImg.style.backgroundImage = `url(${BASE_URL}/uploads/${p.images[0].imagePath})`;
 
-      gallery.innerHTML = "";
+  title1.textContent = p.name;
+  loc.textContent = p.location || '-';
+  area.textContent = p.area || '-';
+  type.textContent = p.projectType || '-';
+  desc.textContent = p.description || '';
 
-      p.images.forEach(i => {
-      gallery.innerHTML += `
-        <div class="gallery-item">
-            <img src="${BASE_URL}/uploads/${i.imagePath}" alt="Project Image">
-        </div>
-        `;
-      });
+  gallery.innerHTML = "";
 
-view.style.display = "block";
-initBA();
-    }
+  // 🔥 store all images globally
+  currentProjectImages = p.images.map(i => `${BASE_URL}/uploads/${i.imagePath}`);
+
+  p.images.forEach(i => {
+    gallery.innerHTML += `
+      <div class="gallery-item">
+        <img src="${BASE_URL}/uploads/${i.imagePath}" alt="Project Image">
+      </div>
+    `;
+  });
+
+  view.style.display = "block";
+}
+
 
     function closeProject(){view.style.display="none";}
 
@@ -835,22 +1157,6 @@ document.addEventListener("keydown", function (e) {
     }
 </script>
 
-<!--
-<div class="social-text">
-    <a href="https://wa.me/7666300048">Chat with us</a>
-</div>
-
-
-&lt;!&ndash; WhatsApp Float &ndash;&gt;
-<a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
-    <i class="fa-brands fa-instagram" style="font-size: 40px;" aria-hidden="true"></i>
-</a>
-
-<a href="https://wa.me/7666300048" target="_blank" class="social-square wa" aria-label="WhatsApp - Gajmor Designs"  style="text-decoration: none;">
-    <i class="fa-brands fa-whatsapp" style="font-size: 40px;" aria-hidden="true"></i>
-</a>
--->
-
 <div class="social-stack">
 
     <!-- Text -->
@@ -861,19 +1167,13 @@ document.addEventListener("keydown", function (e) {
     </a>
 
     <!-- Instagram -->
-    <a href="https://www.instagram.com/gajmordesign"
-       target="_blank"
-       class="social-square ig"
-       aria-label="Instagram - Gajmor Designs">
-        <i class="fa-brands fa-instagram"></i>
+    <a href="https://www.instagram.com/gajmordesign" target="_blank" class="social-square ig" aria-label="Instagram - Gajmor Designs" style="text-decoration: none;" >
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://wa.me/7666300048"
-       target="_blank"
-       class="social-square wa"
-       aria-label="WhatsApp - Gajmor Designs">
-        <i class="fa-brands fa-whatsapp"></i>
+    <a href="https://wa.me/7666300048" target="_blank" class="social-square wa" aria-label="WhatsApp - Gajmor Designs"  style="text-decoration: none;">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
     </a>
 
 </div>

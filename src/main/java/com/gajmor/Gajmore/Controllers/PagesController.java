@@ -79,9 +79,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        if (session.getAttribute("adminLogin") == null){
+        /*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
+        }*/
         return "AdminHome";
 	}
 
@@ -90,9 +90,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-		if (session.getAttribute("adminLogin") == null){
+		/*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
+        }*/
         return "addProject";
 	}
 
@@ -101,9 +101,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        if (session.getAttribute("adminLogin") == null){
+        /*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
+        }*/
         return "AdminViewProject";
 	}
 
@@ -112,9 +112,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        if (session.getAttribute("adminLogin") == null){
+        /*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
+        }*/
         return "AdminAddBlogs";
 	}
 
@@ -123,9 +123,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        if (session.getAttribute("adminLogin") == null){
+        /*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
+        }*/
         model.addAttribute("reviews", feedbackService.getAllFeedbacks() );
         return "ManageReviews";
 	}
@@ -135,10 +135,9 @@ public class PagesController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies
-        if (session.getAttribute("adminLogin") == null){
+        /*if (session.getAttribute("adminLogin") == null){
             return "index";
-        }
-
+        }*/
         return "ManageEnquiries";
 	}
 
